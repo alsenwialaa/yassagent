@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 global $wpdb;
 
 $ownedPrefix = (string) $wpdb->prefix . 'ysai_';
