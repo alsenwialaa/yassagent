@@ -37,7 +37,15 @@ $WP option update home 'http://wordpress'
 $WP option update siteurl 'http://wordpress'
 $WP option update permalink_structure '/%postname%/'
 $WP plugin install woocommerce --version=10.9.4 --activate --force
-$WP plugin activate yassin-ai-assistant
+if ! $WP plugin activate yassin-ai-assistant; then
+  $WP eval-file /workspace/plugin/integration/wordpress/schema-activation-diagnostic.php \
+    > /artifacts/schema-activation-diagnostic.json 2>&1 || true
+  if [ -f /var/www/html/wp-content/debug.log ]; then
+    cp /var/www/html/wp-content/debug.log /artifacts/wordpress-debug-activation.log || true
+  fi
+  echo 'Plugin activation failed; schema diagnostics were written to the runtime evidence artifact.' >&2
+  exit 1
+fi
 $WP option update woocommerce_currency 'USD'
 $WP option update woocommerce_store_address 'Integration Street'
 $WP option update woocommerce_store_city 'Test City'

@@ -80,6 +80,7 @@ services:
       - ..:/var/www/html/wp-content/plugins/yassin-ai-assistant:ro
       - ./wordpress/mu-plugins:/var/www/html/wp-content/mu-plugins:ro
       - ..:/workspace/plugin:ro
+      - ./artifacts:/artifacts
     working_dir: /var/www/html
     entrypoint: ["wp", "--allow-root"]
 
