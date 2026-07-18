@@ -12,6 +12,16 @@ $tableNames = $wpdb->get_col(
         $like
     )
 );
+$columnDefaults = $wpdb->get_results(
+    $wpdb->prepare(
+        'SELECT TABLE_NAME, COLUMN_NAME, IS_NULLABLE, COLUMN_DEFAULT'
+        . ' FROM information_schema.COLUMNS'
+        . ' WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME LIKE %s'
+        . ' ORDER BY TABLE_NAME, ORDINAL_POSITION',
+        $like
+    ),
+    ARRAY_A
+);
 
 $tables = array();
 foreach (is_array($tableNames) ? $tableNames : array() as $tableName) {
@@ -32,6 +42,7 @@ $payload = array(
     'woocommerce_version' => defined('WC_VERSION') ? WC_VERSION : '',
     'schema_version' => get_option('ysai_schema_version', null),
     'schema_status' => get_option('ysai_schema_status', null),
+    'information_schema_column_defaults' => is_array($columnDefaults) ? $columnDefaults : array(),
     'owned_tables' => $tables,
     'diagnostic_query_error' => trim((string) $wpdb->last_error),
 );
