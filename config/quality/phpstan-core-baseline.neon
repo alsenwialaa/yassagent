@@ -1,0 +1,667 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Agent\\AgentContext\:\:__construct\(\) has parameter \$cartIntentHistory with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Application/Agent/AgentContext.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Agent\\AgentContext\:\:__construct\(\) has parameter \$currentAttachments with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Application/Agent/AgentContext.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Agent\\AgentRequestFactory\:\:historyForModel\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Application/Agent/AgentRequestFactory.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Agent\\AgentRunner\:\:handle\(\) has parameter \$quotedProduct with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Application/Agent/AgentRunner.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Agent\\ResponseProjection\:\:assertRef\(\) has parameter \$seen with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Application/Agent/ResponseProjection.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Agent\\ResponseProjection\:\:continuity\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Application/Agent/ResponseProjection.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Agent\\ResponseProjection\:\:productForClient\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Application/Agent/ResponseProjection.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Ai\\ModelRequest\:\:normalizeAttachments\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Application/Ai/ModelRequest.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Ai\\ModelRequest\:\:normalizeDeclarations\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Application/Ai/ModelRequest.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Ai\\ModelRequest\:\:normalizeHistory\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Application/Ai/ModelRequest.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Authority\\AuthorityRegistry\:\:continuityForRefs\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Application/Authority/AuthorityRegistry.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Authority\\AuthorityRegistry\:\:recordVariationCatalog\(\) has parameter \$variations with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Application/Authority/AuthorityRegistry.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Authority\\AuthorityRegistry\:\:recordVariationCatalog\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Application/Authority/AuthorityRegistry.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Commerce\\CartIntentVerificationFactory\:\:attributes\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Application/Commerce/CartIntentVerificationFactory.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Commerce\\CartIntentVerificationFactory\:\:cartItem\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Application/Commerce/CartIntentVerificationFactory.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Commerce\\CartIntentVerificationFactory\:\:forClarification\(\) has parameter \$questionEvidence with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Application/Commerce/CartIntentVerificationFactory.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Commerce\\CartIntentVerificationFactory\:\:forClarification\(\) has parameter \$resolvedValues with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Application/Commerce/CartIntentVerificationFactory.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Commerce\\CartPlanFactory\:\:assertVariation\(\) has parameter \$variation with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Application/Commerce/CartPlanFactory.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Commerce\\CartPlanFactory\:\:replacementQuantity\(\) has parameter \$source with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Application/Commerce/CartPlanFactory.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Commerce\\CartPlanFactory\:\:requireKeys\(\) has parameter \$allowed with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Application/Commerce/CartPlanFactory.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Commerce\\CartPlanFactory\:\:requireKeys\(\) has parameter \$required with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Application/Commerce/CartPlanFactory.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Commerce\\CartPlanFactory\:\:updatedQuantity\(\) has parameter \$item with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Application/Commerce/CartPlanFactory.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Commerce\\CurrentTurnCartIntentEvidence\:\:pendingReplacementQuantityMatches\(\) has parameter \$item with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Application/Commerce/CurrentTurnCartIntentEvidence.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Commerce\\CurrentTurnCartIntentEvidence\:\:variationMatchesPending\(\) has parameter \$target with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Application/Commerce/CurrentTurnCartIntentEvidence.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Commerce\\CurrentTurnCartIntentEvidence\:\:variationMatchesPending\(\) has parameter \$variation with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Application/Commerce/CurrentTurnCartIntentEvidence.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Commerce\\VariableProductAuthority\:\:matches\(\) has parameter \$target with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Application/Commerce/VariableProductAuthority.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Commerce\\VariationResolver\:\:matches\(\) has parameter \$criteria with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Application/Commerce/VariationResolver.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Commerce\\VariationResolver\:\:project\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Application/Commerce/VariationResolver.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Contract\\PublicApiContract\:\:assertDefinitionFields\(\) has parameter \$expected with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Application/Contract/PublicApiContract.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Contract\\PublicApiContract\:\:assertExactRefs\(\) has parameter \$names with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Application/Contract/PublicApiContract.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Contract\\PublicApiContract\:\:assertObjectKeys\(\) has parameter \$expected with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Application/Contract/PublicApiContract.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Contract\\PublicApiContract\:\:validate\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Application/Contract/PublicApiContract.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Contract\\PublicResponseSchemaValidator\:\:jsonEquals\(\) has parameter \$expected with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: ../../src/Application/Contract/PublicResponseSchemaValidator.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Contract\\PublicResponseSchemaValidator\:\:matches\(\) has parameter \$value with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: ../../src/Application/Contract/PublicResponseSchemaValidator.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Contract\\PublicResponseSchemaValidator\:\:schemaList\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Application/Contract/PublicResponseSchemaValidator.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Contract\\PublicResponseSchemaValidator\:\:schemaObject\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Application/Contract/PublicResponseSchemaValidator.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Contract\\PublicResponseSchemaValidator\:\:validateNumber\(\) has parameter \$value with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: ../../src/Application/Contract/PublicResponseSchemaValidator.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Execution\\ExecutionDeadline\:\:__construct\(\) has parameter \$clock with no signature specified for callable\.$#'
+			identifier: missingType.callable
+			count: 1
+			path: ../../src/Application/Execution/ExecutionDeadline.php
+
+		-
+			message: '#^Property YassinStore\\AiAssistant\\Application\\Execution\\ExecutionDeadline\:\:\$clock type has no signature specified for callable\.$#'
+			identifier: missingType.callable
+			count: 1
+			path: ../../src/Application/Execution/ExecutionDeadline.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Port\\ContentRepositoryPort\:\:search\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Application/Port/ContentRepositoryPort.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Port\\MessageStorePort\:\:appendAssistantMessage\(\) has parameter \$payload with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Application/Port/MessageStorePort.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Port\\MessageStorePort\:\:appendAssistantMessage\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Application/Port/MessageStorePort.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Port\\MessageStorePort\:\:appendUserMessage\(\) has parameter \$payload with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Application/Port/MessageStorePort.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Port\\MessageStorePort\:\:appendUserMessage\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Application/Port/MessageStorePort.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Port\\ProductCatalogPort\:\:alternatives\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Application/Port/ProductCatalogPort.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Port\\ProductCatalogPort\:\:categories\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Application/Port/ProductCatalogPort.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Port\\ProductCatalogPort\:\:discover\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Application/Port/ProductCatalogPort.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Port\\RuntimeSettingsPort\:\:get\(\) has parameter \$default with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: ../../src/Application/Port/RuntimeSettingsPort.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Tool\\ArgumentValidator\:\:validate\(\) has parameter \$schema with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Application/Tool/ArgumentValidator.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Tool\\ArgumentValidator\:\:validateArray\(\) has parameter \$schema with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Application/Tool/ArgumentValidator.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Tool\\ArgumentValidator\:\:validateNumber\(\) has parameter \$schema with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Application/Tool/ArgumentValidator.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Tool\\ArgumentValidator\:\:validateObject\(\) has parameter \$schema with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Application/Tool/ArgumentValidator.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Tool\\ProductComparisonBuilder\:\:build\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Application/Tool/ProductComparisonBuilder.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Tool\\ProductRecommendationRanker\:\:attributeCriteria\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Application/Tool/ProductRecommendationRanker.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Tool\\ProductRecommendationRanker\:\:normalizedStrings\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Application/Tool/ProductRecommendationRanker.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Tool\\ProductRecommendationRanker\:\:rank\(\) has parameter \$criteria with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Application/Tool/ProductRecommendationRanker.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Tool\\ProductRecommendationRanker\:\:rank\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Application/Tool/ProductRecommendationRanker.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Tool\\Service\\CatalogToolService\:\:compactProduct\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Application/Tool/Service/CatalogToolService.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Tool\\Service\\CatalogToolService\:\:compactVariation\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Application/Tool/Service/CatalogToolService.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Tool\\Service\\CatalogToolService\:\:detailedProduct\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Application/Tool/Service/CatalogToolService.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Tool\\ToolCatalog\:\:validateTerminal\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Application/Tool/ToolCatalog.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Tool\\ToolSchemas\:\:closedObject\(\) has parameter \$required with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Application/Tool/ToolSchemas.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Tool\\ToolSchemas\:\:closedObject\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Application/Tool/ToolSchemas.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Tool\\ToolSchemas\:\:described\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Application/Tool/ToolSchemas.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Tool\\VariationEligibilityEvaluator\:\:attributes\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Application/Tool/VariationEligibilityEvaluator.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Tool\\VariationEligibilityEvaluator\:\:containsAny\(\) has parameter \$criteria with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Application/Tool/VariationEligibilityEvaluator.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Tool\\VariationEligibilityEvaluator\:\:evaluate\(\) has parameter \$excluded with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Application/Tool/VariationEligibilityEvaluator.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Tool\\VariationEligibilityEvaluator\:\:evaluate\(\) has parameter \$required with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Application/Tool/VariationEligibilityEvaluator.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Tool\\VariationEligibilityEvaluator\:\:evaluate\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Application/Tool/VariationEligibilityEvaluator.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Tool\\VariationEligibilityEvaluator\:\:matching\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Application/Tool/VariationEligibilityEvaluator.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Tool\\VariationEligibilityEvaluator\:\:preference\(\) has parameter \$criterion with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Application/Tool/VariationEligibilityEvaluator.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Application\\Tool\\VariationEligibilityEvaluator\:\:preference\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Application/Tool/VariationEligibilityEvaluator.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Domain\\Chat\\AssistantResponse\:\:answer\(\) has parameter \$continuityProducts with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Domain/Chat/AssistantResponse.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Domain\\Chat\\AssistantResponse\:\:answer\(\) has parameter \$shoppingMemoryPatches with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Domain/Chat/AssistantResponse.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Domain\\Chat\\AssistantResponse\:\:followUp\(\) has parameter \$continuityProducts with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Domain/Chat/AssistantResponse.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Domain\\Chat\\AssistantResponse\:\:followUp\(\) has parameter \$shoppingMemoryPatches with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Domain/Chat/AssistantResponse.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Domain\\Chat\\AssistantResponse\:\:normalizeContinuity\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Domain/Chat/AssistantResponse.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Domain\\Chat\\AssistantResponse\:\:safeFailure\(\) has parameter \$shoppingMemoryPatches with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Domain/Chat/AssistantResponse.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Domain\\Chat\\AssistantResponse\:\:verifiedAction\(\) has parameter \$shoppingMemoryPatches with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Domain/Chat/AssistantResponse.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Domain\\Chat\\ConversationState\:\:assertKeys\(\) has parameter \$expected with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Domain/Chat/ConversationState.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Domain\\Chat\\ConversationState\:\:products\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Domain/Chat/ConversationState.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Domain\\Chat\\StoredModelQuestionEvidence\:\:assertKeys\(\) has parameter \$expected with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Domain/Chat/StoredModelQuestionEvidence.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Domain\\Chat\\TurnRecord\:\:__construct\(\) has parameter \$response with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Domain/Chat/TurnRecord.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Domain\\Commerce\\ActionReceipt\:\:normalizeCommand\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Domain/Commerce/ActionReceipt.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Domain\\Commerce\\ActionReceipt\:\:normalizeProof\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Domain/Commerce/ActionReceipt.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Domain\\Commerce\\AppliedCartPlan\:\:assertKeys\(\) has parameter \$expected with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Domain/Commerce/AppliedCartPlan.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Domain\\Commerce\\AppliedCartPlan\:\:normalize\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Domain/Commerce/AppliedCartPlan.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Domain\\Commerce\\CartCommand\:\:assertKeys\(\) has parameter \$expected with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Domain/Commerce/CartCommand.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Domain\\Commerce\\CartContinuationCandidate\:\:assertKeys\(\) has parameter \$expected with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Domain/Commerce/CartContinuationCandidate.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Domain\\Commerce\\CartContinuationCandidate\:\:forModel\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Domain/Commerce/CartContinuationCandidate.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Domain\\Commerce\\CartContinuationCandidate\:\:semantics\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Domain/Commerce/CartContinuationCandidate.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Domain\\Commerce\\CartContinuationCandidate\:\:validate\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Domain/Commerce/CartContinuationCandidate.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Domain\\Commerce\\CartLine\:\:__construct\(\) has parameter \$itemData with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Domain/Commerce/CartLine.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Domain\\Commerce\\CartLine\:\:__construct\(\) has parameter \$publicFacts with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Domain/Commerce/CartLine.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Domain\\Commerce\\CartLine\:\:assertKeys\(\) has parameter \$expected with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Domain/Commerce/CartLine.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Domain\\Commerce\\CartPurchaseIdentity\:\:__construct\(\) has parameter \$variation with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Domain/Commerce/CartPurchaseIdentity.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Domain\\Commerce\\CartPurchaseIdentity\:\:attributes\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Domain/Commerce/CartPurchaseIdentity.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Domain\\Commerce\\CartPurchaseIdentity\:\:fromAuthority\(\) has parameter \$variation with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Domain/Commerce/CartPurchaseIdentity.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Domain\\Commerce\\CartSnapshot\:\:__construct\(\) has parameter \$coupons with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Domain/Commerce/CartSnapshot.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Domain\\Commerce\\CartSnapshot\:\:__construct\(\) has parameter \$facts with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Domain/Commerce/CartSnapshot.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Domain\\Commerce\\CartSnapshot\:\:assertKeys\(\) has parameter \$expected with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Domain/Commerce/CartSnapshot.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Domain\\Commerce\\CartSnapshot\:\:normalizeFacts\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Domain/Commerce/CartSnapshot.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Domain\\Commerce\\CartStepAttempt\:\:__construct\(\) has parameter \$candidateEffect with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Domain/Commerce/CartStepAttempt.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Domain\\Commerce\\PendingCartIntent\:\:assertKeys\(\) has parameter \$expected with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Domain/Commerce/PendingCartIntent.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Domain\\Commerce\\PendingCartIntent\:\:forModel\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Domain/Commerce/PendingCartIntent.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Domain\\Shopping\\ShoppingMemoryPatch\:\:constraintKeys\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Domain/Shopping/ShoppingMemoryPatch.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Domain\\Shopping\\ShoppingMemoryPatch\:\:constraints\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Domain/Shopping/ShoppingMemoryPatch.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Domain\\Shopping\\ShoppingMemoryPatch\:\:products\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Domain/Shopping/ShoppingMemoryPatch.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Support\\Json\:\:canonical\(\) has parameter \$value with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: ../../src/Support/Json.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Support\\Json\:\:normalizeDecoded\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: ../../src/Support/Json.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Support\\Json\:\:sortRecursively\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: ../../src/Support/Json.php

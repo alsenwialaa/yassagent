@@ -1,0 +1,924 @@
+{
+    "valid": [
+        {
+            "name": "new boot request",
+            "schema": "boot_request",
+            "value": {
+                "client_instance_id": "11111111-1111-4111-8111-111111111111",
+                "browser_continuity_secret": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+            }
+        },
+        {
+            "name": "resumed boot request",
+            "schema": "boot_request",
+            "value": {
+                "client_instance_id": "11111111-1111-4111-8111-111111111111",
+                "browser_continuity_secret": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                "previous_browser_continuity_secret": "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+                "conversation_id": "22222222-2222-4222-8222-222222222222",
+                "conversation_token": "conversation-token-1234567890",
+                "pending_turn_id": "33333333-3333-4333-8333-333333333333"
+            }
+        },
+        {
+            "name": "text chat request",
+            "schema": "chat_request",
+            "value": {
+                "conversation_id": "11111111-1111-4111-8111-111111111111",
+                "conversation_token": "conversation-token-1234567890",
+                "client_turn_id": "22222222-2222-4222-8222-222222222222",
+                "message": "أبحث عن قميص",
+                "attachments": []
+            }
+        },
+        {
+            "name": "image chat request",
+            "schema": "chat_request",
+            "value": {
+                "conversation_id": "11111111-1111-4111-8111-111111111111",
+                "conversation_token": "conversation-token-1234567890",
+                "client_turn_id": "22222222-2222-4222-8222-222222222222",
+                "message": "",
+                "attachments": [
+                    {
+                        "mime_type": "image/png",
+                        "data": "AAAAAAAAAAAAAAAAAAAAAA=="
+                    }
+                ]
+            }
+        },
+        {
+            "name": "typed boot response",
+            "schema": "boot_response",
+            "value": {
+                "ok": true,
+                "session": {
+                    "token": "eyJ2IjoxfQ.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "conversation": {
+                    "id": "11111111-1111-4111-8111-111111111111",
+                    "token": "conversation-token-1234567890",
+                    "messages": []
+                },
+                "widget": {
+                    "title": "مساعد التسوق",
+                    "subtitle": "",
+                    "button_text": "محادثة",
+                    "empty_state_hint": ""
+                },
+                "cart": {
+                    "item_count": 0,
+                    "formatted_total": "SAR 0.00",
+                    "cart_url": "https://example.test/cart",
+                    "checkout_url": "https://example.test/checkout"
+                },
+                "cart_available": true,
+                "cart_notice": "",
+                "capabilities": {
+                    "chat_ready": true,
+                    "images": true,
+                    "max_images": 2,
+                    "max_image_bytes": 524288,
+                    "cart_mutations": {
+                        "available": true,
+                        "code": "available",
+                        "notice": ""
+                    }
+                },
+                "pending_turn": null,
+                "server_time": 1700000000
+            }
+        },
+        {
+            "name": "typed turn response",
+            "schema": "turn_response",
+            "value": {
+                "ok": true,
+                "message": {
+                    "id": "44444444-4444-4444-8444-444444444444",
+                    "turn_id": "22222222-2222-4222-8222-222222222222",
+                    "role": "assistant",
+                    "outcome": "answer",
+                    "text": "هذا هو القميص المناسب.",
+                    "products": [
+                        {
+                            "id": 17,
+                            "name": "قميص كلاسيكي",
+                            "formatted_price": "SAR 120.00",
+                            "short_description": "قميص قطني.",
+                            "in_stock": true,
+                            "requires_variation": false,
+                            "image": "https://example.test/product.jpg",
+                            "permalink": "https://example.test/product"
+                        }
+                    ],
+                    "receipts": [],
+                    "presentation": {
+                        "image_scope": "none",
+                        "images": [],
+                        "reply_quote": ""
+                    },
+                    "created_at": 1700000001
+                },
+                "turn_committed": true,
+                "conversation": {
+                    "id": "11111111-1111-4111-8111-111111111111",
+                    "token": "conversation-token-1234567890",
+                    "messages": [
+                        {
+                            "id": "33333333-3333-4333-8333-333333333333",
+                            "turn_id": "22222222-2222-4222-8222-222222222222",
+                            "role": "user",
+                            "outcome": "",
+                            "text": "أرني القميص",
+                            "products": [],
+                            "receipts": [],
+                            "presentation": {
+                                "image_scope": "none",
+                                "images": [],
+                                "reply_quote": ""
+                            },
+                            "created_at": 1700000000
+                        },
+                        {
+                            "id": "44444444-4444-4444-8444-444444444444",
+                            "turn_id": "22222222-2222-4222-8222-222222222222",
+                            "role": "assistant",
+                            "outcome": "answer",
+                            "text": "هذا هو القميص المناسب.",
+                            "products": [
+                                {
+                                    "id": 17,
+                                    "name": "قميص كلاسيكي",
+                                    "formatted_price": "SAR 120.00",
+                                    "short_description": "قميص قطني.",
+                                    "in_stock": true,
+                                    "requires_variation": false,
+                                    "image": "https://example.test/product.jpg",
+                                    "permalink": "https://example.test/product"
+                                }
+                            ],
+                            "receipts": [],
+                            "presentation": {
+                                "image_scope": "none",
+                                "images": [],
+                                "reply_quote": ""
+                            },
+                            "created_at": 1700000001
+                        }
+                    ]
+                },
+                "messages_available": true,
+                "messages_notice": "",
+                "cart": {
+                    "item_count": 0,
+                    "formatted_total": "SAR 0.00",
+                    "cart_url": "https://example.test/cart",
+                    "checkout_url": "https://example.test/checkout"
+                },
+                "cart_available": true,
+                "cart_notice": "",
+                "cart_mutations": {
+                    "available": true,
+                    "code": "available",
+                    "notice": ""
+                }
+            }
+        },
+        {
+            "name": "typed health response",
+            "schema": "health_response",
+            "value": {
+                "ok": true,
+                "version": "1.0.0",
+                "architecture": "ai-led-fenced-turns",
+                "assistant_ready": true,
+                "server_time": 1700000000
+            }
+        },
+        {
+            "name": "typed conversation export response",
+            "schema": "conversation_export_response",
+            "value": {
+                "ok": true,
+                "export": {
+                    "schema": 1,
+                    "conversation_id": "11111111-1111-4111-8111-111111111111",
+                    "created_at": 1699999400,
+                    "updated_at": 1699999970,
+                    "expires_at": 1700086400,
+                    "state": {
+                        "schema": 1,
+                        "continuity": {
+                            "products": [],
+                            "updated_at": 0
+                        },
+                        "shopping": {
+                            "revision": 0,
+                            "goal": "",
+                            "stage": "",
+                            "constraints": [],
+                            "compared_products": [],
+                            "unresolved_question": "",
+                            "updated_at": 0
+                        },
+                        "last_outcome": "",
+                        "has_pending_cart_intent": false
+                    },
+                    "messages": [
+                        {
+                            "role": "user",
+                            "outcome": "",
+                            "text": "أرني القميص",
+                            "payload": {
+                                "presentation": {
+                                    "image_scope": "none",
+                                    "images": [],
+                                    "reply_quote": ""
+                                }
+                            },
+                            "created_at": 1700000000
+                        },
+                        {
+                            "role": "assistant",
+                            "outcome": "answer",
+                            "text": "هذا هو القميص المناسب.",
+                            "payload": {
+                                "message": {
+                                    "id": "44444444-4444-4444-8444-444444444444",
+                                    "turn_id": "22222222-2222-4222-8222-222222222222",
+                                    "role": "assistant",
+                                    "outcome": "answer",
+                                    "text": "هذا هو القميص المناسب.",
+                                    "products": [
+                                        {
+                                            "id": 17,
+                                            "name": "قميص كلاسيكي",
+                                            "formatted_price": "SAR 120.00",
+                                            "short_description": "قميص قطني.",
+                                            "in_stock": true,
+                                            "requires_variation": false,
+                                            "image": "https://example.test/product.jpg",
+                                            "permalink": "https://example.test/product"
+                                        }
+                                    ],
+                                    "receipts": [],
+                                    "presentation": {
+                                        "image_scope": "none",
+                                        "images": [],
+                                        "reply_quote": ""
+                                    },
+                                    "created_at": 1700000001
+                                }
+                            },
+                            "created_at": 1700000001
+                        }
+                    ],
+                    "verified_cart_receipts": [],
+                    "turns": [],
+                    "cart_operations": [],
+                    "cart_operation_steps": [],
+                    "cart_step_attempts": [],
+                    "next_cursor": null,
+                    "complete": true
+                }
+            }
+        },
+        {
+            "name": "typed conversation delete response",
+            "schema": "conversation_delete_response",
+            "value": {
+                "ok": true,
+                "deleted": true
+            }
+        },
+        {
+            "name": "typed admin readiness response",
+            "schema": "admin_test_response",
+            "value": {
+                "ok": true,
+                "result": {
+                    "ok": true,
+                    "reply": "جاهز",
+                    "model": "gemini-3.5-flash",
+                    "checks": {
+                        "provider_access": "passed",
+                        "structured_tool": "passed"
+                    },
+                    "provider_requests": 2,
+                    "checked_at": 1700000000,
+                    "expires_at": 1702592000
+                }
+            }
+        },
+        {
+            "name": "typed error response",
+            "schema": "error_response",
+            "value": {
+                "ok": false,
+                "code": "request_failed",
+                "message": "تعذر إكمال الطلب بأمان.",
+                "retry_after": 2
+            }
+        }
+    ],
+    "invalid": [
+        {
+            "name": "boot request rejects unknown fields",
+            "schema": "boot_request",
+            "value": {
+                "client_instance_id": "11111111-1111-4111-8111-111111111111",
+                "browser_continuity_secret": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                "legacy": true
+            }
+        },
+        {
+            "name": "attachment rejects unknown fields",
+            "schema": "chat_request",
+            "value": {
+                "conversation_id": "11111111-1111-4111-8111-111111111111",
+                "conversation_token": "conversation-token-1234567890",
+                "client_turn_id": "22222222-2222-4222-8222-222222222222",
+                "message": "",
+                "attachments": [
+                    {
+                        "mime_type": "image/png",
+                        "data": "AAAAAAAAAAAAAAAAAAAAAA==",
+                        "filename": "private.png"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "chat message rejects over-limit text",
+            "schema": "chat_request",
+            "value": {
+                "conversation_id": "11111111-1111-4111-8111-111111111111",
+                "conversation_token": "conversation-token-1234567890",
+                "client_turn_id": "22222222-2222-4222-8222-222222222222",
+                "message": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+                "attachments": []
+            }
+        },
+        {
+            "name": "boot response rejects unknown nested capability fields",
+            "schema": "boot_response",
+            "value": {
+                "ok": true,
+                "session": {
+                    "token": "eyJ2IjoxfQ.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "conversation": {
+                    "id": "11111111-1111-4111-8111-111111111111",
+                    "token": "conversation-token-1234567890",
+                    "messages": []
+                },
+                "widget": {
+                    "title": "مساعد التسوق",
+                    "subtitle": "",
+                    "button_text": "محادثة",
+                    "empty_state_hint": ""
+                },
+                "cart": {
+                    "item_count": 0,
+                    "formatted_total": "SAR 0.00",
+                    "cart_url": "https://example.test/cart",
+                    "checkout_url": "https://example.test/checkout"
+                },
+                "cart_available": true,
+                "cart_notice": "",
+                "capabilities": {
+                    "chat_ready": true,
+                    "images": true,
+                    "max_images": 2,
+                    "max_image_bytes": 524288,
+                    "cart_mutations": {
+                        "available": true,
+                        "code": "available",
+                        "notice": ""
+                    },
+                    "legacy": true
+                },
+                "pending_turn": null,
+                "server_time": 1700000000
+            }
+        },
+        {
+            "name": "message requires reply_quote",
+            "schema": "turn_response",
+            "value": {
+                "ok": true,
+                "message": {
+                    "id": "44444444-4444-4444-8444-444444444444",
+                    "turn_id": "22222222-2222-4222-8222-222222222222",
+                    "role": "assistant",
+                    "outcome": "answer",
+                    "text": "هذا هو القميص المناسب.",
+                    "products": [
+                        {
+                            "id": 17,
+                            "name": "قميص كلاسيكي",
+                            "formatted_price": "SAR 120.00",
+                            "short_description": "قميص قطني.",
+                            "in_stock": true,
+                            "requires_variation": false,
+                            "image": "https://example.test/product.jpg",
+                            "permalink": "https://example.test/product"
+                        }
+                    ],
+                    "receipts": [],
+                    "presentation": {
+                        "image_scope": "none",
+                        "images": []
+                    },
+                    "created_at": 1700000001
+                },
+                "turn_committed": true,
+                "conversation": {
+                    "id": "11111111-1111-4111-8111-111111111111",
+                    "token": "conversation-token-1234567890",
+                    "messages": [
+                        {
+                            "id": "33333333-3333-4333-8333-333333333333",
+                            "turn_id": "22222222-2222-4222-8222-222222222222",
+                            "role": "user",
+                            "outcome": "",
+                            "text": "أرني القميص",
+                            "products": [],
+                            "receipts": [],
+                            "presentation": {
+                                "image_scope": "none",
+                                "images": [],
+                                "reply_quote": ""
+                            },
+                            "created_at": 1700000000
+                        },
+                        {
+                            "id": "44444444-4444-4444-8444-444444444444",
+                            "turn_id": "22222222-2222-4222-8222-222222222222",
+                            "role": "assistant",
+                            "outcome": "answer",
+                            "text": "هذا هو القميص المناسب.",
+                            "products": [
+                                {
+                                    "id": 17,
+                                    "name": "قميص كلاسيكي",
+                                    "formatted_price": "SAR 120.00",
+                                    "short_description": "قميص قطني.",
+                                    "in_stock": true,
+                                    "requires_variation": false,
+                                    "image": "https://example.test/product.jpg",
+                                    "permalink": "https://example.test/product"
+                                }
+                            ],
+                            "receipts": [],
+                            "presentation": {
+                                "image_scope": "none",
+                                "images": [],
+                                "reply_quote": ""
+                            },
+                            "created_at": 1700000001
+                        }
+                    ]
+                },
+                "messages_available": true,
+                "messages_notice": "",
+                "cart": {
+                    "item_count": 0,
+                    "formatted_total": "SAR 0.00",
+                    "cart_url": "https://example.test/cart",
+                    "checkout_url": "https://example.test/checkout"
+                },
+                "cart_available": true,
+                "cart_notice": "",
+                "cart_mutations": {
+                    "available": true,
+                    "code": "available",
+                    "notice": ""
+                }
+            }
+        },
+        {
+            "name": "product rejects unknown fields",
+            "schema": "turn_response",
+            "value": {
+                "ok": true,
+                "message": {
+                    "id": "44444444-4444-4444-8444-444444444444",
+                    "turn_id": "22222222-2222-4222-8222-222222222222",
+                    "role": "assistant",
+                    "outcome": "answer",
+                    "text": "هذا هو القميص المناسب.",
+                    "products": [
+                        {
+                            "id": 17,
+                            "name": "قميص كلاسيكي",
+                            "formatted_price": "SAR 120.00",
+                            "short_description": "قميص قطني.",
+                            "in_stock": true,
+                            "requires_variation": false,
+                            "image": "https://example.test/product.jpg",
+                            "permalink": "https://example.test/product",
+                            "legacy_price": "120"
+                        }
+                    ],
+                    "receipts": [],
+                    "presentation": {
+                        "image_scope": "none",
+                        "images": [],
+                        "reply_quote": ""
+                    },
+                    "created_at": 1700000001
+                },
+                "turn_committed": true,
+                "conversation": {
+                    "id": "11111111-1111-4111-8111-111111111111",
+                    "token": "conversation-token-1234567890",
+                    "messages": [
+                        {
+                            "id": "33333333-3333-4333-8333-333333333333",
+                            "turn_id": "22222222-2222-4222-8222-222222222222",
+                            "role": "user",
+                            "outcome": "",
+                            "text": "أرني القميص",
+                            "products": [],
+                            "receipts": [],
+                            "presentation": {
+                                "image_scope": "none",
+                                "images": [],
+                                "reply_quote": ""
+                            },
+                            "created_at": 1700000000
+                        },
+                        {
+                            "id": "44444444-4444-4444-8444-444444444444",
+                            "turn_id": "22222222-2222-4222-8222-222222222222",
+                            "role": "assistant",
+                            "outcome": "answer",
+                            "text": "هذا هو القميص المناسب.",
+                            "products": [
+                                {
+                                    "id": 17,
+                                    "name": "قميص كلاسيكي",
+                                    "formatted_price": "SAR 120.00",
+                                    "short_description": "قميص قطني.",
+                                    "in_stock": true,
+                                    "requires_variation": false,
+                                    "image": "https://example.test/product.jpg",
+                                    "permalink": "https://example.test/product"
+                                }
+                            ],
+                            "receipts": [],
+                            "presentation": {
+                                "image_scope": "none",
+                                "images": [],
+                                "reply_quote": ""
+                            },
+                            "created_at": 1700000001
+                        }
+                    ]
+                },
+                "messages_available": true,
+                "messages_notice": "",
+                "cart": {
+                    "item_count": 0,
+                    "formatted_total": "SAR 0.00",
+                    "cart_url": "https://example.test/cart",
+                    "checkout_url": "https://example.test/checkout"
+                },
+                "cart_available": true,
+                "cart_notice": "",
+                "cart_mutations": {
+                    "available": true,
+                    "code": "available",
+                    "notice": ""
+                }
+            }
+        },
+        {
+            "name": "turn response requires cart_mutations",
+            "schema": "turn_response",
+            "value": {
+                "ok": true,
+                "message": {
+                    "id": "44444444-4444-4444-8444-444444444444",
+                    "turn_id": "22222222-2222-4222-8222-222222222222",
+                    "role": "assistant",
+                    "outcome": "answer",
+                    "text": "هذا هو القميص المناسب.",
+                    "products": [
+                        {
+                            "id": 17,
+                            "name": "قميص كلاسيكي",
+                            "formatted_price": "SAR 120.00",
+                            "short_description": "قميص قطني.",
+                            "in_stock": true,
+                            "requires_variation": false,
+                            "image": "https://example.test/product.jpg",
+                            "permalink": "https://example.test/product"
+                        }
+                    ],
+                    "receipts": [],
+                    "presentation": {
+                        "image_scope": "none",
+                        "images": [],
+                        "reply_quote": ""
+                    },
+                    "created_at": 1700000001
+                },
+                "turn_committed": true,
+                "conversation": {
+                    "id": "11111111-1111-4111-8111-111111111111",
+                    "token": "conversation-token-1234567890",
+                    "messages": [
+                        {
+                            "id": "33333333-3333-4333-8333-333333333333",
+                            "turn_id": "22222222-2222-4222-8222-222222222222",
+                            "role": "user",
+                            "outcome": "",
+                            "text": "أرني القميص",
+                            "products": [],
+                            "receipts": [],
+                            "presentation": {
+                                "image_scope": "none",
+                                "images": [],
+                                "reply_quote": ""
+                            },
+                            "created_at": 1700000000
+                        },
+                        {
+                            "id": "44444444-4444-4444-8444-444444444444",
+                            "turn_id": "22222222-2222-4222-8222-222222222222",
+                            "role": "assistant",
+                            "outcome": "answer",
+                            "text": "هذا هو القميص المناسب.",
+                            "products": [
+                                {
+                                    "id": 17,
+                                    "name": "قميص كلاسيكي",
+                                    "formatted_price": "SAR 120.00",
+                                    "short_description": "قميص قطني.",
+                                    "in_stock": true,
+                                    "requires_variation": false,
+                                    "image": "https://example.test/product.jpg",
+                                    "permalink": "https://example.test/product"
+                                }
+                            ],
+                            "receipts": [],
+                            "presentation": {
+                                "image_scope": "none",
+                                "images": [],
+                                "reply_quote": ""
+                            },
+                            "created_at": 1700000001
+                        }
+                    ]
+                },
+                "messages_available": true,
+                "messages_notice": "",
+                "cart": {
+                    "item_count": 0,
+                    "formatted_total": "SAR 0.00",
+                    "cart_url": "https://example.test/cart",
+                    "checkout_url": "https://example.test/checkout"
+                },
+                "cart_available": true,
+                "cart_notice": ""
+            }
+        },
+        {
+            "name": "health response rejects diagnostic fields",
+            "schema": "health_response",
+            "value": {
+                "ok": true,
+                "version": "1.0.0",
+                "architecture": "ai-led-fenced-turns",
+                "assistant_ready": true,
+                "server_time": 1700000000,
+                "details": {
+                    "database": "ready"
+                }
+            }
+        },
+        {
+            "name": "privacy export rejects pending cart authority",
+            "schema": "conversation_export_response",
+            "value": {
+                "ok": true,
+                "export": {
+                    "schema": 1,
+                    "conversation_id": "11111111-1111-4111-8111-111111111111",
+                    "created_at": 1699999400,
+                    "updated_at": 1699999970,
+                    "expires_at": 1700086400,
+                    "state": {
+                        "schema": 1,
+                        "continuity": {
+                            "products": [],
+                            "updated_at": 0
+                        },
+                        "shopping": {
+                            "revision": 0,
+                            "goal": "",
+                            "stage": "",
+                            "constraints": [],
+                            "compared_products": [],
+                            "unresolved_question": "",
+                            "updated_at": 0
+                        },
+                        "last_outcome": "",
+                        "has_pending_cart_intent": false,
+                        "pending_cart_intent": {
+                            "private": true
+                        }
+                    },
+                    "messages": [
+                        {
+                            "role": "user",
+                            "outcome": "",
+                            "text": "أرني القميص",
+                            "payload": {
+                                "presentation": {
+                                    "image_scope": "none",
+                                    "images": [],
+                                    "reply_quote": ""
+                                }
+                            },
+                            "created_at": 1700000000
+                        },
+                        {
+                            "role": "assistant",
+                            "outcome": "answer",
+                            "text": "هذا هو القميص المناسب.",
+                            "payload": {
+                                "message": {
+                                    "id": "44444444-4444-4444-8444-444444444444",
+                                    "turn_id": "22222222-2222-4222-8222-222222222222",
+                                    "role": "assistant",
+                                    "outcome": "answer",
+                                    "text": "هذا هو القميص المناسب.",
+                                    "products": [
+                                        {
+                                            "id": 17,
+                                            "name": "قميص كلاسيكي",
+                                            "formatted_price": "SAR 120.00",
+                                            "short_description": "قميص قطني.",
+                                            "in_stock": true,
+                                            "requires_variation": false,
+                                            "image": "https://example.test/product.jpg",
+                                            "permalink": "https://example.test/product"
+                                        }
+                                    ],
+                                    "receipts": [],
+                                    "presentation": {
+                                        "image_scope": "none",
+                                        "images": [],
+                                        "reply_quote": ""
+                                    },
+                                    "created_at": 1700000001
+                                }
+                            },
+                            "created_at": 1700000001
+                        }
+                    ],
+                    "verified_cart_receipts": [],
+                    "turns": [],
+                    "cart_operations": [],
+                    "cart_operation_steps": [],
+                    "cart_step_attempts": [],
+                    "next_cursor": null,
+                    "complete": true
+                }
+            }
+        },
+        {
+            "name": "privacy export rejects model question provenance",
+            "schema": "conversation_export_response",
+            "value": {
+                "ok": true,
+                "export": {
+                    "schema": 1,
+                    "conversation_id": "11111111-1111-4111-8111-111111111111",
+                    "created_at": 1699999400,
+                    "updated_at": 1699999970,
+                    "expires_at": 1700086400,
+                    "state": {
+                        "schema": 1,
+                        "continuity": {
+                            "products": [],
+                            "updated_at": 0
+                        },
+                        "shopping": {
+                            "revision": 0,
+                            "goal": "",
+                            "stage": "",
+                            "constraints": [],
+                            "compared_products": [],
+                            "unresolved_question": "",
+                            "updated_at": 0
+                        },
+                        "last_outcome": "",
+                        "has_pending_cart_intent": false
+                    },
+                    "messages": [
+                        {
+                            "role": "user",
+                            "outcome": "",
+                            "text": "أرني القميص",
+                            "payload": {
+                                "presentation": {
+                                    "image_scope": "none",
+                                    "images": [],
+                                    "reply_quote": ""
+                                }
+                            },
+                            "created_at": 1700000000
+                        },
+                        {
+                            "role": "assistant",
+                            "outcome": "answer",
+                            "text": "هذا هو القميص المناسب.",
+                            "payload": {
+                                "message": {
+                                    "id": "44444444-4444-4444-8444-444444444444",
+                                    "turn_id": "22222222-2222-4222-8222-222222222222",
+                                    "role": "assistant",
+                                    "outcome": "answer",
+                                    "text": "هذا هو القميص المناسب.",
+                                    "products": [
+                                        {
+                                            "id": 17,
+                                            "name": "قميص كلاسيكي",
+                                            "formatted_price": "SAR 120.00",
+                                            "short_description": "قميص قطني.",
+                                            "in_stock": true,
+                                            "requires_variation": false,
+                                            "image": "https://example.test/product.jpg",
+                                            "permalink": "https://example.test/product"
+                                        }
+                                    ],
+                                    "receipts": [],
+                                    "presentation": {
+                                        "image_scope": "none",
+                                        "images": [],
+                                        "reply_quote": ""
+                                    },
+                                    "created_at": 1700000001
+                                },
+                                "model_question": {
+                                    "private": true
+                                }
+                            },
+                            "created_at": 1700000001
+                        }
+                    ],
+                    "verified_cart_receipts": [],
+                    "turns": [],
+                    "cart_operations": [],
+                    "cart_operation_steps": [],
+                    "cart_step_attempts": [],
+                    "next_cursor": null,
+                    "complete": true
+                }
+            }
+        },
+        {
+            "name": "conversation delete must confirm deletion",
+            "schema": "conversation_delete_response",
+            "value": {
+                "ok": true,
+                "deleted": false
+            }
+        },
+        {
+            "name": "admin response rejects unknown readiness checks",
+            "schema": "admin_test_response",
+            "value": {
+                "ok": true,
+                "result": {
+                    "ok": true,
+                    "reply": "جاهز",
+                    "model": "gemini-3.5-flash",
+                    "checks": {
+                        "provider_access": "passed",
+                        "structured_tool": "passed",
+                        "catalog": "passed"
+                    },
+                    "provider_requests": 2,
+                    "checked_at": 1700000000,
+                    "expires_at": 1702592000
+                }
+            }
+        },
+        {
+            "name": "error response rejects invalid retry_after",
+            "schema": "error_response",
+            "value": {
+                "ok": false,
+                "code": "request_failed",
+                "message": "تعذر إكمال الطلب بأمان.",
+                "retry_after": 0
+            }
+        }
+    ]
+}

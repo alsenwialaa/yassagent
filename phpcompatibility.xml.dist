@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<ruleset name="Yassin AI Assistant PHP compatibility">
+    <description>Production code must remain compatible with PHP 7.4 and newer.</description>
+    <arg name="basepath" value="."/>
+    <arg name="extensions" value="php"/>
+    <arg name="parallel" value="4"/>
+    <config name="testVersion" value="7.4-"/>
+
+    <file>src</file>
+    <file>yassin-ai-assistant.php</file>
+    <file>uninstall.php</file>
+
+    <exclude-pattern>src/Application/Contract/GeneratedPublicApiContract.php</exclude-pattern>
+    <rule ref="PHPCompatibilityWP"/>
+</ruleset>

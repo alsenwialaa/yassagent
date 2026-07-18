@@ -1,0 +1,205 @@
+{
+  "schema": 1,
+  "gate": "stage-h-release-hardening-v1",
+  "project_state": "unpublished",
+  "stage_g_authority": {
+    "commit": "d64084b07f3141f560b4e0eaa402df4e1c25d565",
+    "source_archive_sha256": "e57a52169d519f8e42333a7a2b5002bb6bf5715ecb2a4bca143deabbce33911d",
+    "tree": "1124c092fa343d8483b362ec9f8808d7d9b002a8"
+  },
+  "modes": {
+    "source": {
+      "description": "Validate the checked-in hardening policy, debt guards, hygiene, and findings ledger without requiring external evidence."
+    },
+    "item9": {
+      "description": "Permit the clarification rewrite only when no unresolved code or architecture blocker remains outside the item-9 target."
+    },
+    "publication": {
+      "description": "Require every publication-scoped code fix and external promotion proof in addition to all local and packaged gates."
+    }
+  },
+  "static_debt": {
+    "phpstan_core": {
+      "maximum": 111,
+      "baseline": "config/quality/phpstan-core-baseline.neon",
+      "allowed_identifiers": [
+        "missingType.callable",
+        "missingType.iterableValue",
+        "missingType.parameter",
+        "missingType.return"
+      ]
+    },
+    "phpstan_adapters": {
+      "maximum": 140,
+      "baseline": "config/quality/phpstan-adapters-baseline.neon",
+      "allowed_identifiers": [
+        "missingType.callable",
+        "missingType.iterableValue",
+        "missingType.parameter",
+        "missingType.return"
+      ]
+    },
+    "phpcs": {
+      "maximum": 1175,
+      "baseline": "config/quality/phpcs-baseline.json"
+    },
+    "php_compatibility": {
+      "maximum": 0,
+      "baseline": "config/quality/phpcompatibility-baseline.json"
+    }
+  },
+  "maintainability": {
+    "threshold_lines": 500,
+    "generated_exclusions": [
+      "src/Application/Contract/GeneratedPublicApiContract.php"
+    ],
+    "budgets": [
+      {
+        "path": "src/Application/Commerce/PendingCartIntentFactory.php",
+        "maximum_lines": 1027,
+        "disposition": "planned_item9"
+      },
+      {
+        "path": "src/Presentation/Admin/AdminPages.php",
+        "maximum_lines": 764,
+        "disposition": "accepted_debt"
+      },
+      {
+        "path": "src/Application/Contract/PublicResponseSchemaValidator.php",
+        "maximum_lines": 739,
+        "disposition": "accepted_debt"
+      },
+      {
+        "path": "src/Infrastructure/Database/ConversationPrivacyService.php",
+        "maximum_lines": 655,
+        "disposition": "accepted_debt"
+      },
+      {
+        "path": "src/Infrastructure/Database/ConversationMaintenanceRepository.php",
+        "maximum_lines": 593,
+        "disposition": "accepted_debt"
+      },
+      {
+        "path": "src/Infrastructure/WooCommerce/ProductCatalog.php",
+        "maximum_lines": 589,
+        "disposition": "accepted_debt"
+      },
+      {
+        "path": "src/Infrastructure/WooCommerce/Cart/WooSessionCartStore.php",
+        "maximum_lines": 553,
+        "disposition": "accepted_debt"
+      },
+      {
+        "path": "src/Application/Contract/PublicApiContract.php",
+        "maximum_lines": 538,
+        "disposition": "accepted_debt"
+      },
+      {
+        "path": "src/Infrastructure/Security/IngressRateLimiter.php",
+        "maximum_lines": 513,
+        "disposition": "accepted_debt"
+      },
+      {
+        "path": "src/Infrastructure/Database/OperationRepository.php",
+        "maximum_lines": 501,
+        "disposition": "accepted_debt"
+      }
+    ]
+  },
+  "inline_suppressions": [
+    {
+      "path": "src/Infrastructure/Concurrency/TurnLeaseManager.php",
+      "needle": "@phpstan-ignore",
+      "count": 2
+    },
+    {
+      "path": "src/Infrastructure/Database/BrowserContinuityAuthorityRepository.php",
+      "needle": "@phpstan-ignore",
+      "count": 1
+    },
+    {
+      "path": "src/Infrastructure/Database/ConversationRepository.php",
+      "needle": "@phpstan-ignore",
+      "count": 3
+    },
+    {
+      "path": "src/Infrastructure/Security/RequestGuard.php",
+      "needle": "phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- exact origin bytes are unslashed, sanitized below, and rejected if sanitization changes them.",
+      "count": 1
+    },
+    {
+      "path": "src/Infrastructure/WooCommerce/Cart/SafeSerializedArrayDecoder.php",
+      "needle": "phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.serialize_unserialize",
+      "count": 1
+    },
+    {
+      "path": "src/Infrastructure/WooCommerce/Cart/WooCartRequestFence.php",
+      "needle": "phpcs:disable WordPress.Security.NonceVerification.Recommended,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- signed Woo session identity is read-only here, sanitized, and cryptographically validated below.",
+      "count": 1
+    },
+    {
+      "path": "src/Infrastructure/WooCommerce/Cart/WooCartRequestFence.php",
+      "needle": "phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- the header is sanitized and cryptographically validated as a Woo cart token below.",
+      "count": 1
+    },
+    {
+      "path": "src/Infrastructure/WooCommerce/Internals/WooCartHookTopology.php",
+      "needle": "@phpstan-ignore",
+      "count": 1
+    },
+    {
+      "path": "src/Infrastructure/WooCommerce/Internals/WooCartIdentityInternals.php",
+      "needle": "phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- wc_clean mirrors Woo core canonicalization; the signed cookie is validated below.",
+      "count": 1
+    },
+    {
+      "path": "src/Presentation/Admin/AdminPages.php",
+      "needle": "phpcs:disable WordPress.Security.NonceVerification.Recommended -- display-only status follows a nonce-protected redirect.",
+      "count": 1
+    },
+    {
+      "path": "src/Presentation/Admin/AdminPages.php",
+      "needle": "phpcs:disable WordPress.Security.NonceVerification.Recommended -- read-only administrator pagination does not mutate state.",
+      "count": 1
+    },
+    {
+      "path": "src/Presentation/Admin/AdminPages.php",
+      "needle": "phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped",
+      "count": 2
+    },
+    {
+      "path": "src/Presentation/Admin/SchemaAdmin.php",
+      "needle": "phpcs:disable WordPress.Security.NonceVerification.Recommended -- display-only status follows the nonce-protected repair redirect.",
+      "count": 1
+    },
+    {
+      "path": "src/Presentation/Rest/ImageAttachmentDecoder.php",
+      "needle": "phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_decode",
+      "count": 1
+    },
+    {
+      "path": "src/Presentation/Widget/Widget.php",
+      "needle": "phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped",
+      "count": 1
+    },
+    {
+      "path": "src/Support/Base64Url.php",
+      "needle": "phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_decode",
+      "count": 1
+    },
+    {
+      "path": "src/Support/Base64Url.php",
+      "needle": "phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode",
+      "count": 1
+    }
+  ],
+  "dependency_locks": {
+    "composer.lock": "38ad986100f67ddbceaf88245c4d24b9f2a3e6a698dfd8bc1f8f0c66ef44bd58",
+    "package-lock.json": "4405afbb6c4b3a4cc3465f1a46d5378eaae0d5bc1ebd698db1c282cccc01402e"
+  },
+  "external_evidence": {
+    "composer_advisory_audit": "composer-audit.json",
+    "clean_composer_install": "clean-composer-install.json",
+    "woocommerce_promotion": "woocommerce-promotion/promotion-status.json"
+  }
+}

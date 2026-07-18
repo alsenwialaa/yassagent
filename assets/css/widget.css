@@ -1,0 +1,1632 @@
+.ysai-widget-root {
+    --ysai-brand: #380000;
+    --ysai-header-bg: #380000;
+    --ysai-header-fg: #fffaf5;
+    --ysai-chat-bg: #f8f5f5;
+    --ysai-surface: #ffffff;
+    --ysai-assistant-bubble: #ffffff;
+    --ysai-user-bubble: #380000;
+    --ysai-user-text: #ffffff;
+    --ysai-text: #24191b;
+    --ysai-muted: #75696c;
+    --ysai-border: #e8dfe1;
+    --ysai-panel-width: 420px;
+    --ysai-panel-height: 700px;
+    --ysai-panel-radius: 26px;
+    --ysai-bubble-radius: 20px;
+    --ysai-card-radius: 17px;
+    --ysai-bubble-tail-radius: clamp(5px, calc(var(--ysai-bubble-radius) * 0.34), 10px);
+    --ysai-font-size: 14px;
+    --ysai-product-cards: 1;
+    --ysai-product-ratio: 1 / 1;
+    --ysai-shadow-soft: 0 8px 26px rgba(37, 18, 22, 0.08);
+    --ysai-shadow-panel: 0 28px 80px rgba(37, 18, 22, 0.2), 0 8px 26px rgba(37, 18, 22, 0.09);
+    position: fixed;
+    bottom: 22px;
+    z-index: 999999;
+    box-sizing: border-box;
+    color: var(--ysai-text);
+    font-family: "Noto Sans Arabic", Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Tahoma, Arial, sans-serif;
+    font-size: var(--ysai-font-size);
+    line-height: 1.5;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+}
+
+html.ysai-widget-modal-open,
+body.ysai-widget-modal-open {
+    overflow: hidden !important;
+    overscroll-behavior: none;
+}
+
+.ysai-widget-root.ysai-position-right {
+    right: 22px;
+    left: auto;
+}
+
+.ysai-widget-root.ysai-position-left {
+    right: auto;
+    left: 22px;
+}
+
+.ysai-position-right .ysai-panel {
+    right: 0;
+    left: auto;
+}
+
+.ysai-position-left .ysai-panel {
+    right: auto;
+    left: 0;
+}
+
+.ysai-widget-root *,
+.ysai-widget-root *::before,
+.ysai-widget-root *::after {
+    box-sizing: border-box;
+}
+
+.ysai-widget-root button,
+.ysai-widget-root input {
+    font: inherit;
+}
+
+.ysai-widget-root button {
+    -webkit-tap-highlight-color: transparent;
+}
+
+.ysai-icon {
+    display: block;
+    width: 18px;
+    height: 18px;
+    pointer-events: none;
+}
+
+.ysai-launcher {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 56px;
+    padding: 7px 18px 7px 8px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 999px;
+    background: linear-gradient(145deg, color-mix(in srgb, var(--ysai-brand) 92%, #ffffff), var(--ysai-brand));
+    color: #ffffff;
+    box-shadow: 0 16px 42px color-mix(in srgb, var(--ysai-brand) 28%, transparent), 0 4px 12px rgba(35, 15, 19, 0.14);
+    cursor: pointer;
+    font-weight: 760;
+    letter-spacing: -0.012em;
+    transition: transform 160ms ease, box-shadow 160ms ease, opacity 160ms ease;
+    max-width: calc(100vw - 16px);
+}
+
+[dir="rtl"] .ysai-launcher {
+    padding: 7px 8px 7px 18px;
+}
+
+.ysai-launcher-icon {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    flex: 0 0 auto;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.14);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.ysai-launcher-icon .ysai-icon {
+    width: 21px;
+    height: 21px;
+}
+
+.ysai-launcher-label {
+    min-width: 0;
+    max-width: min(260px, calc(100vw - 96px));
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    white-space: normal;
+    text-align: start;
+}
+
+.ysai-launcher:focus-visible,
+.ysai-panel button:focus-visible,
+.ysai-panel a:focus-visible {
+    outline: 3px solid color-mix(in srgb, var(--ysai-brand) 26%, #ffffff);
+    outline-offset: 2px;
+}
+
+.ysai-panel {
+    position: absolute;
+    bottom: 70px;
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr) auto auto auto auto auto;
+    width: min(var(--ysai-panel-width), calc(100vw - 28px));
+    height: min(var(--ysai-panel-height), calc(100dvh - 110px));
+    min-height: min(520px, calc(100dvh - 110px));
+    overflow: hidden;
+    border: 1px solid color-mix(in srgb, var(--ysai-border) 92%, #ffffff);
+    border-radius: var(--ysai-panel-radius);
+    background: var(--ysai-surface);
+    box-shadow: var(--ysai-shadow-panel);
+    isolation: isolate;
+    overscroll-behavior: contain;
+    transform-origin: bottom right;
+    animation: ysai-panel-enter 180ms cubic-bezier(0.2, 0.72, 0.2, 1);
+}
+
+.ysai-position-left .ysai-panel {
+    transform-origin: bottom left;
+}
+
+.ysai-panel[hidden] {
+    display: none;
+}
+
+@keyframes ysai-panel-enter {
+    from {
+        opacity: 0;
+        transform: translateY(10px) scale(0.985);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.ysai-header {
+    display: grid;
+    grid-template-columns: 38px minmax(0, 1fr) 38px 38px;
+    align-items: center;
+    gap: 10px;
+    min-height: 64px;
+    padding: 9px 12px;
+    border-bottom: 1px solid color-mix(in srgb, var(--ysai-header-fg) 18%, transparent);
+    background: var(--ysai-header-bg);
+    backdrop-filter: blur(16px) saturate(1.15);
+}
+
+.ysai-brand-mark {
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--ysai-header-fg) 14%, transparent);
+    color: var(--ysai-header-fg);
+    box-shadow: inset 0 1px 0 color-mix(in srgb, var(--ysai-header-fg) 20%, transparent);
+}
+
+.ysai-brand-mark .ysai-icon {
+    width: 19px;
+    height: 19px;
+}
+
+.ysai-brand-mark.has-site-icon {
+    overflow: hidden;
+    border: 1px solid color-mix(in srgb, var(--ysai-border) 76%, #ffffff);
+    border-radius: 50%;
+    background: var(--ysai-surface);
+    box-shadow: 0 4px 12px rgba(35, 16, 20, 0.09);
+}
+
+.ysai-brand-avatar {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.ysai-heading {
+    display: grid;
+    gap: 2px;
+    min-width: 0;
+}
+
+.ysai-title {
+    overflow: hidden;
+    color: var(--ysai-header-fg);
+    font-size: calc(var(--ysai-font-size) + 1px);
+    font-weight: 790;
+    letter-spacing: -0.016em;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ysai-presence {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    min-width: 0;
+}
+
+.ysai-presence-dot {
+    width: 7px;
+    height: 7px;
+    flex: 0 0 auto;
+    border-radius: 50%;
+    background: #17a767;
+    box-shadow: 0 0 0 3px rgba(23, 167, 103, 0.11);
+}
+
+.ysai-widget-root.is-busy .ysai-presence-dot {
+    background: #d58a18;
+    box-shadow: 0 0 0 3px rgba(213, 138, 24, 0.12);
+    animation: ysai-presence-pulse 1.5s ease-in-out infinite;
+}
+
+.ysai-widget-root.is-unavailable .ysai-presence-dot {
+    background: #93878a;
+    box-shadow: 0 0 0 3px rgba(117, 105, 108, 0.1);
+    animation: none;
+}
+
+@keyframes ysai-presence-pulse {
+    0%, 100% { box-shadow: 0 0 0 3px rgba(213, 138, 24, 0.12); }
+    50% { box-shadow: 0 0 0 6px rgba(213, 138, 24, 0.045); }
+}
+
+.ysai-subtitle {
+    overflow: hidden;
+    color: color-mix(in srgb, var(--ysai-header-fg) 78%, transparent);
+    font-size: calc(var(--ysai-font-size) - 2px);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ysai-close,
+.ysai-privacy-toggle,
+.ysai-reply-cancel,
+.ysai-message-action,
+.ysai-product-nav,
+.ysai-product-quote {
+    display: grid;
+    place-items: center;
+    padding: 0;
+    cursor: pointer;
+}
+
+.ysai-close,
+.ysai-privacy-toggle {
+    width: 38px;
+    height: 38px;
+    border: 0;
+    border-radius: 12px;
+    background: transparent;
+    color: var(--ysai-header-fg);
+    transition: background 140ms ease, color 140ms ease, transform 140ms ease;
+}
+
+.ysai-privacy-panel {
+    z-index: 2;
+    display: flex;
+    gap: 8px;
+    padding: 9px 12px;
+    border-bottom: 1px solid var(--ysai-border);
+    background: var(--ysai-surface);
+}
+
+.ysai-privacy-panel[hidden] {
+    display: none;
+}
+
+.ysai-privacy-action {
+    min-height: 36px;
+    flex: 1 1 0;
+    border: 1px solid var(--ysai-border);
+    border-radius: 10px;
+    background: var(--ysai-surface);
+    color: var(--ysai-text);
+    cursor: pointer;
+    font: inherit;
+    font-size: calc(var(--ysai-font-size) - 1px);
+    font-weight: 700;
+}
+
+.ysai-privacy-action.is-danger {
+    border-color: color-mix(in srgb, #b3261e 35%, var(--ysai-border));
+    color: #9f201a;
+}
+
+.ysai-privacy-action:disabled,
+.ysai-privacy-toggle:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.ysai-messages {
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 18px 13px 22px;
+    background:
+        linear-gradient(180deg, color-mix(in srgb, var(--ysai-chat-bg) 84%, var(--ysai-surface)), var(--ysai-chat-bg) 120px),
+        var(--ysai-chat-bg);
+    scroll-behavior: smooth;
+    scrollbar-color: color-mix(in srgb, var(--ysai-muted) 34%, transparent) transparent;
+    scrollbar-width: thin;
+    overscroll-behavior-y: contain;
+    -webkit-overflow-scrolling: touch;
+}
+
+.ysai-messages.is-empty {
+    display: grid;
+    align-content: center;
+}
+
+.ysai-empty-state-hint {
+    max-width: 30rem;
+    margin: 0 auto;
+    padding: 14px 18px;
+    color: var(--ysai-muted);
+    font-size: 0.95em;
+    line-height: 1.7;
+    text-align: center;
+}
+
+.ysai-messages::-webkit-scrollbar,
+.ysai-products::-webkit-scrollbar,
+.ysai-attachment-previews::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+.ysai-messages::-webkit-scrollbar-thumb,
+.ysai-products::-webkit-scrollbar-thumb,
+.ysai-attachment-previews::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--ysai-muted) 32%, transparent);
+}
+
+.ysai-message {
+    display: grid;
+    width: 100%;
+    margin: 0 0 12px;
+}
+
+.ysai-message:last-child {
+    margin-bottom: 0;
+}
+
+.ysai-message-row {
+    display: flex;
+    align-items: flex-end;
+    gap: 5px;
+    width: 100%;
+    direction: ltr;
+}
+
+.ysai-message.is-assistant .ysai-message-row {
+    justify-content: flex-start;
+}
+
+.ysai-message.is-user .ysai-message-row {
+    justify-content: flex-end;
+}
+
+.ysai-message.is-user .ysai-message-actions {
+    order: -1;
+}
+
+.ysai-message-actions {
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    gap: 2px;
+    padding-bottom: 3px;
+    opacity: 0.84;
+    transition: opacity 140ms ease;
+}
+
+.ysai-message-row:hover .ysai-message-actions,
+.ysai-message-actions:focus-within {
+    opacity: 1;
+}
+
+.ysai-message-action {
+    width: 27px;
+    height: 27px;
+    border: 0;
+    border-radius: 9px;
+    background: transparent;
+    color: var(--ysai-muted);
+    transition: background 130ms ease, color 130ms ease, transform 130ms ease;
+}
+
+.ysai-message-action .ysai-icon {
+    width: 14px;
+    height: 14px;
+}
+
+.ysai-message-action.is-confirmed {
+    background: color-mix(in srgb, var(--ysai-brand) 9%, var(--ysai-surface));
+    color: var(--ysai-brand);
+}
+
+.ysai-bubble {
+    --ysai-current-bubble-bg: var(--ysai-assistant-bubble);
+    position: relative;
+    max-width: 84%;
+    padding: 10px 13px 11px;
+    border-radius: var(--ysai-bubble-radius);
+    color: var(--ysai-text);
+    font-size: var(--ysai-font-size);
+    font-weight: 430;
+    isolation: isolate;
+    line-height: 1.62;
+    overflow-wrap: anywhere;
+    text-align: start;
+    white-space: normal;
+}
+
+.ysai-bubble::after {
+    position: absolute;
+    bottom: -1px;
+    z-index: -1;
+    width: 10px;
+    height: 13px;
+    background: var(--ysai-current-bubble-bg);
+    content: "";
+    pointer-events: none;
+}
+
+.ysai-message-text {
+    white-space: pre-wrap;
+    unicode-bidi: plaintext;
+}
+
+.ysai-message.is-user .ysai-bubble {
+    --ysai-current-bubble-bg: var(--ysai-user-bubble);
+    border-bottom-right-radius: var(--ysai-bubble-tail-radius);
+    background: linear-gradient(145deg, color-mix(in srgb, var(--ysai-user-bubble) 94%, #ffffff), var(--ysai-user-bubble));
+    color: var(--ysai-user-text);
+    box-shadow: 0 7px 18px color-mix(in srgb, var(--ysai-user-bubble) 18%, transparent);
+}
+
+.ysai-message.is-user .ysai-bubble::after {
+    right: -5px;
+    clip-path: polygon(0 0, 0 100%, 100% 100%);
+}
+
+.ysai-message.is-assistant .ysai-bubble {
+    border: 1px solid color-mix(in srgb, var(--ysai-border) 88%, #ffffff);
+    border-bottom-left-radius: var(--ysai-bubble-tail-radius);
+    background: var(--ysai-assistant-bubble);
+    box-shadow: 0 4px 14px rgba(40, 20, 23, 0.045);
+}
+
+.ysai-message.is-assistant .ysai-bubble::after {
+    left: -5px;
+    clip-path: polygon(100% 0, 100% 100%, 0 100%);
+}
+
+.ysai-message.is-uncertain .ysai-bubble {
+    --ysai-current-bubble-bg: #fff9f0;
+    border-color: #d49a58;
+    background: #fff9f0;
+}
+
+.ysai-message[data-outcome="safe_failure"] .ysai-bubble {
+    --ysai-current-bubble-bg: #fff8f8;
+    border-color: #efc5c5;
+    background: #fff8f8;
+}
+
+.ysai-quoted-message {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: center;
+    max-width: 100%;
+    margin: -2px -3px 8px;
+    padding: 7px 9px;
+    overflow: hidden;
+    border-inline-start: 3px solid currentColor;
+    border-radius: calc(var(--ysai-bubble-radius) * 0.45);
+    background: rgba(0, 0, 0, 0.045);
+    font-size: calc(var(--ysai-font-size) - 1px);
+    line-height: 1.45;
+    opacity: 0.82;
+    text-align: start;
+}
+
+.ysai-quoted-message.has-thumbnail {
+    grid-template-columns: 44px minmax(0, 1fr);
+    gap: 8px;
+    padding: 5px 8px 5px 5px;
+}
+
+.ysai-quoted-thumbnail {
+    display: block;
+    width: 44px;
+    height: 44px;
+    border-radius: calc(var(--ysai-bubble-radius) * 0.36);
+    object-fit: cover;
+    box-shadow: 0 1px 4px rgba(25, 12, 15, 0.12);
+}
+
+.ysai-quoted-copy {
+    display: -webkit-box;
+    max-height: calc(1.45em * 3);
+    overflow: hidden;
+    overflow-wrap: anywhere;
+    unicode-bidi: plaintext;
+    white-space: normal;
+    word-break: break-word;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+}
+
+.ysai-message.is-user .ysai-quoted-message {
+    background: rgba(255, 255, 255, 0.13);
+}
+
+.ysai-message-media {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 5px;
+    margin: -4px -6px 8px;
+    overflow: hidden;
+    border-radius: calc(var(--ysai-bubble-radius) * 0.72);
+}
+
+.ysai-message-media.has-multiple {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.ysai-message-image {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    max-height: 190px;
+    aspect-ratio: 4 / 3;
+    border-radius: calc(var(--ysai-bubble-radius) * 0.62);
+    object-fit: cover;
+    background: color-mix(in srgb, var(--ysai-chat-bg) 84%, var(--ysai-surface));
+}
+
+
+.ysai-typing-message {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    margin: 1px 0 12px;
+    direction: ltr;
+}
+
+.ysai-typing-bubble {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    min-width: 49px;
+    padding: 11px 14px;
+    border: 1px solid color-mix(in srgb, var(--ysai-border) 88%, #ffffff);
+    border-radius: var(--ysai-bubble-radius);
+    border-bottom-left-radius: var(--ysai-bubble-tail-radius);
+    background: var(--ysai-assistant-bubble);
+    box-shadow: 0 4px 14px rgba(40, 20, 23, 0.04);
+}
+
+.ysai-typing-bubble::after {
+    position: absolute;
+    bottom: -1px;
+    left: -5px;
+    width: 10px;
+    height: 13px;
+    background: var(--ysai-assistant-bubble);
+    clip-path: polygon(100% 0, 100% 100%, 0 100%);
+    content: "";
+    pointer-events: none;
+}
+
+.ysai-typing-bubble span {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--ysai-muted);
+    animation: ysai-typing 1s ease-in-out infinite;
+}
+
+.ysai-typing-bubble span:nth-child(2) {
+    animation-delay: 130ms;
+}
+
+.ysai-typing-bubble span:nth-child(3) {
+    animation-delay: 260ms;
+}
+
+@keyframes ysai-typing {
+    0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+    30% { transform: translateY(-3px); opacity: 1; }
+}
+
+.ysai-product-section {
+    display: grid;
+    width: min(100%, 390px);
+    gap: 7px;
+    margin-top: 9px;
+}
+
+.ysai-message.is-user .ysai-product-section,
+.ysai-message.is-user .ysai-message-retry-actions {
+    justify-self: end;
+}
+
+.ysai-product-controls {
+    display: none;
+    justify-content: flex-end;
+    gap: 6px;
+    padding-inline: 2px;
+}
+
+.ysai-product-layout-carousel .ysai-product-controls {
+    display: flex;
+}
+
+.ysai-product-controls[hidden] {
+    display: none;
+}
+
+.ysai-product-nav {
+    width: 30px;
+    height: 30px;
+    border: 1px solid var(--ysai-border);
+    border-radius: 10px;
+    background: color-mix(in srgb, var(--ysai-surface) 94%, var(--ysai-chat-bg));
+    color: var(--ysai-text);
+    box-shadow: 0 2px 8px rgba(40, 20, 23, 0.035);
+    transition: border-color 130ms ease, color 130ms ease, transform 130ms ease, background 130ms ease;
+}
+
+.ysai-product-nav .ysai-icon {
+    width: 14px;
+    height: 14px;
+}
+
+[dir="rtl"] .ysai-product-nav .ysai-icon {
+    transform: scaleX(-1);
+}
+
+.ysai-products {
+    min-width: 0;
+}
+
+.ysai-product-layout-list .ysai-products {
+    display: grid;
+    gap: 9px;
+}
+
+.ysai-product-layout-grid .ysai-products {
+    display: grid;
+    grid-template-columns: repeat(var(--ysai-product-cards), minmax(0, 1fr));
+    gap: 9px;
+}
+
+.ysai-product-layout-carousel .ysai-products {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 2px 2px 8px;
+    scroll-behavior: smooth;
+    scroll-padding-inline: 2px;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    overscroll-behavior-inline: contain;
+    -webkit-overflow-scrolling: touch;
+}
+
+.ysai-product-layout-carousel .ysai-products::-webkit-scrollbar {
+    display: none;
+}
+
+.ysai-product-layout-carousel .ysai-product-card {
+    flex: 0 0 calc((100% - ((var(--ysai-product-cards) - 1) * 10px)) / var(--ysai-product-cards));
+    scroll-snap-align: start;
+}
+
+.ysai-product-card {
+    position: relative;
+    display: grid;
+    min-width: 0;
+    overflow: hidden;
+    border: 1px solid color-mix(in srgb, var(--ysai-border) 92%, #ffffff);
+    border-radius: var(--ysai-card-radius);
+    background: var(--ysai-surface);
+    box-shadow: 0 6px 20px rgba(42, 21, 25, 0.06);
+    transition: border-color 150ms ease, box-shadow 150ms ease, transform 150ms ease;
+}
+
+.ysai-product-card.is-out-of-stock {
+    opacity: 0.82;
+}
+
+.ysai-product-layout-list .ysai-product-card {
+    grid-template-columns: clamp(82px, 26%, 104px) minmax(0, 1fr);
+    gap: 11px;
+    padding: 8px;
+}
+
+.ysai-product-layout-grid .ysai-product-card,
+.ysai-product-layout-carousel .ysai-product-card {
+    grid-template-rows: auto 1fr;
+}
+
+.ysai-product-media {
+    display: block;
+    min-width: 0;
+    overflow: hidden;
+    background: color-mix(in srgb, var(--ysai-brand) 5%, var(--ysai-chat-bg));
+    color: inherit;
+    text-decoration: none;
+}
+
+.ysai-product-layout-list .ysai-product-media {
+    align-self: start;
+    border-radius: 12px;
+}
+
+.ysai-product-image,
+.ysai-product-placeholder {
+    display: block;
+    width: 100%;
+    aspect-ratio: var(--ysai-product-ratio);
+}
+
+.ysai-product-image {
+    object-fit: cover;
+    object-position: center;
+    image-rendering: auto;
+    transition: transform 220ms ease;
+}
+
+.ysai-product-placeholder {
+    display: grid;
+    place-items: center;
+    color: var(--ysai-brand);
+}
+
+.ysai-product-placeholder .ysai-icon {
+    width: 29px;
+    height: 29px;
+    opacity: 0.48;
+}
+
+.ysai-product-body {
+    display: grid;
+    align-content: start;
+    gap: 5px;
+    min-width: 0;
+    padding: 11px 12px 12px;
+}
+
+.ysai-product-layout-list .ysai-product-body {
+    padding: 4px 32px 4px 0;
+}
+
+[dir="rtl"] .ysai-product-layout-list .ysai-product-body {
+    padding: 4px 0 4px 32px;
+}
+
+.ysai-product-name {
+    display: -webkit-box;
+    overflow: hidden;
+    color: var(--ysai-text);
+    font-size: calc(var(--ysai-font-size) - 1px);
+    font-weight: 770;
+    line-height: 1.4;
+    text-decoration: none;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+.ysai-money {
+    display: inline-block;
+    max-width: 100%;
+    unicode-bidi: isolate;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
+.ysai-product-price {
+    color: var(--ysai-brand);
+    font-size: var(--ysai-font-size);
+    font-weight: 820;
+    letter-spacing: -0.01em;
+}
+
+.ysai-product-description {
+    display: none;
+    overflow: hidden;
+    margin: 0;
+    color: var(--ysai-muted);
+    font-size: calc(var(--ysai-font-size) - 3px);
+    line-height: 1.5;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+.ysai-show-product-description .ysai-product-description {
+    display: -webkit-box;
+}
+
+.ysai-product-badges {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+    margin-top: 1px;
+}
+
+.ysai-badge {
+    padding: 3px 7px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--ysai-brand) 7%, var(--ysai-surface));
+    color: var(--ysai-brand);
+    font-size: 9px;
+    font-weight: 740;
+    line-height: 1.25;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+.ysai-badge.is-warning {
+    background: #fff0ef;
+    color: #b42318;
+}
+
+.ysai-product-quote {
+    position: absolute;
+    top: 9px;
+    left: 9px;
+    width: 30px;
+    height: 30px;
+    border: 1px solid color-mix(in srgb, var(--ysai-border) 90%, #ffffff);
+    border-radius: 10px;
+    background: color-mix(in srgb, var(--ysai-surface) 91%, transparent);
+    color: var(--ysai-brand);
+    box-shadow: 0 4px 12px rgba(35, 16, 20, 0.08);
+    backdrop-filter: blur(8px);
+    transition: background 130ms ease, color 130ms ease, transform 130ms ease, border-color 130ms ease;
+}
+
+.ysai-product-quote .ysai-icon {
+    width: 15px;
+    height: 15px;
+}
+
+.ysai-message-retry-actions {
+    display: flex;
+    width: min(100%, 390px);
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 9px;
+}
+
+.ysai-message-retry {
+    min-width: 0;
+    max-width: 100%;
+    min-height: 40px;
+    padding: 8px 13px;
+    border: 1px solid color-mix(in srgb, var(--ysai-brand) 24%, var(--ysai-border));
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--ysai-brand) 5%, var(--ysai-surface));
+    color: var(--ysai-brand);
+    cursor: pointer;
+    font-size: calc(var(--ysai-font-size) - 1px);
+    font-weight: 740;
+    line-height: 1.25;
+    unicode-bidi: plaintext;
+    text-align: start;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    white-space: normal;
+    transition: background 130ms ease, color 130ms ease, transform 130ms ease, border-color 130ms ease;
+}
+
+.ysai-cart-summary[hidden],
+.ysai-attachment-previews[hidden],
+.ysai-reply-preview[hidden],
+.ysai-status-line[hidden] {
+    display: none;
+}
+
+.ysai-cart-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    min-height: 44px;
+    margin: 0 10px 7px;
+    padding: 9px 11px;
+    border: 1px solid var(--ysai-border);
+    border-radius: 14px;
+    background: color-mix(in srgb, var(--ysai-surface) 95%, var(--ysai-chat-bg));
+    color: var(--ysai-muted);
+    box-shadow: 0 3px 12px rgba(40, 20, 23, 0.035);
+    font-size: calc(var(--ysai-font-size) - 2px);
+}
+
+.ysai-cart-text {
+    color: var(--ysai-text);
+    font-weight: 700;
+}
+
+.ysai-cart-notice {
+    color: #b42318;
+    line-height: 1.4;
+}
+
+.ysai-cart-links {
+    display: flex;
+    gap: 9px;
+    white-space: nowrap;
+}
+
+.ysai-cart-links a {
+    color: var(--ysai-brand);
+    font-weight: 760;
+    text-decoration: none;
+}
+
+.ysai-attachment-previews {
+    display: flex;
+    width: fit-content;
+    max-width: calc(100% - 20px);
+    gap: 9px;
+    overflow-x: auto;
+    margin: 0 10px 7px auto;
+    padding: 9px;
+    border: 1px solid var(--ysai-border);
+    border-radius: 14px;
+    background: color-mix(in srgb, var(--ysai-surface) 95%, var(--ysai-chat-bg));
+}
+
+.ysai-attachment {
+    position: relative;
+    flex: 0 0 auto;
+}
+
+.ysai-attachment img,
+.ysai-attachment-status {
+    width: 62px;
+    height: 62px;
+    border: 1px solid var(--ysai-border);
+    border-radius: 13px;
+    background: var(--ysai-chat-bg);
+}
+
+.ysai-attachment img {
+    display: block;
+    object-fit: cover;
+}
+
+.ysai-attachment-status {
+    display: grid;
+    place-items: center;
+    padding: 5px;
+    color: var(--ysai-muted);
+    font-size: 9px;
+    line-height: 1.25;
+    text-align: center;
+}
+
+.ysai-attachment > button {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    display: grid;
+    place-items: center;
+    width: 26px;
+    height: 26px;
+    padding: 0;
+    border: 2px solid var(--ysai-surface);
+    border-radius: 50%;
+    background: var(--ysai-text);
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.ysai-attachment > button .ysai-icon {
+    width: 12px;
+    height: 12px;
+}
+
+.ysai-reply-preview {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 32px;
+    align-items: center;
+    gap: 8px;
+    margin: 0 10px 6px;
+    padding: 8px;
+    border: 1px solid var(--ysai-border);
+    border-radius: 14px;
+    background: color-mix(in srgb, var(--ysai-surface) 95%, var(--ysai-chat-bg));
+    box-shadow: 0 3px 12px rgba(40, 20, 23, 0.03);
+}
+
+.ysai-reply-preview.has-media {
+    grid-template-columns: 44px minmax(0, 1fr) 32px;
+}
+
+.ysai-reply-preview-media {
+    display: block;
+    width: 44px;
+    height: 44px;
+    overflow: hidden;
+    border-radius: 10px;
+    background: var(--ysai-chat-bg);
+}
+
+.ysai-reply-preview-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.ysai-reply-preview-copy {
+    display: grid;
+    min-width: 0;
+    padding: 7px 10px;
+    border-inline-start: 3px solid var(--ysai-brand);
+    border-radius: 9px;
+    background: var(--ysai-chat-bg);
+}
+
+.ysai-reply-preview-copy strong {
+    color: var(--ysai-brand);
+    font-size: 10px;
+}
+
+.ysai-reply-preview-copy span {
+    display: -webkit-box;
+    max-height: 3em;
+    overflow: hidden;
+    color: var(--ysai-muted);
+    font-size: 11px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+    unicode-bidi: plaintext;
+    white-space: normal;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+.ysai-reply-cancel {
+    width: 32px;
+    height: 32px;
+    border: 0;
+    border-radius: 10px;
+    background: transparent;
+    color: var(--ysai-muted);
+}
+
+.ysai-reply-cancel .ysai-icon {
+    width: 15px;
+    height: 15px;
+}
+
+.ysai-composer {
+    position: relative;
+    z-index: 4;
+    padding: 8px 10px max(10px, env(safe-area-inset-bottom));
+    border-top: 0;
+    background: linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--ysai-surface) 0%, transparent) 0,
+        color-mix(in srgb, var(--ysai-surface) 94%, transparent) 24px,
+        var(--ysai-surface) 100%
+    );
+    box-shadow: none;
+}
+
+.has-reply .ysai-composer {
+    padding-top: 6px;
+}
+
+.ysai-composer-row {
+    display: grid;
+    grid-template-columns: 48px minmax(0, 1fr);
+    align-items: end;
+    gap: 0;
+    width: 100%;
+    min-height: 58px;
+    padding: 4px;
+    overflow: hidden;
+    border: 1px solid var(--ysai-border);
+    border-color: color-mix(in srgb, var(--ysai-border) 88%, var(--ysai-text));
+    border-radius: 30px;
+    background: var(--ysai-surface);
+    box-shadow: 0 1px 2px rgba(38, 17, 21, 0.06), 0 8px 24px rgba(38, 17, 21, 0.07);
+    direction: ltr;
+    transition: border-color 150ms ease, box-shadow 150ms ease, background 150ms ease;
+}
+
+.ysai-composer.has-image-input .ysai-composer-row {
+    grid-template-columns: 48px minmax(0, 1fr) 48px;
+}
+
+.ysai-composer.has-draft .ysai-composer-row {
+    border-color: color-mix(in srgb, var(--ysai-brand) 20%, var(--ysai-border));
+}
+
+.ysai-composer-row:focus-within {
+    border-color: color-mix(in srgb, var(--ysai-brand) 28%, var(--ysai-border));
+    background: var(--ysai-surface);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--ysai-brand) 5%, transparent), 0 8px 24px rgba(38, 17, 21, 0.08);
+}
+
+.ysai-input-shell {
+    grid-column: 2;
+    display: flex;
+    align-items: flex-end;
+    min-width: 0;
+    min-height: 48px;
+    overflow: visible;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+}
+
+.ysai-input {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    min-height: 48px;
+    max-height: 120px;
+    resize: none;
+    overflow-y: auto;
+    padding: 12px 7px 11px;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: var(--ysai-text);
+    font-family: inherit;
+    font-size: max(16px, var(--ysai-font-size));
+    line-height: 1.45;
+    text-align: start;
+    unicode-bidi: plaintext;
+    scrollbar-width: thin;
+}
+
+.ysai-input::placeholder {
+    color: color-mix(in srgb, var(--ysai-muted) 82%, var(--ysai-surface));
+    opacity: 1;
+}
+
+.ysai-send,
+.ysai-attach {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    min-height: 48px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    cursor: pointer;
+    touch-action: manipulation;
+    isolation: isolate;
+    transition: transform 140ms ease, color 140ms ease, opacity 140ms ease;
+}
+
+.ysai-send {
+    grid-column: 1;
+    color: #ffffff;
+}
+
+.ysai-send::before {
+    position: absolute;
+    z-index: -1;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--ysai-brand);
+    box-shadow: 0 5px 14px color-mix(in srgb, var(--ysai-brand) 24%, transparent);
+    content: "";
+    transition: transform 140ms ease, background 140ms ease, box-shadow 140ms ease;
+}
+
+.ysai-send .ysai-icon {
+    width: 18px;
+    height: 18px;
+    transform: none;
+}
+
+.ysai-attach {
+    grid-column: 3;
+    color: var(--ysai-muted);
+}
+
+.ysai-attach .ysai-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.ysai-send:disabled {
+    color: color-mix(in srgb, var(--ysai-muted) 68%, var(--ysai-surface));
+    cursor: default;
+    opacity: 1;
+    transform: none;
+}
+
+.ysai-send:disabled::before {
+    background: color-mix(in srgb, var(--ysai-text) 7%, var(--ysai-surface));
+    box-shadow: none;
+}
+
+.ysai-attach:disabled,
+.ysai-message-retry:disabled,
+.ysai-product-nav:disabled {
+    cursor: not-allowed;
+    opacity: 0.38;
+    transform: none;
+}
+
+.ysai-composer.has-pending-attachment .ysai-send .ysai-icon {
+    opacity: 0.52;
+}
+
+.ysai-status-line {
+    margin: 0 10px 4px;
+    padding: 7px 10px;
+    border: 1px solid color-mix(in srgb, var(--ysai-brand) 8%, var(--ysai-border));
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--ysai-brand) 5%, var(--ysai-surface));
+    color: var(--ysai-muted);
+    font-size: max(12px, calc(var(--ysai-font-size) - 2px));
+    line-height: 1.45;
+    text-align: center;
+}
+
+.ysai-copy-buffer {
+    position: fixed;
+    top: -1000px;
+    left: -1000px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+}
+
+.ysai-widget-root.is-open .ysai-launcher {
+    display: none;
+}
+
+.ysai-widget-root.is-open .ysai-panel {
+    bottom: 0;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .ysai-launcher:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 20px 48px color-mix(in srgb, var(--ysai-brand) 31%, transparent), 0 5px 14px rgba(35, 15, 19, 0.15);
+    }
+
+    .ysai-close:hover,
+    .ysai-reply-cancel:hover {
+        background: var(--ysai-chat-bg);
+        color: var(--ysai-text);
+    }
+
+    .ysai-message-action:hover {
+        background: color-mix(in srgb, var(--ysai-surface) 90%, var(--ysai-chat-bg));
+        color: var(--ysai-brand);
+        transform: translateY(-1px);
+    }
+
+    .ysai-product-nav:hover:not(:disabled) {
+        border-color: color-mix(in srgb, var(--ysai-brand) 46%, var(--ysai-border));
+        background: var(--ysai-surface);
+        color: var(--ysai-brand);
+        transform: translateY(-1px);
+    }
+
+    .ysai-product-card:hover {
+        border-color: color-mix(in srgb, var(--ysai-brand) 27%, var(--ysai-border));
+        box-shadow: 0 11px 28px rgba(42, 21, 25, 0.09);
+        transform: translateY(-2px);
+    }
+
+    .ysai-product-card:hover .ysai-product-image {
+        transform: scale(1.025);
+    }
+
+    .ysai-product-name:hover,
+    .ysai-cart-links a:hover {
+        color: var(--ysai-brand);
+        text-decoration: underline;
+        text-underline-offset: 2px;
+    }
+
+    .ysai-product-quote:hover {
+        border-color: var(--ysai-brand);
+        background: var(--ysai-brand);
+        color: #ffffff;
+        transform: translateY(-1px);
+    }
+
+    .ysai-message-retry:hover:not(:disabled) {
+        border-color: var(--ysai-brand);
+        background: var(--ysai-brand);
+        color: #ffffff;
+        transform: translateY(-1px);
+    }
+
+    .ysai-send:hover:not(:disabled) {
+        transform: translateY(-1px);
+    }
+
+    .ysai-send:hover:not(:disabled)::before {
+        box-shadow: 0 7px 18px color-mix(in srgb, var(--ysai-brand) 30%, transparent);
+        transform: scale(1.03);
+    }
+
+    .ysai-attach:hover:not(:disabled) {
+        background: color-mix(in srgb, var(--ysai-brand) 6%, transparent);
+        color: var(--ysai-brand);
+        transform: translateY(-1px);
+    }
+}
+
+.ysai-launcher:active,
+.ysai-send:active:not(:disabled),
+.ysai-attach:active:not(:disabled) {
+    transform: scale(0.95);
+}
+
+@media (min-width: 521px) {
+    .ysai-composer {
+        padding-inline: 12px;
+    }
+
+    .ysai-composer-row {
+        grid-template-columns: 46px minmax(0, 1fr);
+        min-height: 54px;
+        border-radius: 28px;
+    }
+
+    .ysai-composer.has-image-input .ysai-composer-row {
+        grid-template-columns: 46px minmax(0, 1fr) 46px;
+    }
+
+    .ysai-send,
+    .ysai-attach {
+        width: 46px;
+        height: 46px;
+        min-width: 46px;
+        min-height: 46px;
+    }
+
+    .ysai-send::before {
+        width: 38px;
+        height: 38px;
+    }
+
+    .ysai-input-shell,
+    .ysai-input {
+        min-height: 46px;
+    }
+
+    .ysai-input {
+        padding-block: 11px 10px;
+        font-size: var(--ysai-font-size);
+    }
+}
+
+@media (hover: none) {
+    .ysai-message-actions {
+        opacity: 0.88;
+    }
+}
+
+@media (max-width: 520px) {
+    .ysai-widget-root.ysai-position-right,
+    .ysai-widget-root.ysai-position-left {
+        right: 8px;
+        left: 8px;
+        bottom: max(8px, env(safe-area-inset-bottom));
+    }
+
+    .ysai-position-right .ysai-launcher {
+        float: right;
+    }
+
+    .ysai-position-left .ysai-launcher {
+        float: left;
+    }
+
+    .ysai-panel {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100dvh;
+        min-height: 0;
+        max-height: none;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+        transform-origin: bottom center;
+    }
+
+    .ysai-header {
+        grid-template-columns: 36px minmax(0, 1fr) 40px 40px;
+        min-height: calc(58px + env(safe-area-inset-top));
+        padding: max(7px, env(safe-area-inset-top)) 10px 7px;
+    }
+
+    .ysai-brand-mark {
+        width: 36px;
+        height: 36px;
+        border-radius: 11px;
+    }
+
+    .ysai-close {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+    }
+
+    .ysai-messages {
+        padding: 14px 10px 18px;
+        scroll-padding-block: 14px 18px;
+    }
+
+    .ysai-message {
+        margin-bottom: 11px;
+    }
+
+    .ysai-bubble {
+        max-width: 88%;
+        padding: 10px 12px 11px;
+    }
+
+    .ysai-message-action {
+        width: 29px;
+        height: 29px;
+    }
+
+    .ysai-product-section,
+    .ysai-message-retry-actions {
+        width: 100%;
+    }
+
+    .ysai-widget-root.ysai-product-cards-3 {
+        --ysai-product-cards: 2 !important;
+    }
+
+    .ysai-product-layout-list .ysai-product-card {
+        grid-template-columns: 92px minmax(0, 1fr);
+    }
+
+    .ysai-cart-summary,
+    .ysai-reply-preview {
+        margin-inline: 9px;
+    }
+
+    .ysai-attachment-previews {
+        max-width: calc(100% - 18px);
+        margin: 0 9px 7px auto;
+    }
+
+    .ysai-composer {
+        padding: 8px 10px max(10px, env(safe-area-inset-bottom));
+    }
+
+    .ysai-composer-row {
+        min-height: 58px;
+        border-radius: 30px;
+    }
+
+    .ysai-input {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 370px) {
+    .ysai-product-layout-grid .ysai-products {
+        grid-template-columns: 1fr;
+    }
+
+    .ysai-launcher-label {
+        display: none;
+    }
+
+    .ysai-launcher {
+        width: 56px;
+        padding: 7px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ysai-panel,
+    .ysai-launcher,
+    .ysai-product-card,
+    .ysai-product-image,
+    .ysai-message-action,
+    .ysai-product-nav,
+    .ysai-product-quote,
+    .ysai-message-retry,
+    .ysai-send,
+    .ysai-send::before,
+    .ysai-attach,
+    .ysai-composer-row,
+    .ysai-typing-bubble span,
+    .ysai-presence-dot {
+        animation: none;
+        scroll-behavior: auto;
+        transition: none;
+    }
+
+    .ysai-messages,
+    .ysai-products {
+        scroll-behavior: auto;
+    }
+}
+
+@media (forced-colors: active) {
+    .ysai-launcher,
+    .ysai-send,
+    .ysai-brand-mark {
+        border: 1px solid ButtonText;
+    }
+
+    .ysai-panel,
+    .ysai-bubble,
+    .ysai-product-card,
+    .ysai-composer-row,
+    .ysai-cart-summary,
+    .ysai-reply-preview,
+    .ysai-attachment-previews {
+        border-color: CanvasText;
+    }
+
+    .ysai-send::before {
+        border: 1px solid ButtonText;
+        background: ButtonFace;
+        box-shadow: none;
+    }
+}
+
+.ysai-message-image-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-width: 0;
+    min-height: 96px;
+    padding: 14px;
+    border: 1px solid color-mix(in srgb, currentColor 16%, transparent);
+    border-radius: calc(var(--ysai-bubble-radius) * 0.62);
+    background: color-mix(in srgb, var(--ysai-chat-bg) 82%, var(--ysai-surface));
+}
+
+.ysai-message-image-placeholder .ysai-icon {
+    width: 28px;
+    height: 28px;
+    flex: 0 0 auto;
+    opacity: 0.78;
+}
+
+.ysai-message-image-placeholder-copy {
+    display: grid;
+    gap: 2px;
+    min-width: 0;
+}
+
+.ysai-message-image-placeholder-copy strong,
+.ysai-message-image-placeholder-copy small {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ysai-message-image-placeholder-copy small {
+    opacity: 0.72;
+    font-size: 0.72rem;
+}

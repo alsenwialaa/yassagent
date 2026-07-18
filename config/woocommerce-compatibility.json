@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "minimum": "10.9.4",
+  "maximum_exclusive": "11.0.0",
+  "tested_up_to": "10.9.4",
+  "promotion_tested": [
+    "10.9.4"
+  ],
+  "wordpress_minimum": "6.9",
+  "runtime_contract": "woocommerce-10.9-core-session-v1"
+}

@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "policy": "new violations are forbidden; baseline reductions require explicit regeneration and review",
+  "phpstan": {
+    "core": {
+      "level": 8,
+      "baseline_errors": 111
+    },
+    "adapters": {
+      "level": 6,
+      "baseline_errors": 140
+    }
+  },
+  "phpcs": {
+    "baseline_violations": 1175
+  },
+  "php_compatibility": {
+    "minimum": "7.4",
+    "baseline_violations": 0
+  }
+}

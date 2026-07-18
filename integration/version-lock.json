@@ -1,0 +1,10 @@
+{
+  "wordpress": "6.9",
+  "woocommerce": "10.9.4",
+  "php": "7.4",
+  "wp_cli": "2.12.0",
+  "mariadb": "11.8.8",
+  "node": "24.18.0",
+  "playwright": "1.61.1",
+  "updated": "2026-07-18"
+}

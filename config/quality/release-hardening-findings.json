@@ -1,0 +1,268 @@
+{
+  "schema": 1,
+  "findings": [
+    {
+      "id": "H-001",
+      "category": "release_authority",
+      "severity": "high",
+      "status": "resolved",
+      "scopes": [
+        "item9",
+        "publication"
+      ],
+      "summary": "The delivered Stage G source and an older preserved worktree were divergent.",
+      "rationale": "Stage H is based on the delivered Stage G source archive and its matching cumulative Git commit; the divergent worktree is not used as release authority.",
+      "guard": "The hardening policy records the Stage G commit and source-archive checksum, and the Stage H gate requires a clean candidate tree.",
+      "resolution": "Use the delivered Stage G source authority as the sole Stage H base.",
+      "evidence": [
+        "config/quality/release-hardening-policy.json"
+      ],
+      "review_by": null
+    },
+    {
+      "id": "H-002",
+      "category": "release_gate",
+      "severity": "high",
+      "status": "resolved",
+      "scopes": [
+        "item9",
+        "publication"
+      ],
+      "summary": "An in-place quality result did not prove deterministic packages, extracted-source replay, supply-chain status, and artifact-first promotion separately.",
+      "rationale": "The Stage H runner executes bounded phases, refuses destructive or overlapping paths, replaces only empty or marked output directories, verifies exact Composer and Node replay metadata, builds twice, verifies archives, replays the extracted source, and keeps external publication evidence distinct from code correctness.",
+      "guard": "scripts/run-stage-h-gate.py, its fail-closed self-test, and scripts/quality/verify-release-hardening.py",
+      "resolution": "Use the Stage H gate as the cumulative pre-item-9 and publication authority.",
+      "evidence": [
+        "scripts/run-stage-h-gate.py",
+        "scripts/quality/self-test-stage-h-runner.py",
+        "scripts/quality/verify-release-hardening.py",
+        "scripts/quality/verify-composer-install.py",
+        "scripts/quality/verify-node-install.py",
+        "scripts/quality/verify-release-archives.py",
+        "scripts/quality/smoke-production-archive.py"
+      ],
+      "review_by": null
+    },
+    {
+      "id": "H-003",
+      "category": "input_security",
+      "severity": "high",
+      "status": "resolved",
+      "scopes": [
+        "item9",
+        "publication"
+      ],
+      "summary": "Several WordPress request values crossed trust boundaries without explicit unslashing and sanitization.",
+      "rationale": "Signed identity values still require exact bounded input handling before cryptographic validation; display-only admin inputs require the same explicit treatment.",
+      "guard": "PHPCS no-growth enforcement, request-boundary tests, and the cumulative quality gate.",
+      "resolution": "Unslash, sanitize, and fail closed when sanitization changes security-sensitive identity input.",
+      "evidence": [
+        "src/Infrastructure/WooCommerce/Cart/WooCartRequestFence.php",
+        "src/Infrastructure/Security/RequestGuard.php",
+        "src/Presentation/Admin/SchemaAdmin.php"
+      ],
+      "review_by": null
+    },
+    {
+      "id": "H-004",
+      "category": "encoding_and_serialization",
+      "severity": "high",
+      "status": "resolved",
+      "scopes": [
+        "item9",
+        "publication"
+      ],
+      "summary": "Opaque authority encoding and serialized-data handling were duplicated across security-sensitive boundaries.",
+      "rationale": "Duplicated base64url and broad serialization logic increases canonicalization and object-injection risk.",
+      "guard": "One strict Base64Url codec, one bounded WooCommerce decoder, architecture checks, and exact inline-suppression inventory.",
+      "resolution": "Centralize canonical base64url handling, use canonical JSON where object serialization is unnecessary, and keep class-disabled unserialization behind a bounded decoder.",
+      "evidence": [
+        "src/Support/Base64Url.php",
+        "src/Infrastructure/WooCommerce/Cart/SafeSerializedArrayDecoder.php",
+        "tests/php/Unit/Support/Base64UrlTest.php"
+      ],
+      "review_by": null
+    },
+    {
+      "id": "H-005",
+      "category": "framework_contracts",
+      "severity": "high",
+      "status": "resolved",
+      "scopes": [
+        "item9",
+        "publication"
+      ],
+      "summary": "Static analysis exposed real control-flow, WooCommerce boundary, WordPress input, and database-error handling defects among framework-stub noise.",
+      "rationale": "Suppressing the full reports would have hidden runtime defects; only exact unavoidable framework limitations should remain.",
+      "guard": "Level-8 core analysis, level-6 adapter analysis, exact path-bound baselines, and an explicit 21-suppression inventory.",
+      "resolution": "Fix the actionable findings, isolate mutable wpdb error access, remove dead scaffolding, and retain only reviewed missing-type or exact framework-stub findings.",
+      "evidence": [
+        "src/Infrastructure/Database/WpdbError.php",
+        "config/quality/phpstan-core-baseline.neon",
+        "config/quality/phpstan-adapters-baseline.neon"
+      ],
+      "review_by": null
+    },
+    {
+      "id": "H-006",
+      "category": "domain_policy_duplication",
+      "severity": "high",
+      "status": "resolved",
+      "scopes": [
+        "item9",
+        "publication"
+      ],
+      "summary": "Cart quantity limits and comparisons and product price-range projection were duplicated across domain, application, and WooCommerce components.",
+      "rationale": "Duplicated commerce invariants can diverge silently and make clarification, authorization, execution, and verification disagree.",
+      "guard": "Code-health verification rejects duplicate policy methods and cart-quantity limit literals outside the canonical owner.",
+      "resolution": "Added CartQuantity and ProductPriceRange as single domain authorities and migrated every existing caller.",
+      "evidence": [
+        "src/Domain/Commerce/CartQuantity.php",
+        "src/Domain/Shopping/ProductPriceRange.php",
+        "scripts/quality/verify-code-health.py",
+        "tests/php/Unit/Domain/Commerce/CartQuantityTest.php",
+        "tests/php/Unit/Domain/Shopping/ProductPriceRangeTest.php"
+      ],
+      "review_by": null
+    },
+    {
+      "id": "H-101",
+      "category": "static_analysis",
+      "severity": "medium",
+      "status": "accepted_debt",
+      "scopes": [
+        "maintenance"
+      ],
+      "summary": "Core PHPStan carries 111 reviewed missing generic/callable type findings and no actionable correctness identifiers.",
+      "rationale": "The level-8 gate rejects every new identifier or count while iterable, callable, parameter, and return precision is reduced deliberately.",
+      "guard": "config/quality/phpstan-core-baseline.neon and scripts/quality/verify-static-baselines.py",
+      "resolution": "Reduce the baseline subsystem by subsystem; never broaden ignores.",
+      "evidence": [
+        "config/quality/static-analysis-policy.json"
+      ],
+      "review_by": "2026-09-30"
+    },
+    {
+      "id": "H-102",
+      "category": "static_analysis",
+      "severity": "medium",
+      "status": "accepted_debt",
+      "scopes": [
+        "maintenance"
+      ],
+      "summary": "PHPStan WordPress/WooCommerce adapters have 140 exact path-bound missing-type findings.",
+      "rationale": "The adapter gate rejects every new identifier or count while framework-facing array and callable types are tightened deliberately.",
+      "guard": "config/quality/phpstan-adapters-baseline.neon and scripts/quality/verify-static-baselines.py",
+      "resolution": "Reduce the baseline around every framework boundary touched by later refactors.",
+      "evidence": [
+        "config/quality/static-analysis-policy.json"
+      ],
+      "review_by": "2026-09-30"
+    },
+    {
+      "id": "H-103",
+      "category": "code_style",
+      "severity": "low",
+      "status": "accepted_debt",
+      "scopes": [
+        "maintenance"
+      ],
+      "summary": "PHPCS carries 1175 reviewed line-length, direct-database, prepared-SQL, and output-analysis findings after removing 3,048 Stage-G violations and moving exceptional input handling to exact local rationale.",
+      "rationale": "The remaining ledger is dominated by line-length and deliberate WordPress database/output patterns; new findings are forbidden and reductions require explicit review.",
+      "guard": "config/quality/phpcs-baseline.json and scripts/quality/run-phpcs-baseline.py",
+      "resolution": "Reduce remaining findings in focused subsystem changes without adding broad file-level exclusions.",
+      "evidence": [
+        "config/quality/static-analysis-policy.json"
+      ],
+      "review_by": "2026-09-30"
+    },
+    {
+      "id": "H-104",
+      "category": "maintainability",
+      "severity": "high",
+      "status": "planned_item9",
+      "scopes": [
+        "publication",
+        "maintenance"
+      ],
+      "summary": "PendingCartIntentFactory remains a 1,027-line clarification subsystem and is the exact item-9 rewrite target.",
+      "rationale": "This is the explicit item-9 rewrite target. Starting item 9 is the resolution, not permission to expand the current class.",
+      "guard": "The Stage H maintainability discovery and exact no-growth budget.",
+      "resolution": "Replace it with parsing, authority resolution, clarification strategies, continuation matching, policy, and assembly components in item 9.",
+      "evidence": [
+        "src/Application/Commerce/PendingCartIntentFactory.php"
+      ],
+      "review_by": "2026-08-31"
+    },
+    {
+      "id": "H-105",
+      "category": "maintainability",
+      "severity": "medium",
+      "status": "accepted_debt",
+      "scopes": [
+        "maintenance"
+      ],
+      "summary": "Nine non-generated, non-item-9 production components remain above 500 lines.",
+      "rationale": "Every component is discovered automatically and protected by an exact no-growth budget; none may grow unnoticed during the clarification rewrite.",
+      "guard": "config/quality/release-hardening-policy.json maintainability discovery and budgets.",
+      "resolution": "Split each component only with characterization coverage and no behavior change.",
+      "evidence": [
+        "config/quality/release-hardening-policy.json"
+      ],
+      "review_by": "2026-10-31"
+    },
+    {
+      "id": "H-106",
+      "category": "local_suppressions",
+      "severity": "low",
+      "status": "accepted_debt",
+      "scopes": [
+        "maintenance"
+      ],
+      "summary": "Twenty-one local static-analysis and coding-standard suppressions remain, each exact, counted, and justified next to the line it affects.",
+      "rationale": "The suppressions cover cryptographic encoding, class-disabled WooCommerce decoding, signed non-action identity, escaped render helpers, mutable wpdb state, and one WordPress hook-stub limitation.",
+      "guard": "The Stage H policy inventories every path, marker, and count and rejects any unlisted suppression.",
+      "resolution": "Remove a suppression whenever the framework stub or implementation can express the runtime contract directly.",
+      "evidence": [
+        "config/quality/release-hardening-policy.json"
+      ],
+      "review_by": "2026-10-31"
+    },
+    {
+      "id": "H-201",
+      "category": "promotion_evidence",
+      "severity": "critical",
+      "status": "external_evidence_required",
+      "scopes": [
+        "publication"
+      ],
+      "summary": "The exact installable ZIP has not passed the artifact-first WordPress 6.9 and WooCommerce 10.9.4 promotion lane on a container-capable host.",
+      "rationale": "Source, fake-provider, browser, and package tests cannot prove real activation, WooCommerce session persistence, mutation recovery, upgrade, uninstall, and diagnostic-log cleanliness.",
+      "guard": "scripts/run-woocommerce-promotion-gate.sh returns non-success when infrastructure or evidence is missing.",
+      "resolution": "Run the exact plugin and WooCommerce packages through the promotion command and retain promotion-status.json.",
+      "evidence": [
+        "scripts/run-woocommerce-promotion-gate.sh"
+      ],
+      "review_by": "2026-08-31"
+    },
+    {
+      "id": "H-202",
+      "category": "dependency_evidence",
+      "severity": "high",
+      "status": "external_evidence_required",
+      "scopes": [
+        "publication"
+      ],
+      "summary": "A fresh Composer download and current Composer advisory query require reachable Packagist and GitHub infrastructure.",
+      "rationale": "The lock and installed vendor tree can be verified offline, but current advisory data and independent package download are external facts.",
+      "guard": "The Stage H runner records clean-install and composer-audit phases separately and publication mode rejects missing evidence.",
+      "resolution": "Run Stage H publication mode on a networked build host with the locked Composer toolchain.",
+      "evidence": [
+        "composer.lock",
+        "scripts/quality/verify-composer-install.py",
+        "scripts/quality/verify-composer-audit.py"
+      ],
+      "review_by": "2026-08-31"
+    }
+  ]
+}

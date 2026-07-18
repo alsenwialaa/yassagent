@@ -1,0 +1,841 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\Database\\CartStepAttemptRepository\:\:sameOptionalArray\(\) has parameter \$right with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/Database/CartStepAttemptRepository.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\Database\\CartStepAttemptRepository\:\:transition\(\) has parameter \$effect with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/Database/CartStepAttemptRepository.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\Database\\CartStepRepository\:\:sameOptionalEffect\(\) has parameter \$right with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/Database/CartStepRepository.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\Database\\ConversationPrivacyProjector\:\:appliedEffects\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/Database/ConversationPrivacyProjector.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\Database\\ConversationPrivacyProjector\:\:cartPlan\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/Database/ConversationPrivacyProjector.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\Database\\ConversationPrivacyProjector\:\:cartPrimitive\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/Database/ConversationPrivacyProjector.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\Database\\ConversationPrivacyProjector\:\:cartSnapshot\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/Database/ConversationPrivacyProjector.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\Database\\ConversationPrivacyProjector\:\:conversationState\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/Database/ConversationPrivacyProjector.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\Database\\ConversationPrivacyProjector\:\:messagePayload\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/Database/ConversationPrivacyProjector.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\Database\\ConversationPrivacyProjector\:\:optionalCartSnapshot\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/Database/ConversationPrivacyProjector.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\Database\\ConversationPrivacyProjector\:\:turnInput\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/Database/ConversationPrivacyProjector.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\Database\\ConversationPrivacyProjector\:\:turnResponse\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/Database/ConversationPrivacyProjector.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\Database\\ConversationPrivacyService\:\:authorityIdentity\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/Database/ConversationPrivacyService.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\Database\\ConversationPrivacyService\:\:export\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/Database/ConversationPrivacyService.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\Database\\ConversationPrivacyService\:\:lockAuthority\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/Database/ConversationPrivacyService.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\Database\\ConversationRepository\:\:hydrate\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/Database/ConversationRepository.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\Database\\MessageRepository\:\:appendAssistantMessage\(\) has parameter \$payload with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/Database/MessageRepository.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\Database\\MessageRepository\:\:appendAssistantMessage\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/Database/MessageRepository.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\Database\\MessageRepository\:\:appendMessage\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/Database/MessageRepository.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\Database\\MessageRepository\:\:appendUserMessage\(\) has parameter \$payload with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/Database/MessageRepository.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\Database\\MessageRepository\:\:appendUserMessage\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/Database/MessageRepository.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\Database\\MessageRepository\:\:canonicalPayload\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/Database/MessageRepository.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\Database\\MessageRepository\:\:hydrateMessage\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/Database/MessageRepository.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\Database\\MessageRepository\:\:messagesByTurn\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/Database/MessageRepository.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\Database\\SchemaDefinition\:\:index\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/Database/SchemaDefinition.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\Database\\SchemaDefinition\:\:table\(\) has parameter \$indexes with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/Database/SchemaDefinition.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\Database\\SchemaDefinition\:\:table\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/Database/SchemaDefinition.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\Database\\SchemaDiffer\:\:sameColumn\(\) has parameter \$actual with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/Database/SchemaDiffer.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\Database\\SchemaDiffer\:\:sameIndex\(\) has parameter \$actual with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/Database/SchemaDiffer.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\Database\\SchemaDiffer\:\:sameOptionalIdentifier\(\) has parameter \$actual with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: ../../src/Infrastructure/Database/SchemaDiffer.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\Database\\SchemaInspector\:\:rows\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/Database/SchemaInspector.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\Database\\SchemaInstaller\:\:__construct\(\) has parameter \$schemaUpdater with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: ../../src/Infrastructure/Database/SchemaInstaller.php
+
+		-
+			message: '#^Property YassinStore\\AiAssistant\\Infrastructure\\Database\\SchemaInstaller\:\:\$schemaUpdater type has no signature specified for callable\.$#'
+			identifier: missingType.callable
+			count: 1
+			path: ../../src/Infrastructure/Database/SchemaInstaller.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\Gemini\\GeminiResponseDecoder\:\:presentDataKeys\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/Gemini/GeminiResponseDecoder.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\Gemini\\GeminiRuntimeReadiness\:\:report\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/Gemini/GeminiRuntimeReadiness.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\Gemini\\GeminiSchemaProjector\:\:project\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/Gemini/GeminiSchemaProjector.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\Gemini\\GeminiSchemaProjector\:\:projectValue\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: ../../src/Infrastructure/Gemini/GeminiSchemaProjector.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\Gemini\\GeminiTimeoutTransportInterface\:\:generateWithTimeout\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/Gemini/GeminiTimeoutTransportInterface.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\Gemini\\GeminiTransport\:\:__construct\(\) has parameter \$clock with no signature specified for callable\.$#'
+			identifier: missingType.callable
+			count: 1
+			path: ../../src/Infrastructure/Gemini/GeminiTransport.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\Gemini\\GeminiTransport\:\:__construct\(\) has parameter \$sleeper with no signature specified for callable\.$#'
+			identifier: missingType.callable
+			count: 1
+			path: ../../src/Infrastructure/Gemini/GeminiTransport.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\Gemini\\GeminiTransport\:\:generate\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/Gemini/GeminiTransport.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\Gemini\\GeminiTransport\:\:generateWithTimeout\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/Gemini/GeminiTransport.php
+
+		-
+			message: '#^Property YassinStore\\AiAssistant\\Infrastructure\\Gemini\\GeminiTransport\:\:\$clock type has no signature specified for callable\.$#'
+			identifier: missingType.callable
+			count: 1
+			path: ../../src/Infrastructure/Gemini/GeminiTransport.php
+
+		-
+			message: '#^Property YassinStore\\AiAssistant\\Infrastructure\\Gemini\\GeminiTransport\:\:\$sleeper type has no signature specified for callable\.$#'
+			identifier: missingType.callable
+			count: 1
+			path: ../../src/Infrastructure/Gemini/GeminiTransport.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\Gemini\\GeminiTransportInterface\:\:generate\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/Gemini/GeminiTransportInterface.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\Runtime\\ImageRuntimeCapability\:\:__construct\(\) has parameter \$limitProvider with no signature specified for callable\.$#'
+			identifier: missingType.callable
+			count: 1
+			path: ../../src/Infrastructure/Runtime/ImageRuntimeCapability.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\Runtime\\ImageRuntimeCapability\:\:__construct\(\) has parameter \$usageProvider with no signature specified for callable\.$#'
+			identifier: missingType.callable
+			count: 1
+			path: ../../src/Infrastructure/Runtime/ImageRuntimeCapability.php
+
+		-
+			message: '#^Property YassinStore\\AiAssistant\\Infrastructure\\Runtime\\ImageRuntimeCapability\:\:\$limitProvider type has no signature specified for callable\.$#'
+			identifier: missingType.callable
+			count: 1
+			path: ../../src/Infrastructure/Runtime/ImageRuntimeCapability.php
+
+		-
+			message: '#^Property YassinStore\\AiAssistant\\Infrastructure\\Runtime\\ImageRuntimeCapability\:\:\$usageProvider type has no signature specified for callable\.$#'
+			identifier: missingType.callable
+			count: 1
+			path: ../../src/Infrastructure/Runtime/ImageRuntimeCapability.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\Security\\ConversationExportCursor\:\:__construct\(\) has parameter \$clock with no signature specified for callable\.$#'
+			identifier: missingType.callable
+			count: 1
+			path: ../../src/Infrastructure/Security/ConversationExportCursor.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\Security\\ConversationExportCursor\:\:assertState\(\) has parameter \$authority with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/Security/ConversationExportCursor.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\Security\\ConversationExportCursor\:\:open\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/Security/ConversationExportCursor.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\Security\\ConversationExportCursor\:\:seal\(\) has parameter \$authority with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/Security/ConversationExportCursor.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\Security\\ConversationExportCursor\:\:start\(\) has parameter \$highWater with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/Security/ConversationExportCursor.php
+
+		-
+			message: '#^Property YassinStore\\AiAssistant\\Infrastructure\\Security\\ConversationExportCursor\:\:\$clock type has no signature specified for callable\.$#'
+			identifier: missingType.callable
+			count: 1
+			path: ../../src/Infrastructure/Security/ConversationExportCursor.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\Security\\IngressRateLimiter\:\:__construct\(\) has parameter \$admitter with no signature specified for callable\.$#'
+			identifier: missingType.callable
+			count: 1
+			path: ../../src/Infrastructure/Security/IngressRateLimiter.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\Security\\IngressRateLimiter\:\:__construct\(\) has parameter \$clock with no signature specified for callable\.$#'
+			identifier: missingType.callable
+			count: 1
+			path: ../../src/Infrastructure/Security/IngressRateLimiter.php
+
+		-
+			message: '#^Property YassinStore\\AiAssistant\\Infrastructure\\Security\\IngressRateLimiter\:\:\$admitter type has no signature specified for callable\.$#'
+			identifier: missingType.callable
+			count: 1
+			path: ../../src/Infrastructure/Security/IngressRateLimiter.php
+
+		-
+			message: '#^Property YassinStore\\AiAssistant\\Infrastructure\\Security\\IngressRateLimiter\:\:\$clock type has no signature specified for callable\.$#'
+			identifier: missingType.callable
+			count: 1
+			path: ../../src/Infrastructure/Security/IngressRateLimiter.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\Cart\\CartDeltaVerifier\:\:same\(\) has parameter \$right with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/Cart/CartDeltaVerifier.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\Cart\\CartItemDataNormalizer\:\:normalize\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/Cart/CartItemDataNormalizer.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\Cart\\CartItemDataNormalizer\:\:value\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/Cart/CartItemDataNormalizer.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\Cart\\CartLineAuthorityPolicy\:\:stableIdentity\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/Cart/CartLineAuthorityPolicy.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\Cart\\CartProductPolicy\:\:normalizeVariation\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/Cart/CartProductPolicy.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\Cart\\CartProductPolicy\:\:sameVariation\(\) has parameter \$right with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/Cart/CartProductPolicy.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\Cart\\CartSemanticEffectBuilder\:\:effectForPhase\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/Cart/CartSemanticEffectBuilder.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\Cart\\CartSnapshotFactory\:\:displayAttributes\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/Cart/CartSnapshotFactory.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\Cart\\CartSnapshotFactory\:\:publicFacts\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/Cart/CartSnapshotFactory.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\Cart\\CartSnapshotFactory\:\:variation\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/Cart/CartSnapshotFactory.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\Cart\\CartStepVerifier\:\:same\(\) has parameter \$right with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/Cart/CartStepVerifier.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\Cart\\CartStepVerifier\:\:seal\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/Cart/CartStepVerifier.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\Cart\\SafeSerializedArrayDecoder\:\:validate\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/Cart/SafeSerializedArrayDecoder.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\Cart\\WooCartGateway\:\:add\(\) has parameter \$itemData with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/Cart/WooCartGateway.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\Cart\\WooCartGateway\:\:assertAddAllowed\(\) has parameter \$variation with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/Cart/WooCartGateway.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\Cart\\WooCartRequestFence\:\:beforeSessionHandler\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/Cart/WooCartRequestFence.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\Cart\\WooSessionCartEnvelope\:\:__construct\(\) has parameter \$storedEntries with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/Cart/WooSessionCartEnvelope.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\Cart\\WooSessionCartEnvelope\:\:authorityHash\(\) has parameter \$coupons with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/Cart/WooSessionCartEnvelope.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\Cart\\WooSessionCartEnvelope\:\:fromRaw\(\) has parameter \$marker with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/Cart/WooSessionCartEnvelope.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\Cart\\WooSessionCartEnvelope\:\:fromRaw\(\) has parameter \$storedEntries with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/Cart/WooSessionCartEnvelope.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\Cart\\WooSessionCartStore\:\:clearMarker\(\) has parameter \$afterClear with no signature specified for callable\.$#'
+			identifier: missingType.callable
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/Cart/WooSessionCartStore.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\Cart\\WooSessionCartStore\:\:decodeEntry\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/Cart/WooSessionCartStore.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\Cart\\WooSessionCartStore\:\:persistAndReadBack\(\) has parameter \$expectedEffect with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/Cart/WooSessionCartStore.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\Cart\\WooStorageTopologyPolicy\:\:groupedIndexes\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/Cart/WooStorageTopologyPolicy.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\Cart\\WooStorageTopologyPolicy\:\:hasExactUniqueIndex\(\) has parameter \$columns with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/Cart/WooStorageTopologyPolicy.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\Discovery\\CatalogAlternativeRanker\:\:attributeValues\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/Discovery/CatalogAlternativeRanker.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\Discovery\\CatalogAlternativeRanker\:\:sourceContext\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/Discovery/CatalogAlternativeRanker.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\Discovery\\CatalogCandidateMerger\:\:merge\(\) has parameter \$buckets with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/Discovery/CatalogCandidateMerger.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\Discovery\\CatalogCandidateMerger\:\:merge\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/Discovery/CatalogCandidateMerger.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\Discovery\\CatalogCategoryEligibility\:\:allows\(\) has parameter \$requiredSlugs with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/Discovery/CatalogCategoryEligibility.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\Discovery\\CatalogCategoryEligibility\:\:matched\(\) has parameter \$slugs with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/Discovery/CatalogCategoryEligibility.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\Discovery\\CatalogCategoryEligibility\:\:matched\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/Discovery/CatalogCategoryEligibility.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\Discovery\\CatalogPricePolicy\:\:filterStatus\(\) has parameter \$args with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/Discovery/CatalogPricePolicy.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\Discovery\\CatalogPricePolicy\:\:filterStatus\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/Discovery/CatalogPricePolicy.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\Discovery\\CatalogPricePolicy\:\:range\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/Discovery/CatalogPricePolicy.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\Discovery\\CatalogQueryFilter\:\:apply\(\) has parameter \$args with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/Discovery/CatalogQueryFilter.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\Discovery\\CatalogQueryFilter\:\:categorySlugs\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/Discovery/CatalogQueryFilter.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\Internals\\WooCartHookTopology\:\:cartForPersistentSession\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/Internals/WooCartHookTopology.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\Internals\\WooCartHookTopology\:\:cartSessionWriter\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/Internals/WooCartHookTopology.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\Internals\\WooCartHookTopology\:\:hookPriority\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/Internals/WooCartHookTopology.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\Internals\\WooCartHookTopology\:\:hookPriority\(\) has parameter \$callback with no signature specified for callable\.$#'
+			identifier: missingType.callable
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/Internals/WooCartHookTopology.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\Internals\\WooCartHookTopology\:\:suppressAutomaticSave\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/Internals/WooCartHookTopology.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\Internals\\WooCartHookTopology\:\:suppressAutomaticSave\(\) has parameter \$cart with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/Internals/WooCartHookTopology.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\Internals\\WooCoreStructureProbe\:\:cartSessionWriter\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/Internals/WooCoreStructureProbe.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\Internals\\WooCoreStructureProbe\:\:readSessionEntries\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/Internals/WooCoreStructureProbe.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\Internals\\WooCoreStructureProbe\:\:replaceSessionEntries\(\) has parameter \$entries with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/Internals/WooCoreStructureProbe.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\Internals\\WooPersistentCartInternals\:\:persistentCartProjection\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/Internals/WooPersistentCartInternals.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\Internals\\WooSessionStorageInternals\:\:durableSession\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/Internals/WooSessionStorageInternals.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\Internals\\WooSessionStorageInternals\:\:replaceWorkingSessionEntries\(\) has parameter \$entries with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/Internals/WooSessionStorageInternals.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\Internals\\WooSessionStorageInternals\:\:workingSessionEntries\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/Internals/WooSessionStorageInternals.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\PlainMoneyFormatter\:\:range\(\) has parameter \$maximum with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/PlainMoneyFormatter.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\ProductCapabilityPolicy\:\:cartSupported\(\) has parameter \$product with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/ProductCapabilityPolicy.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\ProductCapabilityPolicy\:\:concreteVariation\(\) has parameter \$variation with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/ProductCapabilityPolicy.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\ProductCapabilityPolicy\:\:reason\(\) has parameter \$product with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/ProductCapabilityPolicy.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\ProductCatalog\:\:alternatives\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/ProductCatalog.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\ProductCatalog\:\:categories\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/ProductCatalog.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\ProductCatalog\:\:discover\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/ProductCatalog.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\ProductCatalog\:\:queryByOrder\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/ProductCatalog.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\ProductCatalog\:\:snapshots\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/ProductCatalog.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\Projection\\CatalogVisibilityPolicy\:\:productIsVisible\(\) has parameter \$product with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/Projection/CatalogVisibilityPolicy.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\Projection\\CatalogVisibilityPolicy\:\:variationIsVisible\(\) has parameter \$parent with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/Projection/CatalogVisibilityPolicy.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\Projection\\CatalogVisibilityPolicy\:\:variationIsVisible\(\) has parameter \$variation with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/Projection/CatalogVisibilityPolicy.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\VariableProductCatalogPolicy\:\:reason\(\) has parameter \$product with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/VariableProductCatalogPolicy.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\WooSession\:\:getValue\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/WooSession.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\WooSession\:\:runtimeComponent\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/WooSession.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\WooSessionInternalsAdapter\:\:cartSessionWriter\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/WooSessionInternalsAdapter.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\WooSessionInternalsAdapter\:\:durableSession\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/WooSessionInternalsAdapter.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\WooSessionInternalsAdapter\:\:persistentCartProjection\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/WooSessionInternalsAdapter.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\WooSessionInternalsAdapter\:\:replaceWorkingSessionEntries\(\) has parameter \$entries with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/WooSessionInternalsAdapter.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\WooSessionInternalsAdapter\:\:suppressAutomaticSave\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/WooSessionInternalsAdapter.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\WooSessionInternalsAdapter\:\:suppressAutomaticSave\(\) has parameter \$cart with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/WooSessionInternalsAdapter.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WooCommerce\\WooSessionInternalsAdapter\:\:workingSessionEntries\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/WooCommerce/WooSessionInternalsAdapter.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WordPress\\LogContextSanitizer\:\:sanitize\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Infrastructure/WordPress/LogContextSanitizer.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WordPress\\LogContextSanitizer\:\:value\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: ../../src/Infrastructure/WordPress/LogContextSanitizer.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WordPress\\PublicContentVisibilityPolicy\:\:allows\(\) has parameter \$post with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: ../../src/Infrastructure/WordPress/PublicContentVisibilityPolicy.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Infrastructure\\WordPress\\Settings\:\:get\(\) has parameter \$default with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: ../../src/Infrastructure/WordPress/Settings.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Plugin\:\:actionLinks\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Plugin.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Presentation\\Admin\\AdminPages\:\:retentionChanged\(\) has parameter \$newValue with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: ../../src/Presentation/Admin/AdminPages.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Presentation\\Rest\\RequestDecoder\:\:assertOnlyFields\(\) has parameter \$allowed with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../../src/Presentation/Rest/RequestDecoder.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Presentation\\Rest\\RestApi\:\:adminPermission\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: ../../src/Presentation/Rest/RestApi.php
+
+		-
+			message: '#^Method YassinStore\\AiAssistant\\Presentation\\Rest\\RestApi\:\:publicPermission\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: ../../src/Presentation/Rest/RestApi.php

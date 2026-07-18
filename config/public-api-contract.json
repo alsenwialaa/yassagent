@@ -1,0 +1,2762 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://yassin-store.example/contracts/public-api-v3.schema.json",
+  "title": "Yassin AI Assistant Public API Contract v3",
+  "description": "Closed request and response contract for every public and administrative REST route exposed by the unpublished plugin.",
+  "x-contract-version": 3,
+  "x-namespace": "yassin-ai/v1",
+  "x-runtime": {
+    "max_body_bytes": 2097152,
+    "transcript_max_rows": 24,
+    "message_optional_failure_fields": [
+      "failure_code",
+      "state_uncertain"
+    ],
+    "image_policy": {
+      "min_decoded_bytes": 16,
+      "max_decoded_bytes": 524288,
+      "max_encoded_bytes": 699052,
+      "max_total_decoded_bytes": 1048576,
+      "max_total_encoded_bytes": 1398104,
+      "max_width": 4096,
+      "max_height": 4096,
+      "max_pixels": 12000000
+    },
+    "endpoint_schemas": {
+      "boot_request": "#/$defs/boot_request",
+      "chat_request": "#/$defs/chat_request",
+      "boot_response": "#/$defs/boot_response",
+      "turn_response": "#/$defs/turn_response",
+      "health_response": "#/$defs/health_response",
+      "conversation_export_response": "#/$defs/conversation_export_response",
+      "conversation_delete_response": "#/$defs/conversation_delete_response",
+      "admin_test_response": "#/$defs/admin_test_response",
+      "error_response": "#/$defs/error_response"
+    }
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/boot_request"
+    },
+    {
+      "$ref": "#/$defs/chat_request"
+    },
+    {
+      "$ref": "#/$defs/boot_response"
+    },
+    {
+      "$ref": "#/$defs/turn_response"
+    },
+    {
+      "$ref": "#/$defs/health_response"
+    },
+    {
+      "$ref": "#/$defs/conversation_export_response"
+    },
+    {
+      "$ref": "#/$defs/conversation_delete_response"
+    },
+    {
+      "$ref": "#/$defs/admin_test_response"
+    },
+    {
+      "$ref": "#/$defs/error_response"
+    }
+  ],
+  "$defs": {
+    "uuid_v4": {
+      "type": "string",
+      "maxLength": 36,
+      "minLength": 36,
+      "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$"
+    },
+    "code": {
+      "type": "string",
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^[a-z0-9_]{1,64}$"
+    },
+    "conversation_token": {
+      "type": "string",
+      "maxLength": 180,
+      "minLength": 24,
+      "pattern": "^[A-Za-z0-9_-]{24,180}$"
+    },
+    "attachment": {
+      "type": "object",
+      "properties": {
+        "mime_type": {
+          "type": "string",
+          "maxLength": 32,
+          "minLength": 1,
+          "enum": [
+            "image/jpeg",
+            "image/png",
+            "image/webp"
+          ]
+        },
+        "data": {
+          "type": "string",
+          "maxLength": 699052,
+          "minLength": 24,
+          "pattern": "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$"
+        }
+      },
+      "required": [
+        "mime_type",
+        "data"
+      ],
+      "additionalProperties": false
+    },
+    "reply_context": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "text": {
+              "type": "string",
+              "maxLength": 280,
+              "minLength": 1
+            }
+          },
+          "required": [
+            "text"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "text": {
+              "type": "string",
+              "maxLength": 280,
+              "minLength": 1
+            },
+            "message_id": {
+              "$ref": "#/$defs/uuid_v4"
+            },
+            "product_index": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 7
+            }
+          },
+          "required": [
+            "text",
+            "message_id",
+            "product_index"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "boot_request": {
+      "type": "object",
+      "properties": {
+        "client_instance_id": {
+          "$ref": "#/$defs/uuid_v4"
+        },
+        "browser_continuity_secret": {
+          "type": "string",
+          "maxLength": 43,
+          "minLength": 43,
+          "pattern": "^[A-Za-z0-9_-]{43}$"
+        },
+        "previous_browser_continuity_secret": {
+          "type": "string",
+          "maxLength": 43,
+          "minLength": 0,
+          "pattern": "^(?:|[A-Za-z0-9_-]{43})$"
+        },
+        "conversation_id": {
+          "oneOf": [
+            {
+              "type": "string",
+              "maxLength": 0,
+              "minLength": 0,
+              "const": ""
+            },
+            {
+              "$ref": "#/$defs/uuid_v4"
+            }
+          ]
+        },
+        "conversation_token": {
+          "type": "string",
+          "maxLength": 180,
+          "minLength": 0,
+          "pattern": "^(?:|[A-Za-z0-9_-]{24,180})$"
+        },
+        "pending_turn_id": {
+          "oneOf": [
+            {
+              "type": "string",
+              "maxLength": 0,
+              "minLength": 0,
+              "const": ""
+            },
+            {
+              "$ref": "#/$defs/uuid_v4"
+            }
+          ]
+        }
+      },
+      "required": [
+        "client_instance_id",
+        "browser_continuity_secret"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "conversation_id"
+            ],
+            "properties": {
+              "conversation_id": {
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "then": {
+            "required": [
+              "conversation_token"
+            ],
+            "properties": {
+              "conversation_token": {
+                "minLength": 24,
+                "type": "string"
+              }
+            },
+            "type": "object"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "conversation_token"
+            ],
+            "properties": {
+              "conversation_token": {
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "then": {
+            "required": [
+              "conversation_id"
+            ],
+            "properties": {
+              "conversation_id": {
+                "minLength": 36,
+                "type": "string"
+              }
+            },
+            "type": "object"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "pending_turn_id"
+            ],
+            "properties": {
+              "pending_turn_id": {
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "then": {
+            "required": [
+              "conversation_id",
+              "conversation_token"
+            ]
+          }
+        }
+      ]
+    },
+    "chat_request": {
+      "type": "object",
+      "properties": {
+        "conversation_id": {
+          "$ref": "#/$defs/uuid_v4"
+        },
+        "conversation_token": {
+          "$ref": "#/$defs/conversation_token"
+        },
+        "client_turn_id": {
+          "$ref": "#/$defs/uuid_v4"
+        },
+        "message": {
+          "type": "string",
+          "maxLength": 1200,
+          "minLength": 0
+        },
+        "reply_context": {
+          "$ref": "#/$defs/reply_context"
+        },
+        "attachments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/attachment"
+          },
+          "maxItems": 2
+        }
+      },
+      "required": [
+        "conversation_id",
+        "conversation_token",
+        "client_turn_id"
+      ],
+      "additionalProperties": false,
+      "anyOf": [
+        {
+          "required": [
+            "message"
+          ],
+          "properties": {
+            "message": {
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        {
+          "required": [
+            "attachments"
+          ],
+          "properties": {
+            "attachments": {
+              "minItems": 1,
+              "type": "array"
+            }
+          },
+          "type": "object"
+        }
+      ]
+    },
+    "image_metadata": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "maxLength": 16,
+          "minLength": 1,
+          "const": "image"
+        },
+        "mime_type": {
+          "type": "string",
+          "maxLength": 32,
+          "minLength": 1,
+          "enum": [
+            "image/jpeg",
+            "image/png",
+            "image/webp"
+          ]
+        },
+        "byte_length": {
+          "type": "integer",
+          "minimum": 16,
+          "maximum": 524288
+        }
+      },
+      "required": [
+        "kind",
+        "mime_type",
+        "byte_length"
+      ],
+      "additionalProperties": false
+    },
+    "presentation": {
+      "type": "object",
+      "properties": {
+        "image_scope": {
+          "type": "string",
+          "maxLength": 16,
+          "minLength": 1,
+          "enum": [
+            "none",
+            "turn_only"
+          ]
+        },
+        "images": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/image_metadata"
+          },
+          "maxItems": 2
+        },
+        "reply_quote": {
+          "type": "string",
+          "maxLength": 280,
+          "minLength": 0
+        }
+      },
+      "required": [
+        "image_scope",
+        "images",
+        "reply_quote"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "images": {
+                "maxItems": 0,
+                "type": "array"
+              }
+            },
+            "required": [
+              "images"
+            ],
+            "type": "object"
+          },
+          "then": {
+            "properties": {
+              "image_scope": {
+                "const": "none"
+              }
+            },
+            "type": "object"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "images": {
+                "minItems": 1,
+                "type": "array"
+              }
+            },
+            "required": [
+              "images"
+            ],
+            "type": "object"
+          },
+          "then": {
+            "properties": {
+              "image_scope": {
+                "const": "turn_only"
+              }
+            },
+            "type": "object"
+          }
+        }
+      ]
+    },
+    "product": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "name": {
+          "type": "string",
+          "maxLength": 500,
+          "minLength": 1
+        },
+        "formatted_price": {
+          "type": "string",
+          "maxLength": 1000,
+          "minLength": 0
+        },
+        "short_description": {
+          "type": "string",
+          "maxLength": 4000,
+          "minLength": 0
+        },
+        "in_stock": {
+          "type": "boolean"
+        },
+        "requires_variation": {
+          "type": "boolean"
+        },
+        "image": {
+          "type": "string",
+          "maxLength": 4096,
+          "minLength": 0,
+          "pattern": "^(?:|https?://[^\\s]+)$"
+        },
+        "permalink": {
+          "type": "string",
+          "maxLength": 4096,
+          "minLength": 1,
+          "pattern": "^https?://[^\\s]+$"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "formatted_price",
+        "short_description",
+        "in_stock",
+        "requires_variation",
+        "image",
+        "permalink"
+      ],
+      "additionalProperties": false
+    },
+    "cart_command": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "maxLength": 64,
+              "minLength": 1,
+              "const": "add"
+            },
+            "item": {
+              "type": "string",
+              "maxLength": 500,
+              "minLength": 1
+            },
+            "quantity": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 999
+            }
+          },
+          "required": [
+            "type",
+            "item",
+            "quantity"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "maxLength": 64,
+              "minLength": 1,
+              "const": "update"
+            },
+            "item": {
+              "type": "string",
+              "maxLength": 500,
+              "minLength": 1
+            },
+            "quantity": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 999
+            }
+          },
+          "required": [
+            "type",
+            "item",
+            "quantity"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "maxLength": 64,
+              "minLength": 1,
+              "const": "remove"
+            },
+            "item": {
+              "type": "string",
+              "maxLength": 500,
+              "minLength": 1
+            }
+          },
+          "required": [
+            "type",
+            "item"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "maxLength": 64,
+              "minLength": 1,
+              "const": "replace"
+            },
+            "item": {
+              "type": "string",
+              "maxLength": 500,
+              "minLength": 1
+            },
+            "quantity": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 999
+            }
+          },
+          "required": [
+            "type",
+            "item",
+            "quantity"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "maxLength": 64,
+              "minLength": 1,
+              "const": "clear"
+            }
+          },
+          "required": [
+            "type"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "receipt_proof": {
+      "type": "object",
+      "properties": {
+        "commands": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/cart_command"
+          },
+          "minItems": 1,
+          "maxItems": 1
+        },
+        "cart_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        },
+        "cart_total": {
+          "type": "string",
+          "maxLength": 2048,
+          "minLength": 0
+        },
+        "changed_line_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        },
+        "currency": {
+          "type": "string",
+          "maxLength": 3,
+          "minLength": 3,
+          "pattern": "^[A-Z]{3}$"
+        }
+      },
+      "required": [
+        "commands",
+        "cart_count",
+        "cart_total",
+        "changed_line_count",
+        "currency"
+      ],
+      "additionalProperties": false
+    },
+    "receipt": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/uuid_v4"
+        },
+        "action": {
+          "type": "string",
+          "maxLength": 64,
+          "minLength": 1,
+          "const": "cart_apply"
+        },
+        "changed": {
+          "type": "boolean"
+        },
+        "message": {
+          "type": "string",
+          "maxLength": 4096,
+          "minLength": 1
+        },
+        "proof": {
+          "$ref": "#/$defs/receipt_proof"
+        },
+        "created_at": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4294967295
+        }
+      },
+      "required": [
+        "id",
+        "action",
+        "changed",
+        "message",
+        "proof",
+        "created_at"
+      ],
+      "additionalProperties": false
+    },
+    "message": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/uuid_v4"
+        },
+        "turn_id": {
+          "$ref": "#/$defs/uuid_v4"
+        },
+        "role": {
+          "type": "string",
+          "maxLength": 16,
+          "minLength": 1,
+          "enum": [
+            "user",
+            "assistant"
+          ]
+        },
+        "outcome": {
+          "type": "string",
+          "maxLength": 64,
+          "minLength": 0,
+          "enum": [
+            "",
+            "answer",
+            "follow_up",
+            "action_verified",
+            "safe_failure"
+          ]
+        },
+        "text": {
+          "type": "string",
+          "maxLength": 16384,
+          "minLength": 1
+        },
+        "products": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/product"
+          },
+          "maxItems": 8
+        },
+        "receipts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/receipt"
+          },
+          "maxItems": 1
+        },
+        "presentation": {
+          "$ref": "#/$defs/presentation"
+        },
+        "created_at": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4294967295
+        },
+        "failure_code": {
+          "$ref": "#/$defs/code"
+        },
+        "state_uncertain": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "id",
+        "turn_id",
+        "role",
+        "outcome",
+        "text",
+        "products",
+        "receipts",
+        "presentation",
+        "created_at"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "role": {
+                "const": "user"
+              }
+            },
+            "required": [
+              "role"
+            ],
+            "type": "object"
+          },
+          "then": {
+            "properties": {
+              "outcome": {
+                "const": ""
+              },
+              "products": {
+                "maxItems": 0,
+                "type": "array"
+              },
+              "receipts": {
+                "maxItems": 0,
+                "type": "array"
+              }
+            },
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "failure_code"
+                  ]
+                },
+                {
+                  "required": [
+                    "state_uncertain"
+                  ]
+                }
+              ]
+            },
+            "type": "object"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "role": {
+                "const": "assistant"
+              }
+            },
+            "required": [
+              "role"
+            ],
+            "type": "object"
+          },
+          "then": {
+            "properties": {
+              "outcome": {
+                "enum": [
+                  "answer",
+                  "follow_up",
+                  "action_verified",
+                  "safe_failure"
+                ]
+              },
+              "presentation": {
+                "properties": {
+                  "images": {
+                    "maxItems": 0,
+                    "type": "array"
+                  },
+                  "reply_quote": {
+                    "maxLength": 0,
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "action_verified"
+              }
+            },
+            "required": [
+              "outcome"
+            ],
+            "type": "object"
+          },
+          "then": {
+            "properties": {
+              "receipts": {
+                "minItems": 1,
+                "maxItems": 1,
+                "type": "array"
+              },
+              "products": {
+                "maxItems": 0,
+                "type": "array"
+              }
+            },
+            "type": "object"
+          },
+          "else": {
+            "properties": {
+              "receipts": {
+                "maxItems": 0,
+                "type": "array"
+              }
+            },
+            "type": "object"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "safe_failure"
+              }
+            },
+            "required": [
+              "outcome"
+            ],
+            "type": "object"
+          },
+          "then": {
+            "required": [
+              "failure_code",
+              "state_uncertain"
+            ],
+            "properties": {
+              "products": {
+                "maxItems": 0,
+                "type": "array"
+              },
+              "receipts": {
+                "maxItems": 0,
+                "type": "array"
+              }
+            },
+            "type": "object"
+          },
+          "else": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "failure_code"
+                  ]
+                },
+                {
+                  "required": [
+                    "state_uncertain"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "conversation": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/uuid_v4"
+        },
+        "token": {
+          "$ref": "#/$defs/conversation_token"
+        },
+        "messages": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/message"
+          },
+          "maxItems": 24
+        }
+      },
+      "required": [
+        "id",
+        "token",
+        "messages"
+      ],
+      "additionalProperties": false
+    },
+    "widget": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "maxLength": 300,
+          "minLength": 0
+        },
+        "subtitle": {
+          "type": "string",
+          "maxLength": 500,
+          "minLength": 0
+        },
+        "button_text": {
+          "type": "string",
+          "maxLength": 300,
+          "minLength": 0
+        },
+        "empty_state_hint": {
+          "type": "string",
+          "maxLength": 500,
+          "minLength": 0
+        }
+      },
+      "required": [
+        "title",
+        "subtitle",
+        "button_text",
+        "empty_state_hint"
+      ],
+      "additionalProperties": false
+    },
+    "cart": {
+      "type": "object",
+      "properties": {
+        "item_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        },
+        "formatted_total": {
+          "type": "string",
+          "maxLength": 2048,
+          "minLength": 0
+        },
+        "cart_url": {
+          "type": "string",
+          "maxLength": 4096,
+          "minLength": 1,
+          "pattern": "^https?://[^\\s]+$"
+        },
+        "checkout_url": {
+          "type": "string",
+          "maxLength": 4096,
+          "minLength": 1,
+          "pattern": "^https?://[^\\s]+$"
+        }
+      },
+      "required": [
+        "item_count",
+        "formatted_total",
+        "cart_url",
+        "checkout_url"
+      ],
+      "additionalProperties": false
+    },
+    "cart_mutation_capability": {
+      "type": "object",
+      "properties": {
+        "available": {
+          "type": "boolean"
+        },
+        "code": {
+          "type": "string",
+          "maxLength": 64,
+          "minLength": 1,
+          "enum": [
+            "available",
+            "version_not_promotion_tested",
+            "session_handler_unsupported",
+            "request_fence_unavailable",
+            "storage_topology_unsupported",
+            "session_runtime_unsupported",
+            "session_authority_unavailable",
+            "runtime_unavailable"
+          ]
+        },
+        "notice": {
+          "type": "string",
+          "maxLength": 4000,
+          "minLength": 0
+        }
+      },
+      "required": [
+        "available",
+        "code",
+        "notice"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "available": {
+                "const": true
+              }
+            },
+            "required": [
+              "available"
+            ],
+            "type": "object"
+          },
+          "then": {
+            "properties": {
+              "code": {
+                "const": "available"
+              },
+              "notice": {
+                "maxLength": 0,
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "else": {
+            "properties": {
+              "code": {
+                "not": {
+                  "const": "available"
+                }
+              },
+              "notice": {
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "type": "object"
+          }
+        }
+      ]
+    },
+    "capabilities": {
+      "type": "object",
+      "properties": {
+        "chat_ready": {
+          "type": "boolean"
+        },
+        "images": {
+          "type": "boolean"
+        },
+        "max_images": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2
+        },
+        "max_image_bytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 524288
+        },
+        "cart_mutations": {
+          "$ref": "#/$defs/cart_mutation_capability"
+        }
+      },
+      "required": [
+        "chat_ready",
+        "images",
+        "max_images",
+        "max_image_bytes",
+        "cart_mutations"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "images": {
+                "const": true
+              }
+            },
+            "required": [
+              "images"
+            ],
+            "type": "object"
+          },
+          "then": {
+            "properties": {
+              "max_images": {
+                "const": 2
+              },
+              "max_image_bytes": {
+                "const": 524288
+              }
+            },
+            "type": "object"
+          },
+          "else": {
+            "properties": {
+              "max_images": {
+                "const": 0
+              },
+              "max_image_bytes": {
+                "const": 0
+              }
+            },
+            "type": "object"
+          }
+        }
+      ]
+    },
+    "pending_turn": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/uuid_v4"
+        },
+        "status": {
+          "type": "string",
+          "maxLength": 16,
+          "minLength": 1,
+          "enum": [
+            "absent",
+            "pending",
+            "terminal"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "status"
+      ],
+      "additionalProperties": false
+    },
+    "session": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string",
+          "maxLength": 2048,
+          "minLength": 66,
+          "pattern": "^[A-Za-z0-9_-]+\\.[a-f0-9]{64}$"
+        }
+      },
+      "required": [
+        "token"
+      ],
+      "additionalProperties": false
+    },
+    "boot_response": {
+      "type": "object",
+      "properties": {
+        "ok": {
+          "const": true
+        },
+        "session": {
+          "$ref": "#/$defs/session"
+        },
+        "conversation": {
+          "$ref": "#/$defs/conversation"
+        },
+        "widget": {
+          "$ref": "#/$defs/widget"
+        },
+        "cart": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/cart"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "cart_available": {
+          "type": "boolean"
+        },
+        "cart_notice": {
+          "type": "string",
+          "maxLength": 4000,
+          "minLength": 0
+        },
+        "capabilities": {
+          "$ref": "#/$defs/capabilities"
+        },
+        "pending_turn": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/pending_turn"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "server_time": {
+          "type": "integer",
+          "minimum": 1577836800,
+          "maximum": 4102444800
+        }
+      },
+      "required": [
+        "ok",
+        "session",
+        "conversation",
+        "widget",
+        "cart",
+        "cart_available",
+        "cart_notice",
+        "capabilities",
+        "pending_turn",
+        "server_time"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "cart_available": {
+                "const": true
+              }
+            },
+            "required": [
+              "cart_available"
+            ],
+            "type": "object"
+          },
+          "then": {
+            "properties": {
+              "cart": {
+                "$ref": "#/$defs/cart"
+              },
+              "cart_notice": {
+                "maxLength": 0,
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "else": {
+            "properties": {
+              "cart": {
+                "type": "null"
+              },
+              "cart_notice": {
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "type": "object"
+          }
+        }
+      ]
+    },
+    "turn_response": {
+      "type": "object",
+      "properties": {
+        "ok": {
+          "const": true
+        },
+        "message": {
+          "$ref": "#/$defs/message"
+        },
+        "turn_committed": {
+          "type": "boolean"
+        },
+        "conversation": {
+          "$ref": "#/$defs/conversation"
+        },
+        "messages_available": {
+          "type": "boolean"
+        },
+        "messages_notice": {
+          "type": "string",
+          "maxLength": 4000,
+          "minLength": 0
+        },
+        "cart": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/cart"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "cart_available": {
+          "type": "boolean"
+        },
+        "cart_notice": {
+          "type": "string",
+          "maxLength": 4000,
+          "minLength": 0
+        },
+        "cart_mutations": {
+          "$ref": "#/$defs/cart_mutation_capability"
+        }
+      },
+      "required": [
+        "ok",
+        "message",
+        "turn_committed",
+        "conversation",
+        "messages_available",
+        "messages_notice",
+        "cart",
+        "cart_available",
+        "cart_notice",
+        "cart_mutations"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "cart_available": {
+                "const": true
+              }
+            },
+            "required": [
+              "cart_available"
+            ],
+            "type": "object"
+          },
+          "then": {
+            "properties": {
+              "cart": {
+                "$ref": "#/$defs/cart"
+              },
+              "cart_notice": {
+                "maxLength": 0,
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "else": {
+            "properties": {
+              "cart": {
+                "type": "null"
+              },
+              "cart_notice": {
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "type": "object"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "messages_available": {
+                "const": true
+              }
+            },
+            "required": [
+              "messages_available"
+            ],
+            "type": "object"
+          },
+          "then": {
+            "properties": {
+              "messages_notice": {
+                "maxLength": 0,
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "else": {
+            "properties": {
+              "messages_notice": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "conversation": {
+                "properties": {
+                  "messages": {
+                    "maxItems": 0,
+                    "type": "array"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        }
+      ]
+    },
+    "timestamp": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 4294967295
+    },
+    "optional_code": {
+      "type": "string",
+      "maxLength": 64,
+      "minLength": 0,
+      "pattern": "^(?:|[a-z0-9_]{1,64})$"
+    },
+    "privacy_product_reference": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "name": {
+          "type": "string",
+          "maxLength": 500,
+          "minLength": 1
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ],
+      "additionalProperties": false
+    },
+    "privacy_constraint": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string",
+          "maxLength": 48,
+          "minLength": 1,
+          "pattern": "^[a-z][a-z0-9_]{0,47}$"
+        },
+        "value": {
+          "type": "string",
+          "maxLength": 160,
+          "minLength": 1
+        },
+        "priority": {
+          "type": "string",
+          "maxLength": 16,
+          "minLength": 1,
+          "enum": [
+            "required",
+            "preferred"
+          ]
+        },
+        "polarity": {
+          "type": "string",
+          "maxLength": 16,
+          "minLength": 1,
+          "enum": [
+            "include",
+            "exclude"
+          ]
+        }
+      },
+      "required": [
+        "key",
+        "value",
+        "priority",
+        "polarity"
+      ],
+      "additionalProperties": false
+    },
+    "privacy_shopping_memory": {
+      "type": "object",
+      "properties": {
+        "revision": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        },
+        "goal": {
+          "type": "string",
+          "maxLength": 320,
+          "minLength": 0
+        },
+        "stage": {
+          "type": "string",
+          "maxLength": 16,
+          "minLength": 0,
+          "enum": [
+            "",
+            "discovering",
+            "comparing",
+            "configuring",
+            "deciding",
+            "cart"
+          ]
+        },
+        "constraints": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/privacy_constraint"
+          },
+          "maxItems": 16
+        },
+        "compared_products": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/privacy_product_reference"
+          },
+          "maxItems": 8
+        },
+        "unresolved_question": {
+          "type": "string",
+          "maxLength": 320,
+          "minLength": 0
+        },
+        "updated_at": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4294967295
+        }
+      },
+      "required": [
+        "revision",
+        "goal",
+        "stage",
+        "constraints",
+        "compared_products",
+        "unresolved_question",
+        "updated_at"
+      ],
+      "additionalProperties": false
+    },
+    "privacy_continuity": {
+      "type": "object",
+      "properties": {
+        "products": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/privacy_product_reference"
+          },
+          "maxItems": 8
+        },
+        "updated_at": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4294967295
+        }
+      },
+      "required": [
+        "products",
+        "updated_at"
+      ],
+      "additionalProperties": false
+    },
+    "privacy_conversation_state": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "integer",
+          "const": 1
+        },
+        "continuity": {
+          "$ref": "#/$defs/privacy_continuity"
+        },
+        "shopping": {
+          "$ref": "#/$defs/privacy_shopping_memory"
+        },
+        "last_outcome": {
+          "type": "string",
+          "maxLength": 64,
+          "minLength": 0,
+          "enum": [
+            "",
+            "answer",
+            "follow_up",
+            "action_verified",
+            "safe_failure"
+          ]
+        },
+        "has_pending_cart_intent": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "schema",
+        "continuity",
+        "shopping",
+        "last_outcome",
+        "has_pending_cart_intent"
+      ],
+      "additionalProperties": false
+    },
+    "privacy_user_message_payload": {
+      "type": "object",
+      "properties": {
+        "presentation": {
+          "$ref": "#/$defs/presentation"
+        }
+      },
+      "required": [
+        "presentation"
+      ],
+      "additionalProperties": false
+    },
+    "privacy_assistant_message_payload": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "$ref": "#/$defs/message"
+        }
+      },
+      "required": [
+        "message"
+      ],
+      "additionalProperties": false
+    },
+    "privacy_message_payload": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/privacy_user_message_payload"
+        },
+        {
+          "$ref": "#/$defs/privacy_assistant_message_payload"
+        }
+      ]
+    },
+    "privacy_message": {
+      "type": "object",
+      "properties": {
+        "role": {
+          "type": "string",
+          "maxLength": 16,
+          "minLength": 1,
+          "enum": [
+            "user",
+            "assistant"
+          ]
+        },
+        "outcome": {
+          "type": "string",
+          "maxLength": 64,
+          "minLength": 0,
+          "enum": [
+            "",
+            "answer",
+            "follow_up",
+            "action_verified",
+            "safe_failure"
+          ]
+        },
+        "text": {
+          "type": "string",
+          "maxLength": 16384,
+          "minLength": 1
+        },
+        "payload": {
+          "$ref": "#/$defs/privacy_message_payload"
+        },
+        "created_at": {
+          "$ref": "#/$defs/timestamp"
+        }
+      },
+      "required": [
+        "role",
+        "outcome",
+        "text",
+        "payload",
+        "created_at"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "role": {
+                "const": "user"
+              }
+            },
+            "required": [
+              "role"
+            ],
+            "type": "object"
+          },
+          "then": {
+            "type": "object",
+            "properties": {
+              "outcome": {
+                "const": ""
+              },
+              "payload": {
+                "$ref": "#/$defs/privacy_user_message_payload"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "role": {
+                "const": "assistant"
+              }
+            },
+            "required": [
+              "role"
+            ],
+            "type": "object"
+          },
+          "then": {
+            "type": "object",
+            "properties": {
+              "outcome": {
+                "type": "string",
+                "maxLength": 64,
+                "minLength": 1,
+                "enum": [
+                  "answer",
+                  "follow_up",
+                  "action_verified",
+                  "safe_failure"
+                ]
+              },
+              "payload": {
+                "$ref": "#/$defs/privacy_assistant_message_payload"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "privacy_attachment": {
+      "type": "object",
+      "properties": {
+        "mime_type": {
+          "type": "string",
+          "maxLength": 32,
+          "minLength": 1,
+          "enum": [
+            "image/jpeg",
+            "image/png",
+            "image/webp"
+          ]
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 8388608
+        }
+      },
+      "required": [
+        "mime_type",
+        "bytes"
+      ],
+      "additionalProperties": false
+    },
+    "privacy_turn_input": {
+      "type": "object",
+      "properties": {
+        "message_present": {
+          "type": "boolean"
+        },
+        "message_length": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 6000
+        },
+        "reply_context_present": {
+          "type": "boolean"
+        },
+        "reply_context_length": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 280
+        },
+        "attachments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/privacy_attachment"
+          },
+          "maxItems": 2
+        }
+      },
+      "required": [
+        "message_present",
+        "message_length",
+        "reply_context_present",
+        "reply_context_length",
+        "attachments"
+      ],
+      "additionalProperties": false
+    },
+    "privacy_turn_response": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "message": {
+              "$ref": "#/$defs/message"
+            }
+          },
+          "required": [
+            "message"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "privacy_turn": {
+      "type": "object",
+      "properties": {
+        "turn_id": {
+          "$ref": "#/$defs/uuid_v4"
+        },
+        "status": {
+          "type": "string",
+          "maxLength": 16,
+          "minLength": 1,
+          "enum": [
+            "received",
+            "running",
+            "completed",
+            "safe_failed",
+            "uncertain"
+          ]
+        },
+        "input": {
+          "$ref": "#/$defs/privacy_turn_input"
+        },
+        "response": {
+          "$ref": "#/$defs/privacy_turn_response"
+        },
+        "failure_code": {
+          "$ref": "#/$defs/optional_code"
+        },
+        "created_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "updated_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "completed_at": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/timestamp"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "turn_id",
+        "status",
+        "input",
+        "response",
+        "failure_code",
+        "created_at",
+        "updated_at",
+        "completed_at"
+      ],
+      "additionalProperties": false
+    },
+    "privacy_cart_display_row": {
+      "type": "object",
+      "properties": {
+        "label": {
+          "type": "string",
+          "maxLength": 160,
+          "minLength": 1
+        },
+        "value": {
+          "type": "string",
+          "maxLength": 500,
+          "minLength": 1
+        }
+      },
+      "required": [
+        "label",
+        "value"
+      ],
+      "additionalProperties": false
+    },
+    "privacy_cart_line": {
+      "type": "object",
+      "properties": {
+        "product_id": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "variation_id": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "name": {
+          "type": "string",
+          "maxLength": 500,
+          "minLength": 0
+        },
+        "quantity": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "line_total": {
+          "type": "number"
+        },
+        "formatted_line_total": {
+          "type": "string",
+          "maxLength": 2048,
+          "minLength": 0
+        },
+        "attributes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/privacy_cart_display_row"
+          },
+          "maxItems": 64
+        },
+        "item_data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/privacy_cart_display_row"
+          },
+          "maxItems": 32
+        },
+        "image": {
+          "type": "string",
+          "maxLength": 4096,
+          "minLength": 0,
+          "pattern": "^(?:|https?://[^\\s]+)$"
+        },
+        "permalink": {
+          "type": "string",
+          "maxLength": 4096,
+          "minLength": 0,
+          "pattern": "^(?:|https?://[^\\s]+)$"
+        }
+      },
+      "required": [
+        "product_id",
+        "variation_id",
+        "name",
+        "quantity",
+        "line_total",
+        "formatted_line_total",
+        "attributes",
+        "item_data",
+        "image",
+        "permalink"
+      ],
+      "additionalProperties": false
+    },
+    "privacy_cart_snapshot": {
+      "type": "object",
+      "properties": {
+        "item_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        },
+        "subtotal": {
+          "type": "number"
+        },
+        "total": {
+          "type": "number"
+        },
+        "formatted_subtotal": {
+          "type": "string",
+          "maxLength": 2048,
+          "minLength": 0
+        },
+        "formatted_total": {
+          "type": "string",
+          "maxLength": 2048,
+          "minLength": 0
+        },
+        "currency": {
+          "type": "string",
+          "maxLength": 3,
+          "minLength": 3,
+          "pattern": "^[A-Z]{3}$"
+        },
+        "cart_url": {
+          "type": "string",
+          "maxLength": 4096,
+          "minLength": 1,
+          "pattern": "^https?://[^\\s]+$"
+        },
+        "checkout_url": {
+          "type": "string",
+          "maxLength": 4096,
+          "minLength": 1,
+          "pattern": "^https?://[^\\s]+$"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/privacy_cart_line"
+          },
+          "maxItems": 1000
+        },
+        "is_empty": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "item_count",
+        "subtotal",
+        "total",
+        "formatted_subtotal",
+        "formatted_total",
+        "currency",
+        "cart_url",
+        "checkout_url",
+        "items",
+        "is_empty"
+      ],
+      "additionalProperties": false
+    },
+    "privacy_cart_plan": {
+      "type": "object",
+      "properties": {
+        "commands": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/cart_command"
+          },
+          "minItems": 1,
+          "maxItems": 1
+        }
+      },
+      "required": [
+        "commands"
+      ],
+      "additionalProperties": false
+    },
+    "privacy_cart_effect": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "maxLength": 16,
+          "minLength": 1,
+          "enum": [
+            "add",
+            "update",
+            "remove",
+            "replace",
+            "clear"
+          ]
+        },
+        "previous_line_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        },
+        "previous_quantity": {
+          "type": "number",
+          "minimum": 0
+        },
+        "quantity": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 999
+        },
+        "item": {
+          "type": "string",
+          "maxLength": 500,
+          "minLength": 0
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "privacy_cart_primitive": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "maxLength": 32,
+          "minLength": 1,
+          "enum": [
+            "add_line",
+            "set_quantity",
+            "remove_line",
+            "replace_line",
+            "empty_cart"
+          ]
+        },
+        "action": {
+          "type": "string",
+          "maxLength": 16,
+          "minLength": 1,
+          "enum": [
+            "add",
+            "update",
+            "remove",
+            "replace",
+            "clear"
+          ]
+        },
+        "phase": {
+          "type": "string",
+          "maxLength": 32,
+          "minLength": 1,
+          "enum": [
+            "single",
+            "replace_atomic",
+            "clear_atomic"
+          ]
+        },
+        "item": {
+          "type": "string",
+          "maxLength": 500,
+          "minLength": 0
+        },
+        "quantity": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 999
+        }
+      },
+      "required": [
+        "type",
+        "action",
+        "phase"
+      ],
+      "additionalProperties": false
+    },
+    "privacy_verified_receipt": {
+      "type": "object",
+      "properties": {
+        "receipt": {
+          "$ref": "#/$defs/receipt"
+        },
+        "completed_at": {
+          "$ref": "#/$defs/timestamp"
+        }
+      },
+      "required": [
+        "receipt",
+        "completed_at"
+      ],
+      "additionalProperties": false
+    },
+    "privacy_cart_operation": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/uuid_v4"
+        },
+        "turn_id": {
+          "$ref": "#/$defs/uuid_v4"
+        },
+        "status": {
+          "type": "string",
+          "maxLength": 16,
+          "minLength": 1,
+          "enum": [
+            "prepared",
+            "executing",
+            "verified",
+            "rejected",
+            "uncertain"
+          ]
+        },
+        "plan": {
+          "$ref": "#/$defs/privacy_cart_plan"
+        },
+        "pre_state": {
+          "$ref": "#/$defs/privacy_cart_snapshot"
+        },
+        "applied_effects": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/privacy_cart_effect"
+          },
+          "maxItems": 1
+        },
+        "post_state": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/privacy_cart_snapshot"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "receipt": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/receipt"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "failure_code": {
+          "$ref": "#/$defs/optional_code"
+        },
+        "safe_message": {
+          "type": "string",
+          "maxLength": 4096,
+          "minLength": 0
+        },
+        "created_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "updated_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "completed_at": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/timestamp"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "turn_id",
+        "status",
+        "plan",
+        "pre_state",
+        "applied_effects",
+        "post_state",
+        "receipt",
+        "failure_code",
+        "safe_message",
+        "created_at",
+        "updated_at",
+        "completed_at"
+      ],
+      "additionalProperties": false
+    },
+    "privacy_cart_step": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/uuid_v4"
+        },
+        "operation_id": {
+          "$ref": "#/$defs/uuid_v4"
+        },
+        "step_index": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        },
+        "command_index": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        },
+        "status": {
+          "type": "string",
+          "maxLength": 16,
+          "minLength": 1,
+          "enum": [
+            "prepared",
+            "applying",
+            "verified",
+            "rejected",
+            "uncertain"
+          ]
+        },
+        "primitive": {
+          "$ref": "#/$defs/privacy_cart_primitive"
+        },
+        "pre_state": {
+          "$ref": "#/$defs/privacy_cart_snapshot"
+        },
+        "post_state": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/privacy_cart_snapshot"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "failure_code": {
+          "$ref": "#/$defs/optional_code"
+        },
+        "safe_message": {
+          "type": "string",
+          "maxLength": 4096,
+          "minLength": 0
+        },
+        "created_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "updated_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "completed_at": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/timestamp"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "operation_id",
+        "step_index",
+        "command_index",
+        "status",
+        "primitive",
+        "pre_state",
+        "post_state",
+        "failure_code",
+        "safe_message",
+        "created_at",
+        "updated_at",
+        "completed_at"
+      ],
+      "additionalProperties": false
+    },
+    "privacy_cart_attempt": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/uuid_v4"
+        },
+        "step_id": {
+          "$ref": "#/$defs/uuid_v4"
+        },
+        "attempt_number": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "status": {
+          "type": "string",
+          "maxLength": 32,
+          "minLength": 1,
+          "enum": [
+            "started",
+            "intent_staged",
+            "sealed",
+            "session_persisted",
+            "verified",
+            "abandoned",
+            "uncertain"
+          ]
+        },
+        "candidate_post_state": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/privacy_cart_snapshot"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "failure_code": {
+          "$ref": "#/$defs/optional_code"
+        },
+        "safe_message": {
+          "type": "string",
+          "maxLength": 4096,
+          "minLength": 0
+        },
+        "created_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "updated_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "completed_at": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/timestamp"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "step_id",
+        "attempt_number",
+        "status",
+        "candidate_post_state",
+        "failure_code",
+        "safe_message",
+        "created_at",
+        "updated_at",
+        "completed_at"
+      ],
+      "additionalProperties": false
+    },
+    "conversation_export": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "integer",
+          "const": 1
+        },
+        "conversation_id": {
+          "$ref": "#/$defs/uuid_v4"
+        },
+        "created_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "updated_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "expires_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "state": {
+          "$ref": "#/$defs/privacy_conversation_state"
+        },
+        "messages": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/privacy_message"
+          },
+          "maxItems": 100
+        },
+        "verified_cart_receipts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/privacy_verified_receipt"
+          },
+          "maxItems": 50
+        },
+        "turns": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/privacy_turn"
+          },
+          "maxItems": 1
+        },
+        "cart_operations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/privacy_cart_operation"
+          },
+          "maxItems": 10
+        },
+        "cart_operation_steps": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/privacy_cart_step"
+          },
+          "maxItems": 25
+        },
+        "cart_step_attempts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/privacy_cart_attempt"
+          },
+          "maxItems": 25
+        },
+        "next_cursor": {
+          "oneOf": [
+            {
+              "type": "string",
+              "maxLength": 2048,
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9_-]+\\.[a-f0-9]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "complete": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "schema",
+        "conversation_id",
+        "created_at",
+        "updated_at",
+        "expires_at",
+        "state",
+        "messages",
+        "verified_cart_receipts",
+        "turns",
+        "cart_operations",
+        "cart_operation_steps",
+        "cart_step_attempts",
+        "next_cursor",
+        "complete"
+      ],
+      "additionalProperties": false
+    },
+    "runtime_probe_checks": {
+      "type": "object",
+      "properties": {
+        "provider_access": {
+          "type": "string",
+          "maxLength": 16,
+          "minLength": 6,
+          "const": "passed"
+        },
+        "structured_tool": {
+          "type": "string",
+          "maxLength": 16,
+          "minLength": 6,
+          "const": "passed"
+        }
+      },
+      "required": [
+        "provider_access",
+        "structured_tool"
+      ],
+      "additionalProperties": false
+    },
+    "runtime_probe_result": {
+      "type": "object",
+      "properties": {
+        "ok": {
+          "type": "boolean",
+          "const": true
+        },
+        "reply": {
+          "type": "string",
+          "maxLength": 128,
+          "minLength": 1
+        },
+        "model": {
+          "type": "string",
+          "maxLength": 128,
+          "minLength": 1
+        },
+        "checks": {
+          "$ref": "#/$defs/runtime_probe_checks"
+        },
+        "provider_requests": {
+          "type": "integer",
+          "const": 2
+        },
+        "checked_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "expires_at": {
+          "$ref": "#/$defs/timestamp"
+        }
+      },
+      "required": [
+        "ok",
+        "reply",
+        "model",
+        "checks",
+        "provider_requests",
+        "checked_at",
+        "expires_at"
+      ],
+      "additionalProperties": false
+    },
+    "health_response": {
+      "type": "object",
+      "properties": {
+        "ok": {
+          "type": "boolean",
+          "const": true
+        },
+        "version": {
+          "type": "string",
+          "maxLength": 64,
+          "minLength": 1
+        },
+        "architecture": {
+          "type": "string",
+          "maxLength": 64,
+          "minLength": 19,
+          "const": "ai-led-fenced-turns"
+        },
+        "assistant_ready": {
+          "type": "boolean"
+        },
+        "server_time": {
+          "$ref": "#/$defs/timestamp"
+        }
+      },
+      "required": [
+        "ok",
+        "version",
+        "architecture",
+        "assistant_ready",
+        "server_time"
+      ],
+      "additionalProperties": false
+    },
+    "conversation_export_response": {
+      "type": "object",
+      "properties": {
+        "ok": {
+          "type": "boolean",
+          "const": true
+        },
+        "export": {
+          "$ref": "#/$defs/conversation_export"
+        }
+      },
+      "required": [
+        "ok",
+        "export"
+      ],
+      "additionalProperties": false
+    },
+    "conversation_delete_response": {
+      "type": "object",
+      "properties": {
+        "ok": {
+          "type": "boolean",
+          "const": true
+        },
+        "deleted": {
+          "type": "boolean",
+          "const": true
+        }
+      },
+      "required": [
+        "ok",
+        "deleted"
+      ],
+      "additionalProperties": false
+    },
+    "admin_test_response": {
+      "type": "object",
+      "properties": {
+        "ok": {
+          "type": "boolean",
+          "const": true
+        },
+        "result": {
+          "$ref": "#/$defs/runtime_probe_result"
+        }
+      },
+      "required": [
+        "ok",
+        "result"
+      ],
+      "additionalProperties": false
+    },
+    "error_response": {
+      "type": "object",
+      "properties": {
+        "ok": {
+          "const": false
+        },
+        "code": {
+          "$ref": "#/$defs/code"
+        },
+        "message": {
+          "type": "string",
+          "maxLength": 4096,
+          "minLength": 1
+        },
+        "retry_after": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4294967295
+        }
+      },
+      "required": [
+        "ok",
+        "code",
+        "message"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

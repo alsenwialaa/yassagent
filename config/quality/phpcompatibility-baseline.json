@@ -1,0 +1,12 @@
+{
+  "schema": 1,
+  "standard": "phpcompatibility.xml.dist",
+  "standard_sha256": "29b1cfe95780ab65e600b57df175e4526aeb55777b98180678ef127281fbec1b",
+  "phpcs": "PHP_CodeSniffer version 3.13.5 (stable) by Squiz and PHPCSStandards",
+  "totals": {
+    "errors": 0,
+    "warnings": 0,
+    "violations": 0
+  },
+  "violations": {}
+}

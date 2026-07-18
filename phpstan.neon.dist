@@ -1,0 +1,17 @@
+includes:
+    - config/quality/phpstan-core-baseline.neon
+
+parameters:
+    level: 8
+    paths:
+        - src/Domain
+        - src/Application
+        - src/Support
+    bootstrapFiles:
+        - tests/phpstan-bootstrap.php
+    tmpDir: /tmp/ysai-phpstan-core
+    treatPhpDocTypesAsCertain: false
+    reportUnmatchedIgnoredErrors: true
+    checkMissingCallableSignature: true
+    parallel:
+        maximumNumberOfProcesses: 4

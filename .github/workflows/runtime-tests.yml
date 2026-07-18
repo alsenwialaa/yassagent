@@ -1,0 +1,109 @@
+name: Runtime tests
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: runtime-tests-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NODE_VERSION: 24.18.0
+  PHP_VERSION: "7.4"
+
+jobs:
+  engineering:
+    name: Engineering and browser gate
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ env.PHP_VERSION }}
+          extensions: curl, dom, json, libxml, mbstring, tokenizer, xml, xmlwriter
+          coverage: none
+          tools: composer:v2
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - name: Install locked PHP dependencies
+        run: composer install --no-interaction --prefer-dist --no-progress
+
+      - name: Install locked Node dependencies
+        run: npm ci
+
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Export Chromium path
+        run: |
+          chromium_path="$(node -e "process.stdout.write(require('playwright').chromium.executablePath())")"
+          printf 'CHROMIUM_PATH=%s\n' "$chromium_path" >> "$GITHUB_ENV"
+
+      - name: Run complete quality gate
+        run: ./scripts/quality-gate.sh
+
+      - name: Upload engineering evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: engineering-evidence
+          if-no-files-found: ignore
+          retention-days: 14
+          path: |
+            test-results/
+            playwright-report/
+            release/
+
+  wordpress-runtime:
+    name: WordPress and WooCommerce runtime
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up pinned Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Record container runtime
+        run: |
+          docker version
+          docker compose version
+
+      - name: Verify runtime harness contracts
+        run: |
+          python3 integration/scripts/verify-source.py
+          node integration/fake-gemini/self-test.js
+          python3 integration/promotion/scripts/self-test.py
+
+      - name: Run pinned WordPress and WooCommerce integration suite
+        run: ./integration/scripts/run.sh
+
+      - name: Upload runtime evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: wordpress-runtime-evidence
+          if-no-files-found: warn
+          retention-days: 14
+          path: integration/artifacts/

@@ -1,0 +1,123 @@
+name: ${YSAI_PROMOTION_PROJECT_NAME:-ysai-promotion}
+
+services:
+  db:
+    image: mariadb:11.8.8
+    environment:
+      MARIADB_DATABASE: wordpress
+      MARIADB_USER: wordpress
+      MARIADB_PASSWORD: wordpress
+      MARIADB_ROOT_PASSWORD: root
+    command:
+      - --transaction-isolation=READ-COMMITTED
+      - --binlog-format=ROW
+      - --innodb-flush-log-at-trx-commit=1
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 2s
+      timeout: 5s
+      retries: 90
+    volumes:
+      - db_data:/var/lib/mysql
+
+  fake-gemini:
+    build:
+      context: ../..
+      dockerfile: integration/docker/fake-gemini/Dockerfile
+    environment:
+      PORT: 8787
+      YSAI_TEST_CONTROL_TOKEN: ${YSAI_TEST_CONTROL_TOKEN:-ysai-promotion-control}
+      YSAI_TEST_API_KEY: ${YSAI_TEST_API_KEY:-promotion-key}
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:8787/health').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"]
+      interval: 2s
+      timeout: 5s
+      retries: 45
+
+  wordpress:
+    image: wordpress:6.9-php7.4-apache
+    depends_on:
+      db:
+        condition: service_healthy
+      fake-gemini:
+        condition: service_healthy
+    ports:
+      - "127.0.0.1:${YSAI_PROMOTION_HOST_PORT:-8081}:80"
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DEBUG: "1"
+      WORDPRESS_CONFIG_EXTRA: |
+        define('WP_ENVIRONMENT_TYPE', 'local');
+        define('WP_DEBUG_LOG', true);
+        define('WP_DEBUG_DISPLAY', false);
+        define('WP_DISABLE_FATAL_ERROR_HANDLER', true);
+        define('AUTOMATIC_UPDATER_DISABLED', true);
+        define('YSAI_GEMINI_API_KEY', '${YSAI_TEST_API_KEY:-promotion-key}');
+        define('YSAI_INTEGRATION_TEST_MODE', true);
+        define('YSAI_GEMINI_API_BASE_URL', 'http://fake-gemini:8787/v1beta/models');
+        define('YSAI_INTEGRATION_CONTROL_TOKEN', '${YSAI_TEST_CONTROL_TOKEN:-ysai-promotion-control}');
+    volumes:
+      - wordpress_data:/var/www/html
+      - ../wordpress/mu-plugins:/var/www/html/wp-content/mu-plugins:ro
+
+  wpcli:
+    image: wordpress:cli-2.12.0-php7.4
+    user: "33:33"
+    depends_on:
+      db:
+        condition: service_healthy
+      wordpress:
+        condition: service_started
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+      YSAI_PROMOTION_PLUGIN_VERSION: ${YSAI_PROMOTION_PLUGIN_VERSION:-1.0.0}
+      YSAI_PROMOTION_PLUGIN_SHA256: ${YSAI_PROMOTION_PLUGIN_SHA256:?plugin checksum is required}
+      YSAI_PROMOTION_WOOCOMMERCE_VERSION: ${YSAI_PROMOTION_WOOCOMMERCE_VERSION:-10.9.4}
+      YSAI_TEST_CONTROL_TOKEN: ${YSAI_TEST_CONTROL_TOKEN:-ysai-promotion-control}
+      YSAI_FAKE_GEMINI_URL: http://fake-gemini:8787
+    volumes:
+      - wordpress_data:/var/www/html
+      - ../wordpress/mu-plugins:/var/www/html/wp-content/mu-plugins:ro
+      - ${YSAI_PROMOTION_PACKAGE_DIR:?package directory is required}:/package:ro
+      - ./scripts:/promotion/scripts:ro
+      - ./fixtures:/promotion/fixtures:ro
+      - ../wordpress/seed.php:/promotion/seed.php:ro
+      - ${YSAI_PROMOTION_ARTIFACTS_DIR:?artifact directory is required}:/artifacts
+    working_dir: /var/www/html
+    entrypoint: ["sh"]
+
+  runner:
+    build:
+      context: ../..
+      dockerfile: integration/docker/runner/Dockerfile
+    depends_on:
+      wordpress:
+        condition: service_started
+      fake-gemini:
+        condition: service_healthy
+    environment:
+      YSAI_TEST_BASE_URL: http://wordpress
+      YSAI_TEST_CONTROL_TOKEN: ${YSAI_TEST_CONTROL_TOKEN:-ysai-promotion-control}
+      YSAI_FAKE_GEMINI_URL: http://fake-gemini:8787
+      YSAI_TEST_OUTPUT_DIR: /artifacts/test-results
+      YSAI_JUNIT_OUTPUT: /artifacts/junit.xml
+      YSAI_JSON_OUTPUT: /artifacts/playwright-results.json
+      YSAI_PROMOTION_TRACE: "1"
+      YSAI_PROMOTION_MODE: "1"
+      YSAI_PROMOTION_PLUGIN_VERSION: ${YSAI_PROMOTION_PLUGIN_VERSION:?plugin version is required}
+      YSAI_PROMOTION_PLUGIN_SHA256: ${YSAI_PROMOTION_PLUGIN_SHA256:?plugin checksum is required}
+    volumes:
+      - ../..:/workspace/plugin:ro
+      - ${YSAI_PROMOTION_ARTIFACTS_DIR:?artifact directory is required}:/artifacts
+    command: ["/workspace/plugin/integration/promotion/scripts/run-playwright.sh"]
+    shm_size: 1gb
+
+volumes:
+  db_data:
+  wordpress_data:

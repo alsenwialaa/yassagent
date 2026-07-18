@@ -1,0 +1,29 @@
+includes:
+    - vendor/szepeviktor/phpstan-wordpress/extension.neon
+    - config/quality/phpstan-adapters-baseline.neon
+
+parameters:
+    level: 6
+    paths:
+        - src/Infrastructure
+        - src/Presentation
+        - src/Lifecycle
+        - src/Plugin.php
+        - yassin-ai-assistant.php
+        - uninstall.php
+    scanDirectories:
+        - src/Application
+        - src/Domain
+        - src/Support
+    bootstrapFiles:
+        - tests/phpstan-bootstrap.php
+    scanFiles:
+        - src/Autoload.php
+        - vendor/php-stubs/woocommerce-stubs/woocommerce-stubs.php
+        - tests/phpstan-symbols.php
+    tmpDir: /tmp/ysai-phpstan-adapters
+    treatPhpDocTypesAsCertain: false
+    reportUnmatchedIgnoredErrors: true
+    checkMissingCallableSignature: true
+    parallel:
+        maximumNumberOfProcesses: 4

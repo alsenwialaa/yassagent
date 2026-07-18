@@ -1,0 +1,30 @@
+{
+  "name": "yassin-ai-assistant-widget-tests",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "test:widget": "node tests/js/widget.test.js",
+    "test:contract": "python3 scripts/generate-public-contract.py --check && php scripts/generate-public-contract-fixtures.php --check && node scripts/validate-public-contract.js && python3 scripts/verify-public-contract.py",
+    "test:browser": "bash scripts/run-browser-tests.sh",
+    "test:integration:static": "python3 integration/scripts/verify-source.py && node integration/fake-gemini/self-test.js && python3 integration/promotion/scripts/self-test.py",
+    "test:integration": "integration/scripts/run.sh",
+    "test:promotion": "bash scripts/run-woocommerce-promotion-gate.sh",
+    "test:compatibility:matrix": "bash scripts/run-woocommerce-compatibility-matrix.sh",
+    "test:quality": "bash scripts/quality-gate.sh",
+    "test:release": "bash scripts/run-release-gate.sh",
+    "lint:js": "eslint assets/js/admin.js assets/js/widget tests/js tests/browser scripts integration",
+    "test:phpunit": "vendor/bin/phpunit --configuration phpunit.xml.dist",
+    "test:static": "composer analyse && composer analyse:adapters",
+    "test:phpcs": "composer lint:php && composer compatibility:php",
+    "test:engineering": "composer quality:php && npm run lint:js",
+    "test:hardening": "python3 scripts/quality/verify-release-hardening.py --mode source && python3 scripts/quality/self-test-release-hardening.py && python3 scripts/quality/self-test-release-archives.py && python3 scripts/quality/self-test-production-archive.py && python3 scripts/quality/self-test-composer-audit.py && python3 scripts/quality/self-test-node-install.py && python3 scripts/quality/self-test-stage-h-runner.py",
+    "test:stage-h": "python3 scripts/run-stage-h-gate.py --mode item9"
+  },
+  "devDependencies": {
+    "@eslint/js": "9.39.1",
+    "@playwright/test": "1.61.1",
+    "ajv": "8.18.0",
+    "eslint": "9.39.1",
+    "globals": "17.7.0"
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "name": "yassinstore/yassin-ai-assistant",
+  "description": "Development tooling for the unpublished Yassin AI Assistant WordPress plugin.",
+  "type": "wordpress-plugin",
+  "license": "GPL-2.0-or-later",
+  "require": {
+    "php": ">=7.4"
+  },
+  "require-dev": {
+    "dealerdirect/phpcodesniffer-composer-installer": "1.2.1",
+    "php-stubs/woocommerce-stubs": "10.9.4",
+    "php-stubs/wordpress-stubs": "6.9.4",
+    "phpcompatibility/php-compatibility": "9.3.5",
+    "phpcompatibility/phpcompatibility-wp": "2.1.8",
+    "phpstan/phpstan": "2.2.5",
+    "phpstan/phpstan-phpunit": "2.0.18",
+    "phpunit/phpunit": "9.6.35",
+    "squizlabs/php_codesniffer": "3.13.5",
+    "szepeviktor/phpstan-wordpress": "2.0.3",
+    "wp-coding-standards/wpcs": "3.4.0"
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "YassinStore\\AiAssistant\\Tests\\": "tests/php/"
+    }
+  },
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    },
+    "platform": {
+      "php": "7.4.0"
+    },
+    "sort-packages": true
+  },
+  "scripts": {
+    "test:phpunit": "phpunit --configuration phpunit.xml.dist",
+    "analyse": "phpstan analyse --configuration phpstan.neon.dist --memory-limit=1G --no-progress",
+    "analyse:adapters": "phpstan analyse --configuration phpstan-adapters.neon.dist --memory-limit=1G --no-progress",
+    "lint:php": "python3 scripts/quality/run-phpcs-baseline.py --standard phpcs.xml.dist --baseline config/quality/phpcs-baseline.json",
+    "compatibility:php": "python3 scripts/quality/run-phpcs-baseline.py --standard phpcompatibility.xml.dist --baseline config/quality/phpcompatibility-baseline.json",
+    "quality:php": [
+      "@test:phpunit",
+      "@analyse",
+      "@analyse:adapters",
+      "@lint:php",
+      "@compatibility:php",
+      "@quality:architecture"
+    ],
+    "quality:architecture": [
+      "python3 scripts/quality/verify-architecture.py",
+      "python3 scripts/quality/verify-code-health.py",
+      "python3 scripts/quality/verify-static-baselines.py",
+      "python3 scripts/quality/verify-development-metadata.py",
+      "python3 scripts/quality/verify-composer-install.py",
+      "python3 scripts/quality/verify-node-install.py",
+      "python3 scripts/quality/verify-release-hardening.py --mode source",
+      "python3 scripts/quality/self-test-release-hardening.py",
+      "python3 scripts/quality/self-test-release-archives.py",
+      "python3 scripts/quality/self-test-composer-audit.py",
+      "python3 scripts/quality/self-test-production-archive.py",
+      "python3 scripts/quality/self-test-node-install.py",
+      "python3 scripts/quality/self-test-stage-h-runner.py"
+    ]
+  }
+}
