@@ -1,6 +1,6 @@
 # Real WordPress/WooCommerce integration lane
 
-This source-only harness runs the plugin against pinned WordPress 6.9, PHP 7.4, promotion-tested WooCommerce 10.9.4, MariaDB, a strict fake Gemini endpoint, and Playwright Chromium.
+This source-only harness runs the plugin against pinned WordPress 6.9.4, PHP 8.3, promotion-tested WooCommerce 10.9.4, MariaDB, a strict fake Gemini endpoint, and Playwright Chromium. The separate engineering gate continues to prove the PHP 7.4 compatibility floor.
 
 ```bash
 ./integration/scripts/run.sh

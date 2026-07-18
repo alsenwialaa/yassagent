@@ -130,7 +130,7 @@ pull requests, pushes to `main`, and manual dispatches:
 
 - the complete PHP 7.4, Node 24.18.0, Composer, ESLint, PHPUnit, PHPStan,
   PHPCS, PHPCompatibility, contract, package, and local Playwright quality gate;
-- the pinned Docker runtime with WordPress 6.9, WooCommerce 10.9.4,
+- the pinned Docker runtime with WordPress 6.9.4, PHP 8.3, WooCommerce 10.9.4,
   MariaDB 11.8.8, the deterministic fake Gemini service, and Playwright 1.61.1.
 
 The integration lane always uploads its JUnit, JSON, trace, screenshot, video,

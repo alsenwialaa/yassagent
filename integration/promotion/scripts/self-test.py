@@ -61,7 +61,7 @@ def build_evidence(artifacts: Path) -> int:
                 "maximum_exclusive": "11.0.0",
                 "tested_up_to": version_lock["woocommerce"],
                 "promotion_tested": [version_lock["woocommerce"]],
-                "wordpress_minimum": version_lock["wordpress"],
+                "wordpress_minimum": version_lock["wordpress_minimum"],
                 "runtime_contract": "woocommerce-10.9-core-session-v1",
             },
             "members": members,

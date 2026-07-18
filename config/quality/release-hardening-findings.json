@@ -236,7 +236,7 @@
       "scopes": [
         "publication"
       ],
-      "summary": "The exact installable ZIP has not passed the artifact-first WordPress 6.9 and WooCommerce 10.9.4 promotion lane on a container-capable host.",
+      "summary": "The exact installable ZIP has not passed the artifact-first WordPress 6.9.4, PHP 8.3, and WooCommerce 10.9.4 promotion lane on a container-capable host.",
       "rationale": "Source, fake-provider, browser, and package tests cannot prove real activation, WooCommerce session persistence, mutation recovery, upgrade, uninstall, and diagnostic-log cleanliness.",
       "guard": "scripts/run-woocommerce-promotion-gate.sh returns non-success when infrastructure or evidence is missing.",
       "resolution": "Run the exact plugin and WooCommerce packages through the promotion command and retain promotion-status.json.",
