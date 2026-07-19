@@ -34,8 +34,11 @@ jobs:
       - name: Record repository import authority
         run: |
           git cat-file -e "${REPOSITORY_IMPORT_COMMIT}^{commit}"
-          printf 'REPOSITORY_IMPORT_COMMIT=%s\n' "$REPOSITORY_IMPORT_COMMIT"
-          printf 'REPOSITORY_IMPORT_TREE=%s\n' "$(git rev-parse "${REPOSITORY_IMPORT_COMMIT}^{tree}")"
+          mkdir -p release
+          {
+            printf 'REPOSITORY_IMPORT_COMMIT=%s\n' "$REPOSITORY_IMPORT_COMMIT"
+            printf 'REPOSITORY_IMPORT_TREE=%s\n' "$(git rev-parse "${REPOSITORY_IMPORT_COMMIT}^{tree}")"
+          } | tee release/repository-import-authority.txt
 
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
