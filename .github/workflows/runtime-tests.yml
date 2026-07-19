@@ -17,6 +17,7 @@ concurrency:
 env:
   NODE_VERSION: 24.18.0
   PHP_VERSION: "7.4"
+  REPOSITORY_IMPORT_COMMIT: c09ffbcc1b9bd4b764eb09a53991f7210c65144f
 
 jobs:
   engineering:
@@ -27,6 +28,14 @@ jobs:
     steps:
       - name: Check out source
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Record repository import authority
+        run: |
+          git cat-file -e "${REPOSITORY_IMPORT_COMMIT}^{commit}"
+          printf 'REPOSITORY_IMPORT_COMMIT=%s\n' "$REPOSITORY_IMPORT_COMMIT"
+          printf 'REPOSITORY_IMPORT_TREE=%s\n' "$(git rev-parse "${REPOSITORY_IMPORT_COMMIT}^{tree}")"
 
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
@@ -79,6 +88,14 @@ jobs:
     steps:
       - name: Check out source
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Record repository import authority
+        run: |
+          git cat-file -e "${REPOSITORY_IMPORT_COMMIT}^{commit}"
+          printf 'REPOSITORY_IMPORT_COMMIT=%s\n' "$REPOSITORY_IMPORT_COMMIT"
+          printf 'REPOSITORY_IMPORT_TREE=%s\n' "$(git rev-parse "${REPOSITORY_IMPORT_COMMIT}^{tree}")"
 
       - name: Set up pinned Node
         uses: actions/setup-node@v4
