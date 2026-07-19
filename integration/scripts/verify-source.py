@@ -18,8 +18,10 @@ def require(condition: bool, message: str) -> None:
 lock = json.loads((INTEGRATION / "version-lock.json").read_text(encoding="utf-8"))
 compose_text = (INTEGRATION / "docker-compose.yml").read_text(encoding="utf-8")
 
-require(lock["wordpress"] == "6.9", "Real-stack lane must execute the declared WordPress 6.9 floor.")
-require(lock["php"] == "7.4", "Real-stack lane must execute the declared PHP 7.4 floor.")
+require(lock["wordpress"] == "6.9.4", "Real-stack lane must execute the exact WordPress 6.9.4 runtime.")
+require(lock["wordpress_minimum"] == "6.9", "WordPress compatibility floor must remain 6.9.")
+require(lock["php"] == "8.3", "Real-stack lane must execute the declared PHP 8.3 runtime.")
+require(lock["php_minimum"] == "7.4", "PHP compatibility floor must remain 7.4.")
 require(lock["woocommerce"] == "10.9.4", "Real-stack lane must execute the promotion-tested WooCommerce 10.9.4 release.")
 
 compatibility_contract = json.loads((ROOT / "config/woocommerce-compatibility.json").read_text(encoding="utf-8"))
@@ -36,7 +38,7 @@ require(compatibility_contract["maximum_exclusive"] == "11.0.0", "WooCommerce ma
 require(compatibility_contract["tested_up_to"] == lock["woocommerce"], "Integration pin differs from tested-up-to evidence.")
 require(lock["woocommerce"] in compatibility_contract["promotion_tested"], "Source-mounted integration pin must be promotion-tested.")
 require(compatibility_contract["promotion_tested"][-1] == compatibility_contract["tested_up_to"], "Tested-up-to must equal the highest promotion-tested release.")
-require(compatibility_contract["wordpress_minimum"] == lock["wordpress"], "WordPress integration floor differs from the compatibility contract.")
+require(compatibility_contract["wordpress_minimum"] == lock["wordpress_minimum"], "WordPress compatibility floor differs from the runtime lock.")
 require(compatibility_contract["runtime_contract"] == "woocommerce-10.9-core-session-v1", "Unexpected WooCommerce core-session contract.")
 
 plugin_entry = (ROOT / "yassin-ai-assistant.php").read_text(encoding="utf-8")
@@ -357,7 +359,7 @@ require("YSAI_TEST_OUTPUT_DIR" in playwright_config, "Playwright output is still
 promotion = INTEGRATION / "promotion"
 promotion_compose = (promotion / "compose.yaml").read_text(encoding="utf-8")
 require(":latest" not in promotion_compose, "Promotion compose contains a floating container tag.")
-require("wordpress:6.9-php7.4-apache" in promotion_compose, "Promotion WordPress image differs from the compatibility floor.")
+require("wordpress:6.9.4-php8.3-apache" in promotion_compose, "Promotion WordPress image differs from the exact runtime pin.")
 require("../..:/var/www/html/wp-content/plugins" not in promotion_compose, "Promotion WordPress still mounts plugin source.")
 require("/package/yassin-ai-assistant.zip" in (promotion / "scripts/common.sh").read_text(encoding="utf-8"), "Promotion lane does not install the tested ZIP.")
 require("/package/woocommerce.zip" in (promotion / "scripts/common.sh").read_text(encoding="utf-8"), "Promotion lane does not install an exact WooCommerce ZIP.")

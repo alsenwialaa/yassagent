@@ -79,7 +79,7 @@ Publication mode additionally requires:
 
 - a fresh Composer install from the locked source package;
 - normalized current Composer audit evidence with zero advisories and zero abandoned packages;
-- a passing artifact-first WordPress 6.9 / WooCommerce 10.9.4 promotion record for the exact installable ZIP, including clean install, activation, clarification, mutation, replay, recovery, upgrade, uninstall, complete browser traces, installed-byte identity, and clean WordPress/WooCommerce diagnostics.
+- a passing artifact-first WordPress 6.9.4 / PHP 8.3 / WooCommerce 10.9.4 promotion record for the exact installable ZIP, including clean install, activation, clarification, mutation, replay, recovery, upgrade, uninstall, complete browser traces, installed-byte identity, and clean WordPress/WooCommerce diagnostics; PHP 7.4 remains the separately enforced compatibility floor.
 
 ```bash
 scripts/run-release-gate.sh \

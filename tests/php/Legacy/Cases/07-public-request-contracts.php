@@ -1607,7 +1607,10 @@ test('WooCommerce private core layout is split behind one application-facing ada
     notContains('YSAI_MIN_WOOCOMMERCE_VERSION',(string)file_get_contents($root.'/yassin-ai-assistant.php').$plugin.$activator);
 
     $lock=json_decode((string)file_get_contents($root.'/integration/version-lock.json'),true);
-    same('6.9',$lock['wordpress']??'');
+    same('6.9.4',$lock['wordpress']??'');
+    same('6.9',$lock['wordpress_minimum']??'');
+    same('8.3',$lock['php']??'');
+    same('7.4',$lock['php_minimum']??'');
     same('10.9.4',$lock['woocommerce']??'');
 });
 

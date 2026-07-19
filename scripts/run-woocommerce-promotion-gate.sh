@@ -64,8 +64,8 @@ if not isinstance(promoted, list) or not promoted or not all(isinstance(v, str) 
 selected = requested or (promoted[0] if len(promoted) == 1 else '')
 if selected not in promoted:
     raise SystemExit('Select an exact WooCommerce version from promotion_tested: ' + ', '.join(promoted))
-if str(lock.get('wordpress','')) != str(contract.get('wordpress_minimum','')):
-    raise SystemExit('Promotion WordPress pin differs from the compatibility contract.')
+if str(lock.get('wordpress_minimum','')) != str(contract.get('wordpress_minimum','')):
+    raise SystemExit('Promotion WordPress compatibility floor differs from the contract.')
 if not re.fullmatch(r'(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)', selected):
     raise SystemExit('Selected WooCommerce version is malformed.')
 print(selected)

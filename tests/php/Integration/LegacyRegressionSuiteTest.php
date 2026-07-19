@@ -18,7 +18,7 @@ final class LegacyRegressionSuiteTest extends TestCase
         $output = implode("\n", $lines);
 
         self::assertSame(0, $status, $output);
-        self::assertStringContainsString('378 tests, 8095 assertions, 0 failures', $output);
+        self::assertStringContainsString('378 tests, 8098 assertions, 0 failures', $output);
         self::assertSame(378, preg_match_all('/^ok [0-9]+ - /m', $output));
         self::assertStringNotContainsString("\nnot ok ", "\n" . $output);
     }

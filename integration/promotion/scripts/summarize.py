@@ -280,7 +280,7 @@ def main() -> None:
         promoted = compatibility.get("promotion_tested", [])
         if not isinstance(promoted, list) or selected_woocommerce not in promoted:
             failures.append("selected WooCommerce package is not in the promotion-tested contract")
-        if compatibility.get("wordpress_minimum") != version_lock.get("wordpress"):
+        if compatibility.get("wordpress_minimum") != version_lock.get("wordpress_minimum"):
             failures.append("promotion WordPress pin differs from the plugin compatibility contract")
         if compatibility.get("tested_up_to") != (promoted[-1] if promoted else None):
             failures.append("tested-up-to evidence differs from the promotion-tested set")
