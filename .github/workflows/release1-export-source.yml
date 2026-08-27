@@ -1,0 +1,29 @@
+name: Release 1 source export
+
+on:
+  push:
+    branches:
+      - agent/release1-runtime-gate-20260827
+
+permissions:
+  contents: read
+
+jobs:
+  export:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Archive checked-out repository
+        run: |
+          set -euo pipefail
+          tar --exclude=.git --exclude=repo-source.tar.gz -czf repo-source.tar.gz .
+          sha256sum repo-source.tar.gz > repo-source.tar.gz.sha256
+      - name: Upload source archive
+        uses: actions/upload-artifact@v4
+        with:
+          name: release1-repository-source
+          retention-days: 2
+          path: |
+            repo-source.tar.gz
+            repo-source.tar.gz.sha256
