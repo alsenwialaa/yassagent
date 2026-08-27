@@ -1,0 +1,25 @@
+{
+  "ok": false,
+  "required_gates": {
+    "release1_source_present": 0,
+    "atomic_namespace_migration_present": 0,
+    "pre_core_migration_wired": 1,
+    "no_active_legacy_table_namespace": 0,
+    "php_lint": 0,
+    "javascript_syntax": 0,
+    "woocommerce_11_admission_contract": 1,
+    "release1_no_direct_commerce_mutation": 0,
+    "docker_available": 0,
+    "docker_compose_available": 0,
+    "release1_activation_migration_privacy_rollback": 1,
+    "harness_source": 1,
+    "fake_gemini_self_test": 0,
+    "promotion_self_test": 0,
+    "full_wordpress_woocommerce_chat_browser": 1
+  },
+  "wordpress_runtime": "6.9.7",
+  "woocommerce_runtime": "10.9.4",
+  "woocommerce_11_admission": "11.0.1",
+  "commit": "f190d36a336382a7575a6f6992cb581c6067e2c3",
+  "run_id": "33061319885"
+}
