@@ -1,0 +1,108 @@
+name: Release 1 cloud runtime gate v2
+
+on:
+  push:
+    branches:
+      - agent/release1-runtime-gate-20260827
+    paths-ignore:
+      - 'runtime-gate-v2-output/**'
+  pull_request:
+    paths-ignore:
+      - 'runtime-gate-v2-output/**'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release1-cloud-runtime-v2-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  gate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 105
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          coverage: none
+          tools: composer:v2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.18.0'
+      - name: Execute fail-closed runtime gate
+        shell: bash
+        run: |
+          set +e
+          OUT=runtime-gate-v2-output
+          EVIDENCE="$OUT/evidence"
+          mkdir -p "$EVIDENCE"
+          result=0
+          record(){ printf '%s=%s\n' "$1" "$2" | tee -a "$EVIDENCE/gates.env"; [ "$2" = 0 ] || result=1; }
+
+          if [ -f src/Release1Runtime/Runtime.php ] || [ -f src/Release1/Infrastructure/WordPress/LegacyTableNamespaceMigration.php ]; then
+            record release1_source_present 0
+          else
+            record release1_source_present 1
+          fi
+          grep -R -q 'RENAME TABLE' src/Release1Runtime src/Release1 2>/dev/null; record atomic_namespace_migration_present $?
+          grep -q 'Release1Runtime\\Runtime::preBoot\|runBeforeCoreSchemaAuthority' yassin-ai-assistant.php 2>/dev/null; record pre_core_migration_wired $?
+          if grep -R --include='*.php' --exclude='Runtime.php' --exclude='LegacyTableNamespaceMigration.php' --exclude='LegacyTableNamespaceRegression.php' 'ysai_r1_' src 2>/dev/null; then record no_active_legacy_table_namespace 1; else record no_active_legacy_table_namespace 0; fi
+
+          find . -type f -name '*.php' -not -path './vendor/*' -print0 | xargs -0 -n1 php -l > "$EVIDENCE/php-lint.log" 2>&1; record php_lint $?
+          find assets -type f -name '*.js' -print0 2>/dev/null | while IFS= read -r -d '' f; do node --check "$f" || exit 1; done > "$EVIDENCE/javascript-syntax.log" 2>&1; record javascript_syntax $?
+
+          if grep -R --include='*.php' --include='*.json' -E 'maximum_exclusive|TOO_NEW|earlier than 10\.10|< *10\.10' src config yassin-ai-assistant.php readme.txt 2>/dev/null; then record woocommerce_11_admission_contract 1; else record woocommerce_11_admission_contract 0; fi
+          if grep -R --include='*.php' -E 'WC_Cart::|->add_to_cart\(|->remove_cart_item\(|->set_quantity\(|->empty_cart\(|wc_create_order\(|set_status\(' src/Release1Runtime src/Release1 2>/dev/null; then record release1_no_direct_commerce_mutation 1; else record release1_no_direct_commerce_mutation 0; fi
+
+          docker version > "$EVIDENCE/docker-version.log" 2>&1; record docker_available $?
+          docker compose version > "$EVIDENCE/docker-compose-version.log" 2>&1; record docker_compose_available $?
+          sed -i -E 's#wordpress:6\.9[^[:space:]]*-apache#wordpress:6.9.7-php8.3-apache#g' integration/docker-compose.yml 2>/dev/null
+          sed -i -E 's#wordpress:cli-2\.12\.0-php7\.4#wordpress:cli-2.12.0-php8.3#g' integration/docker-compose.yml 2>/dev/null
+          chmod +x integration/scripts/release1-runtime.sh 2>/dev/null
+          timeout 35m ./integration/scripts/release1-runtime.sh > "$EVIDENCE/release1-activation-migration.log" 2>&1; record release1_activation_migration_privacy_rollback $?
+
+          python3 integration/scripts/verify-source.py > "$EVIDENCE/harness-source.log" 2>&1; record harness_source $?
+          node integration/fake-gemini/self-test.js > "$EVIDENCE/fake-gemini-self-test.log" 2>&1; record fake_gemini_self_test $?
+          python3 integration/promotion/scripts/self-test.py > "$EVIDENCE/promotion-self-test.log" 2>&1; record promotion_self_test $?
+          timeout 55m ./integration/scripts/run.sh > "$EVIDENCE/full-wordpress-woocommerce-chat-browser.log" 2>&1; record full_wordpress_woocommerce_chat_browser $?
+          [ -d integration/artifacts ] && cp -a integration/artifacts "$EVIDENCE/integration-artifacts"
+
+          python3 - <<'PY'
+          import hashlib,json,os,pathlib,zipfile
+          root=pathlib.Path('.'); out=pathlib.Path('runtime-gate-v2-output')
+          gates={}
+          for line in (out/'evidence/gates.env').read_text().splitlines():
+              if '=' in line:
+                  k,v=line.split('=',1); gates[k]=int(v)
+          ok=bool(gates) and all(v==0 for v in gates.values())
+          report={'ok':ok,'required_gates':gates,'wordpress_runtime':'6.9.7','woocommerce_runtime':'10.9.4','woocommerce_11_admission':'11.0.1','commit':os.environ.get('GITHUB_SHA',''),'run_id':os.environ.get('GITHUB_RUN_ID','')}
+          if ok:
+              excluded={'.git','.github','integration','tests','test-results','playwright-report','release','runtime-gate-output','runtime-gate-v2-output','runtime-gate'}
+              targets=[(out/'ysai-release1-runtime-verified.zip',False),(out/'ysai-release1-runtime-verified-source.zip',True)]
+              for target,source in targets:
+                  with zipfile.ZipFile(target,'w',zipfile.ZIP_DEFLATED,compresslevel=9) as z:
+                      for p in sorted(root.rglob('*')):
+                          if not p.is_file() or '.git' in p.parts or 'runtime-gate-v2-output' in p.parts: continue
+                          rel=p.relative_to(root)
+                          if not source and rel.parts and rel.parts[0] in excluded: continue
+                          z.write(p,pathlib.Path('yassin-ai-assistant')/rel)
+              def d(p):
+                  h=hashlib.sha256()
+                  with p.open('rb') as f:
+                      for b in iter(lambda:f.read(1048576),b''): h.update(b)
+                  return h.hexdigest()
+              report['artifacts']={p.name:{'bytes':p.stat().st_size,'sha256':d(p)} for p,_ in targets}
+              (out/'SHA256SUMS.txt').write_text('\n'.join(f"{m['sha256']}  {n}" for n,m in report['artifacts'].items())+'\n')
+          (out/'runtime-gate-result.json').write_text(json.dumps(report,indent=2)+'\n')
+          PY
+
+          git config user.name 'Release 1 Runtime Gate'
+          git config user.email 'runtime-gate@users.noreply.github.com'
+          git add -f "$OUT"
+          git commit -m 'test: publish Release 1 runtime v2 evidence [skip ci]' || true
+          git push origin HEAD:${GITHUB_HEAD_REF:-${GITHUB_REF_NAME}}
+          exit "$result"

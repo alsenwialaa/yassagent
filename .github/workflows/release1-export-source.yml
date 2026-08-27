@@ -1,0 +1,28 @@
+name: Release 1 source export
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  export:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Archive checked-out repository
+        run: |
+          set -euo pipefail
+          archive="$RUNNER_TEMP/repo-source.tar.gz"
+          tar --exclude=.git -czf "$archive" .
+          sha256sum "$archive" > "$RUNNER_TEMP/repo-source.tar.gz.sha256"
+      - name: Upload source archive
+        uses: actions/upload-artifact@v4
+        with:
+          name: release1-repository-source
+          retention-days: 2
+          path: |
+            ${{ runner.temp }}/repo-source.tar.gz
+            ${{ runner.temp }}/repo-source.tar.gz.sha256
