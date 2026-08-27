@@ -1,0 +1,180 @@
+name: Release 1 cloud runtime gate
+
+on:
+  push:
+    branches:
+      - agent/release1-runtime-gate-20260827
+    paths-ignore:
+      - 'runtime-gate-output/**'
+  pull_request:
+    paths-ignore:
+      - 'runtime-gate-output/**'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release1-cloud-runtime-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  gate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    env:
+      NODE_VERSION: 24.18.0
+    steps:
+      - name: Check out candidate
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          coverage: none
+          tools: composer:v2
+          extensions: curl, dom, json, libxml, mbstring, mysqli, tokenizer, xml, xmlwriter, zip
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Execute fail-closed gate and publish evidence
+        shell: bash
+        run: |
+          set +e
+          mkdir -p runtime-gate-output/evidence
+          result=0
+
+          record() {
+            local name="$1"
+            local status="$2"
+            printf '%s=%s\n' "$name" "$status" | tee -a runtime-gate-output/evidence/gates.env
+            if [ "$status" != "0" ]; then result=1; fi
+          }
+
+          test -f src/Release1/Infrastructure/WordPress/LegacyTableNamespaceMigration.php
+          record release1_source_present $?
+          grep -q 'RENAME TABLE' src/Release1/Infrastructure/WordPress/LegacyTableNamespaceMigration.php 2>/dev/null
+          record atomic_namespace_migration_present $?
+          grep -q 'runBeforeCoreSchemaAuthority' yassin-ai-assistant.php 2>/dev/null
+          record pre_core_migration_wired $?
+          if grep -R --include='*.php' --exclude='LegacyTableNamespaceMigration.php' --exclude='LegacyTableNamespaceRegression.php' 'ysai_r1_' src tests 2>/dev/null; then
+            record no_active_legacy_table_namespace 1
+          else
+            record no_active_legacy_table_namespace 0
+          fi
+
+          find . -type f -name '*.php' -not -path './vendor/*' -print0 | xargs -0 -n1 php -l > runtime-gate-output/evidence/php-lint.log 2>&1
+          record php_lint $?
+
+          if [ -f tests/Release1/RuntimeGate/LegacyTableNamespaceRegression.php ]; then
+            php tests/Release1/RuntimeGate/LegacyTableNamespaceRegression.php > runtime-gate-output/evidence/release1-regression.log 2>&1
+            record release1_regression $?
+          else
+            record release1_regression 1
+          fi
+
+          if [ -f composer.json ]; then
+            composer install --no-interaction --prefer-dist --no-progress > runtime-gate-output/evidence/composer-install.log 2>&1
+            record composer_install $?
+          fi
+          if [ -f package-lock.json ]; then
+            npm ci > runtime-gate-output/evidence/npm-ci.log 2>&1
+            record npm_ci $?
+          fi
+
+          find assets -type f -name '*.js' -print0 2>/dev/null | while IFS= read -r -d '' file; do node --check "$file" || exit 1; done > runtime-gate-output/evidence/javascript-syntax.log 2>&1
+          record javascript_syntax $?
+
+          docker version > runtime-gate-output/evidence/docker-version.log 2>&1
+          record docker_available $?
+          docker compose version > runtime-gate-output/evidence/docker-compose-version.log 2>&1
+          record docker_compose_available $?
+
+          # Use an existing, published WordPress 6.9 maintenance image with PHP 8.3.
+          if [ -f integration/docker-compose.yml ]; then
+            sed -i -E 's#wordpress:6\.9[^[:space:]]*-apache#wordpress:6.9.7-php8.3-apache#g' integration/docker-compose.yml
+            sed -i -E 's#wordpress:cli-2\.12\.0-php7\.4#wordpress:cli-2.12.0-php8.3#g' integration/docker-compose.yml
+          fi
+
+          python3 integration/scripts/verify-source.py > runtime-gate-output/evidence/harness-source.log 2>&1
+          record harness_source $?
+          node integration/fake-gemini/self-test.js > runtime-gate-output/evidence/fake-gemini-self-test.log 2>&1
+          record fake_gemini_self_test $?
+          python3 integration/promotion/scripts/self-test.py > runtime-gate-output/evidence/promotion-self-test.log 2>&1
+          record promotion_self_test $?
+
+          timeout 55m ./integration/scripts/run.sh > runtime-gate-output/evidence/wordpress-woocommerce-baseline.log 2>&1
+          baseline_status=$?
+          record wordpress_6_9_7_woocommerce_10_9_4_runtime $baseline_status
+
+          # Archive any evidence emitted by the canonical harness.
+          if [ -d integration/artifacts ]; then
+            cp -a integration/artifacts runtime-gate-output/evidence/integration-artifacts-baseline
+          fi
+
+          # Static current-stable compatibility admission is mandatory even when the
+          # integration harness itself is locked to the declared 10.9.4 baseline.
+          if grep -R --include='*.php' --include='*.json' -E 'maximum_exclusive|TOO_NEW|earlier than 10\.10|< *10\.10' src config yassin-ai-assistant.php readme.txt 2>/dev/null; then
+            record woocommerce_11_admission_contract 1
+          else
+            record woocommerce_11_admission_contract 0
+          fi
+
+          # Package only when every required gate passed.
+          python3 - <<'PY'
+          import hashlib, json, os, pathlib, zipfile
+          root = pathlib.Path('.')
+          out = pathlib.Path('runtime-gate-output')
+          gates = {}
+          for line in (out/'evidence/gates.env').read_text().splitlines():
+              if '=' in line:
+                  k,v=line.split('=',1); gates[k]=int(v)
+          ok = bool(gates) and all(v == 0 for v in gates.values())
+          result = {
+              'ok': ok,
+              'required_gates': gates,
+              'wordpress_baseline': '6.9.7',
+              'woocommerce_baseline': '10.9.4',
+              'current_woocommerce_admission_checked': '11.0.1',
+              'commit': os.environ.get('GITHUB_SHA',''),
+              'run_id': os.environ.get('GITHUB_RUN_ID',''),
+          }
+          if ok:
+              excluded = {'.git','.github','integration','tests','test-results','playwright-report','release','runtime-gate-output'}
+              installable = out/'ysai-release1-runtime-verified.zip'
+              source = out/'ysai-release1-runtime-verified-source.zip'
+              with zipfile.ZipFile(installable,'w',zipfile.ZIP_DEFLATED,compresslevel=9) as z:
+                  for p in sorted(root.rglob('*')):
+                      if not p.is_file(): continue
+                      rel=p.relative_to(root)
+                      if rel.parts and rel.parts[0] in excluded: continue
+                      z.write(p, pathlib.Path('yassin-ai-assistant')/rel)
+              with zipfile.ZipFile(source,'w',zipfile.ZIP_DEFLATED,compresslevel=9) as z:
+                  for p in sorted(root.rglob('*')):
+                      if not p.is_file() or '.git' in p.parts or 'runtime-gate-output' in p.parts: continue
+                      z.write(p, pathlib.Path('yassin-ai-assistant')/p.relative_to(root))
+              def digest(p):
+                  h=hashlib.sha256();
+                  with p.open('rb') as f:
+                      for b in iter(lambda:f.read(1048576),b''): h.update(b)
+                  return h.hexdigest()
+              result['artifacts']={
+                  installable.name:{'bytes':installable.stat().st_size,'sha256':digest(installable)},
+                  source.name:{'bytes':source.stat().st_size,'sha256':digest(source)},
+              }
+              (out/'SHA256SUMS.txt').write_text('\n'.join(f"{m['sha256']}  {n}" for n,m in result['artifacts'].items())+'\n')
+          (out/'runtime-gate-result.json').write_text(json.dumps(result,indent=2)+'\n')
+          PY
+
+          git config user.name 'Release 1 Runtime Gate'
+          git config user.email 'runtime-gate@users.noreply.github.com'
+          git add -f runtime-gate-output
+          git commit -m 'test: publish Release 1 runtime evidence [skip ci]' || true
+          git push origin HEAD:${GITHUB_HEAD_REF:-${GITHUB_REF_NAME}}
+
+          exit "$result"
