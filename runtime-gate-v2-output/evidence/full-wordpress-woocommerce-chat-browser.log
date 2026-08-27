@@ -1,5 +1,5 @@
- wordpress Pulling 
  db Pulling 
+ wordpress Pulling 
  wordpress Error manifest for wordpress:6.9.7-php8.3-apache not found: manifest unknown: manifest unknown
  db  Interrupted
 Error response from daemon: manifest for wordpress:6.9.7-php8.3-apache not found: manifest unknown: manifest unknown
