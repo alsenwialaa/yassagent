@@ -1,9 +1,7 @@
 name: Release 1 source export
 
 on:
-  push:
-    branches:
-      - agent/release1-runtime-gate-20260827
+  workflow_dispatch:
 
 permissions:
   contents: read
