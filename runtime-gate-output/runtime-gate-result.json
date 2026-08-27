@@ -4,7 +4,7 @@
     "release1_source_present": 1,
     "atomic_namespace_migration_present": 2,
     "pre_core_migration_wired": 1,
-    "no_active_legacy_table_namespace": 0,
+    "no_active_legacy_table_namespace": 1,
     "php_lint": 0,
     "release1_regression": 1,
     "composer_install": 0,
@@ -21,6 +21,6 @@
   "wordpress_baseline": "6.9.7",
   "woocommerce_baseline": "10.9.4",
   "current_woocommerce_admission_checked": "11.0.1",
-  "commit": "386a3709bb08bdf2e176d0a2e6da959ced780f57",
-  "run_id": "33060809429"
+  "commit": "9b042d6eaca8b1502dde0eb5cb80fb9a0d02ad9b",
+  "run_id": "33061187593"
 }

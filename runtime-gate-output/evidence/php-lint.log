@@ -32,6 +32,7 @@ No syntax errors detected in ./src/Presentation/Rest/Controller/HealthController
 No syntax errors detected in ./src/Presentation/Rest/Controller/ConversationPrivacyController.php
 No syntax errors detected in ./src/Presentation/Rest/Controller/AdminController.php
 No syntax errors detected in ./src/Presentation/Privacy/Privacy.php
+No syntax errors detected in ./src/Release1Runtime/Runtime.php
 No syntax errors detected in ./src/Autoload.php
 No syntax errors detected in ./src/Plugin.php
 No syntax errors detected in ./src/Domain/Shopping/CatalogTextNormalizer.php
