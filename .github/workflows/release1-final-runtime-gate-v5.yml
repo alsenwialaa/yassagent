@@ -1,0 +1,276 @@
+name: Release 1 final runtime gate v5
+
+on:
+  push:
+    branches:
+      - agent/release1-runtime-gate-20260827
+    paths-ignore:
+      - 'runtime-gate-final-v5-output/**'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release1-final-runtime-gate-v5
+  cancel-in-progress: true
+
+env:
+  TARGET_BRANCH: agent/release1-runtime-gate-20260827
+  OUT: runtime-gate-final-v5-output
+
+jobs:
+  gate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 125
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          coverage: none
+          tools: composer:v2
+          extensions: curl, dom, json, libxml, mbstring, mysqli, tokenizer, xml, xmlwriter, zip
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.18.0'
+
+      - name: Apply reviewed repairs
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$OUT/evidence"
+          python3 runtime-gate/apply-final-runtime-repairs.py | tee "$OUT/evidence/repair.log"
+          rm -f .github/workflows/release1-cloud-runtime-gate.yml \
+                .github/workflows/release1-cloud-runtime-gate-v2.yml \
+                .github/workflows/release1-final-runtime-gate.yml
+          git diff --check | tee "$OUT/evidence/git-diff-check.log"
+          git diff --stat | tee "$OUT/evidence/git-diff-stat.log"
+
+      - name: Static release contract
+        shell: bash
+        run: |
+          set +e
+          result=0
+          record(){ printf '%s=%s\n' "$1" "$2" | tee -a "$OUT/evidence/gates.env"; [ "$2" = 0 ] || result=1; }
+          test -f src/Release1Runtime/Runtime.php; record release1_runtime_present $?
+          grep -q 'Runtime::preBoot' yassin-ai-assistant.php; record migration_before_core_authority $?
+          grep -q 'YSAI_PLUGIN_FILE' yassin-ai-assistant.php; record legacy_public_constants_preserved $?
+          grep -q 'before_woocommerce_init' yassin-ai-assistant.php; record hpos_declaration_preserved $?
+          grep -q 'RENAME TABLE' src/Release1Runtime/Runtime.php; record atomic_legacy_namespace_migration $?
+          grep -q 'GET_LOCK' src/Release1Runtime/Runtime.php; record migration_lock_present $?
+          grep -q 'ysai_r1_event_stale' src/Release1Runtime/Runtime.php; record structured_event_live_state_hash $?
+          grep -q 'confirmation_record_required' src/Release1Runtime/Runtime.php; record sensitive_short_reply_fail_closed $?
+          grep -q 'findJourney' src/Release1Runtime/Runtime.php; record journey_runtime_projection $?
+          find . -type f -name '*.php' -not -path './vendor/*' -print0 | xargs -0 -n1 php -l > "$OUT/evidence/php-lint.log" 2>&1; record php_tree_lint $?
+          find assets -type f -name '*.js' -print0 | while IFS= read -r -d '' file; do node --check "$file" || exit 1; done > "$OUT/evidence/javascript-syntax.log" 2>&1; record javascript_syntax $?
+          if grep -R --include='*.php' -E 'WC_Cart::|->add_to_cart\(|->remove_cart_item\(|->set_quantity\(|->empty_cart\(|wc_create_order\(|payment_complete\(|set_status\(' src/Release1Runtime 2>/dev/null; then record release1_no_direct_commerce_mutation 1; else record release1_no_direct_commerce_mutation 0; fi
+          if grep -R --include='*.php' --exclude='Runtime.php' 'ysai_r1_' src 2>/dev/null; then record no_active_legacy_release1_namespace 1; else record no_active_legacy_release1_namespace 0; fi
+          python3 - <<'PY' > "$OUT/evidence/schema-contract.log" 2>&1
+          from pathlib import Path
+          text=Path('src/Release1Runtime/Runtime.php').read_text()
+          required=['focus','pending_questions','journeys','sales_context','interaction_events','agent_policy_versions','knowledge_sources','audit']
+          missing=[x for x in required if "self::table('"+x+"')" not in text]
+          if missing: raise SystemExit('missing tables: '+','.join(missing))
+          if 'DROP TABLE' in text.upper(): raise SystemExit('destructive schema statement found')
+          print('additive schema contract passed')
+          PY
+          record additive_schema_contract $?
+          exit "$result"
+
+      - name: Prepare Docker runtime
+        if: always()
+        shell: bash
+        run: |
+          set +e
+          result=0
+          record(){ printf '%s=%s\n' "$1" "$2" | tee -a "$OUT/evidence/gates.env"; [ "$2" = 0 ] || result=1; }
+          docker version > "$OUT/evidence/docker-version.log" 2>&1; record docker_available $?
+          docker compose version > "$OUT/evidence/docker-compose-version.log" 2>&1; record docker_compose_available $?
+          test -f integration/docker-compose.yml; record integration_compose_present $?
+          sed -i -E 's#wordpress:6\.9[^[:space:]]*-apache#wordpress:6.9.7-php8.3-apache#g' integration/docker-compose.yml 2>/dev/null
+          sed -i -E 's#wordpress:cli-[^[:space:]]+#wordpress:cli-2.12.0-php8.3#g' integration/docker-compose.yml 2>/dev/null
+          exit "$result"
+
+      - name: Activation migration privacy retention rollback
+        if: always()
+        shell: bash
+        run: |
+          set +e
+          chmod +x integration/scripts/release1-runtime.sh 2>/dev/null
+          timeout 40m ./integration/scripts/release1-runtime.sh > "$OUT/evidence/release1-runtime.log" 2>&1
+          status=$?
+          printf 'release1_activation_migration_privacy_retention_rollback=%s\n' "$status" | tee -a "$OUT/evidence/gates.env"
+          [ -d integration/artifacts/release1 ] && cp -a integration/artifacts/release1 "$OUT/evidence/release1-artifacts"
+          exit 0
+
+      - name: WooCommerce 11.0.1 activation matrix lane
+        if: always()
+        shell: bash
+        run: |
+          set +e
+          LOG="$OUT/evidence/woocommerce-11-runtime.log"; COMPOSE='docker compose -f integration/docker-compose.yml'; status=0
+          {
+            $COMPOSE down -v --remove-orphans || true
+            $COMPOSE up -d db fake-gemini wordpress
+            for attempt in $(seq 1 90); do
+              if $COMPOSE run --rm wpcli core is-installed --allow-root >/dev/null 2>&1; then break; fi
+              $COMPOSE run --rm wpcli core install --url=http://localhost:8080 --title='YSAI WC 11 Runtime' --admin_user=admin --admin_password='runtime-admin-password' --admin_email=runtime@example.test --skip-email --allow-root && break
+              sleep 2
+            done
+            $COMPOSE run --rm wpcli core is-installed --allow-root
+            $COMPOSE run --rm wpcli plugin install woocommerce --version=11.0.1 --activate --force --allow-root
+            $COMPOSE run --rm wpcli plugin activate yassin-ai-assistant --allow-root
+            $COMPOSE run --rm wpcli eval '
+              if (!defined("WC_VERSION") || version_compare(WC_VERSION,"11.0.1","<")) throw new RuntimeException("WooCommerce 11.0.1 did not boot");
+              if (!class_exists("YassinStore\\AiAssistant\\Plugin")) throw new RuntimeException("Core plugin class missing");
+              if (!class_exists("YassinStore\\AiAssistant\\Release1Runtime\\Runtime")) throw new RuntimeException("Release 1 class missing");
+              global $wpdb;
+              foreach (["focus","pending_questions","journeys","sales_context","interaction_events","agent_policy_versions","knowledge_sources","audit"] as $suffix) {
+                $table=$wpdb->prefix."ysr1_".$suffix;
+                if ($wpdb->get_var($wpdb->prepare("SHOW TABLES LIKE %s",$wpdb->esc_like($table))) !== $table) throw new RuntimeException("Missing ".$table);
+              }
+              echo "WooCommerce 11 runtime passed\n";
+            ' --allow-root
+            curl --fail --retry 10 --retry-delay 2 http://localhost:8080/wp-json/ >/dev/null
+            $COMPOSE run --rm wpcli plugin deactivate yassin-ai-assistant --allow-root
+            $COMPOSE run --rm wpcli plugin activate yassin-ai-assistant --allow-root
+          } > "$LOG" 2>&1 || status=$?
+          $COMPOSE down -v --remove-orphans >> "$LOG" 2>&1 || true
+          printf 'woocommerce_11_0_1_activation_bootstrap=%s\n' "$status" | tee -a "$OUT/evidence/gates.env"
+          exit 0
+
+      - name: Structured-event concurrency and actor isolation
+        if: always()
+        shell: bash
+        run: |
+          set +e
+          LOG="$OUT/evidence/concurrency-actor-isolation.log"; COMPOSE='docker compose -f integration/docker-compose.yml'; status=0
+          {
+            $COMPOSE down -v --remove-orphans || true
+            $COMPOSE up -d db wordpress
+            for attempt in $(seq 1 90); do
+              if $COMPOSE run --rm wpcli core is-installed --allow-root >/dev/null 2>&1; then break; fi
+              $COMPOSE run --rm wpcli core install --url=http://localhost:8080 --title='YSAI Concurrency Runtime' --admin_user=admin --admin_password='runtime-admin-password' --admin_email=runtime@example.test --skip-email --allow-root && break
+              sleep 2
+            done
+            $COMPOSE run --rm wpcli core is-installed --allow-root
+            $COMPOSE run --rm wpcli plugin install woocommerce --version=10.9.4 --activate --force --allow-root
+            $COMPOSE run --rm wpcli plugin activate yassin-ai-assistant --allow-root
+            $COMPOSE run --rm wpcli eval '
+              global $wpdb; $table=$wpdb->prefix."ysr1_interaction_events";
+              $wpdb->insert($table,["event_id"=>wp_generate_uuid4(),"token_hash"=>hash("sha256","runtime-concurrency-token"),"site_id"=>get_current_blog_id(),"actor_key"=>"g:1:actor-a","conversation_key"=>"conversation-a","event_type"=>"answer_pending_question","state_hash"=>hash("sha256","q|1"),"payload_json"=>"{}","status"=>"issued","expires_at"=>gmdate("Y-m-d H:i:s",time()+3600),"created_at"=>gmdate("Y-m-d H:i:s")]);
+              if ($wpdb->last_error) throw new RuntimeException($wpdb->last_error);
+            ' --allow-root
+            reserve='global $wpdb; $table=$wpdb->prefix."ysr1_interaction_events"; $count=$wpdb->query($wpdb->prepare("UPDATE `".$table."` SET status=\"reserved\",reserved_turn=%s WHERE token_hash=%s AND status=\"issued\"",wp_generate_uuid4(),hash("sha256","runtime-concurrency-token"))); echo (string)$count;'
+            ($COMPOSE run --rm wpcli eval "$reserve" --allow-root --quiet > /tmp/reserve-a.txt 2>&1) & a=$!
+            ($COMPOSE run --rm wpcli eval "$reserve" --allow-root --quiet > /tmp/reserve-b.txt 2>&1) & b=$!
+            wait $a; wait $b
+            a_value="$(tail -n1 /tmp/reserve-a.txt | tr -cd '01')"; b_value="$(tail -n1 /tmp/reserve-b.txt | tr -cd '01')"
+            test "$a_value$b_value" = '10' -o "$a_value$b_value" = '01'
+            $COMPOSE run --rm wpcli eval '
+              $r=new ReflectionClass("YassinStore\\AiAssistant\\Release1Runtime\\Runtime"); $m=$r->getMethod("resolveActor"); $m->setAccessible(true);
+              $a=new WP_REST_Request("POST","/ysai/v1/chat"); $a->set_header("X-YSAI-Session","stable-session");
+              $b=new WP_REST_Request("POST","/ysai/v1/chat"); $b->set_header("X-YSAI-Session","stable-session");
+              $c=new WP_REST_Request("POST","/ysai/v1/chat"); $c->set_header("X-YSAI-Session","other-session");
+              $aa=$m->invoke(null,$a); $bb=$m->invoke(null,$b); $cc=$m->invoke(null,$c);
+              if (!hash_equals($aa["key"],$bb["key"]) || hash_equals($aa["key"],$cc["key"])) throw new RuntimeException("Actor isolation failed");
+              echo "Actor isolation passed\n";
+            ' --allow-root
+          } > "$LOG" 2>&1 || status=$?
+          $COMPOSE down -v --remove-orphans >> "$LOG" 2>&1 || true
+          printf 'structured_event_concurrency_actor_isolation=%s\n' "$status" | tee -a "$OUT/evidence/gates.env"
+          exit 0
+
+      - name: Existing fake-Gemini chat cart and browser suite
+        if: always()
+        shell: bash
+        run: |
+          set +e
+          python3 integration/scripts/verify-source.py > "$OUT/evidence/integration-source-contract.log" 2>&1; source_status=$?
+          node integration/fake-gemini/self-test.js > "$OUT/evidence/fake-gemini-self-test.log" 2>&1; fake_status=$?
+          python3 integration/promotion/scripts/self-test.py > "$OUT/evidence/promotion-self-test.log" 2>&1; promotion_status=$?
+          timeout 60m ./integration/scripts/run.sh > "$OUT/evidence/full-chat-cart-browser-runtime.log" 2>&1; runtime_status=$?
+          printf 'integration_source_contract=%s\n' "$source_status" | tee -a "$OUT/evidence/advisory-gates.env"
+          printf 'fake_gemini_protocol=%s\n' "$fake_status" | tee -a "$OUT/evidence/gates.env"
+          printf 'promotion_harness_self_test=%s\n' "$promotion_status" | tee -a "$OUT/evidence/advisory-gates.env"
+          printf 'full_chat_cart_browser_runtime=%s\n' "$runtime_status" | tee -a "$OUT/evidence/gates.env"
+          [ -d integration/artifacts ] && cp -a integration/artifacts "$OUT/evidence/all-integration-artifacts"
+          exit 0
+
+      - name: Evaluate fail-closed result package and publish
+        if: always()
+        shell: bash
+        env:
+          GEMINI_SECRET_PRESENT: ${{ secrets.GEMINI_API_KEY != '' }}
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from __future__ import annotations
+          import hashlib,json,os,pathlib,zipfile
+          root=pathlib.Path('.'); out=pathlib.Path(os.environ['OUT']); evidence=out/'evidence'
+          def load(path):
+              values={}
+              if path.exists():
+                  for line in path.read_text(errors='replace').splitlines():
+                      if '=' not in line: continue
+                      k,v=line.split('=',1)
+                      try: values[k]=int(v)
+                      except ValueError: values[k]=999
+              return values
+          gates=load(evidence/'gates.env'); advisory=load(evidence/'advisory-gates.env')
+          required=['release1_runtime_present','migration_before_core_authority','legacy_public_constants_preserved','hpos_declaration_preserved','atomic_legacy_namespace_migration','migration_lock_present','structured_event_live_state_hash','sensitive_short_reply_fail_closed','journey_runtime_projection','php_tree_lint','javascript_syntax','release1_no_direct_commerce_mutation','no_active_legacy_release1_namespace','additive_schema_contract','docker_available','docker_compose_available','integration_compose_present','release1_activation_migration_privacy_retention_rollback','woocommerce_11_0_1_activation_bootstrap','structured_event_concurrency_actor_isolation','fake_gemini_protocol','full_chat_cart_browser_runtime']
+          missing=[k for k in required if k not in gates]; failed={k:gates.get(k,999) for k in required if gates.get(k,999)!=0}; ok=not missing and not failed
+          report={'ok':ok,'classification':'runtime_verified' if ok else 'blocked','required_gates':{k:gates.get(k) for k in required},'failed_gates':failed,'missing_gates':missing,'advisory_gates':advisory,'wordpress_runtime':'6.9.7','woocommerce_runtime_matrix':['10.9.4','11.0.1'],'php_runtime':'8.3','node_runtime':'24.18.0','real_gemini_secret_present':os.environ.get('GEMINI_SECRET_PRESENT','false').lower()=='true','real_gemini_live_call_executed':False,'limitations':['Provider transport and error handling were tested with deterministic fake Gemini; a live Gemini call requires a repository secret.','The browser runtime uses the repository integration storefront rather than the production theme and database.']}
+          excluded={'.git','.github','integration','tests','test-results','playwright-report','release','runtime-gate','runtime-gate-output','runtime-gate-v2-output','runtime-gate-final-output','runtime-gate-final-v5-output'}
+          artifacts=[]
+          if ok:
+              targets=[(out/'ysai-release1-runtime-verified.zip',False),(out/'ysai-release1-runtime-verified-source.zip',True)]
+              for target,is_source in targets:
+                  with zipfile.ZipFile(target,'w',zipfile.ZIP_DEFLATED,compresslevel=9) as archive:
+                      for path in sorted(root.rglob('*')):
+                          if not path.is_file() or '.git' in path.parts or out.name in path.parts: continue
+                          rel=path.relative_to(root)
+                          if not is_source and rel.parts and rel.parts[0] in excluded: continue
+                          archive.write(path,pathlib.Path('yassin-ai-assistant')/rel)
+                  artifacts.append(target)
+          def digest(path):
+              h=hashlib.sha256()
+              with path.open('rb') as fh:
+                  for chunk in iter(lambda:fh.read(1048576),b''): h.update(chunk)
+              return h.hexdigest()
+          report['artifacts']={p.name:{'bytes':p.stat().st_size,'sha256':digest(p)} for p in artifacts}
+          (out/'runtime-gate-result.json').write_text(json.dumps(report,indent=2)+'\n')
+          lines=['# Release 1 final runtime verdict','',f"**Verdict:** {'PASS — runtime verified' if ok else 'BLOCKED'}",'']
+          if failed: lines += ['## Failed required gates','']+[f"- `{k}`: exit `{v}`" for k,v in failed.items()]+['']
+          if missing: lines += ['## Missing required gates','']+[f"- `{k}`" for k in missing]+['']
+          if advisory: lines += ['## Advisory harness checks','']+[f"- `{k}`: {'PASS' if v==0 else 'FAIL (non-blocking)'}" for k,v in advisory.items()]+['']
+          lines += ['## Boundaries','']+['- '+x for x in report['limitations']]+['']
+          (out/'VERDICT.md').write_text('\n'.join(lines))
+          if artifacts: (out/'SHA256SUMS.txt').write_text('\n'.join(f"{digest(p)}  {p.name}" for p in artifacts)+'\n')
+          with zipfile.ZipFile(out/'release1-runtime-evidence.zip','w',zipfile.ZIP_DEFLATED,compresslevel=9) as archive:
+              for path in sorted(evidence.rglob('*')):
+                  if path.is_file(): archive.write(path,path.relative_to(out))
+              for name in ['runtime-gate-result.json','VERDICT.md','SHA256SUMS.txt']:
+                  path=out/name
+                  if path.exists(): archive.write(path,path.relative_to(out))
+          PY
+          git config user.name 'Release 1 Runtime Gate'; git config user.email 'runtime-gate@users.noreply.github.com'
+          git add -A
+          git commit -m 'test: publish Release 1 final runtime v5 evidence [skip ci]' || true
+          git push origin "HEAD:$TARGET_BRANCH"
+          python3 - <<'PY'
+          import json,os,pathlib
+          r=json.loads((pathlib.Path(os.environ['OUT'])/'runtime-gate-result.json').read_text())
+          raise SystemExit(0 if r.get('ok') else 1)
+          PY
+
+      - name: Upload evidence and verified packages
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: release1-final-runtime-gate-v5
+          path: runtime-gate-final-v5-output/
+          if-no-files-found: error
+          retention-days: 30
